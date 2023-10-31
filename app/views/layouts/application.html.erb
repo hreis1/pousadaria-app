@@ -11,9 +11,17 @@
 
   <body>
   <header>
-    <h1>Pousadaria</h1>
+    <nav>
+      <ul>
+        <li><%= link_to "Pousadaria", root_path %></li>
+        <li><%= link_to "Cadastrar pousada", new_owner_registration_path %></li>
+      </ul>
+    </nav>
   </header>
   <main>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+    <%= I18n.t "hello" %>
     <%= yield %>
   </main>
   </body>
