@@ -1,0 +1,25 @@
+pt-BR:
+  activerecord:
+    model:
+      inn:
+        one: 'Pousada'
+        other: 'Pousadas'
+    attributes:
+      inn:
+        trade_name: 'Nome Fantasia'
+        corporate_name: 'Razão Social'
+        cnpj: 'CNPJ'
+        phone: 'Telefone de contato'
+        email: 'E-mail de contato'
+        address: 'Endereço'
+        address_number: 'Número'
+        neighborhood: 'Bairro'
+        state: 'Estado'
+        city: 'Cidade'
+        cep: 'CEP'
+        description: 'Descrição'
+        payment_methods: 'Formas de pagamento'
+        pets_allowed: 'Aceita pets'
+        polices: 'Políticas'
+        checkin_time: 'Horário de checkin'
+        checkout_time: 'Horário de checkout'

@@ -3,7 +3,8 @@ require "rails_helper"
 describe "Dono da pousada se cadastra" do
   it "com sucesso" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: "dono@email.com"
     fill_in "Senha", with: "senhadono"
@@ -18,7 +19,8 @@ describe "Dono da pousada se cadastra" do
 
   it "email inválido" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: "senhadono"
@@ -33,7 +35,8 @@ describe "Dono da pousada se cadastra" do
 
   it "senha em branco" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: ""
@@ -48,7 +51,8 @@ describe "Dono da pousada se cadastra" do
 
   it "senha e confirmação diferentes" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: "dono@email.com"
     fill_in "Senha", with: "senhadono"
@@ -63,7 +67,8 @@ describe "Dono da pousada se cadastra" do
 
   it "senha menor que 6 caracteres" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: "12345"
@@ -80,7 +85,8 @@ describe "Dono da pousada se cadastra" do
     owner = Owner.create!(email: "dono@email.com", password: "senhadono")
 
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: owner.email
     fill_in "Senha", with: "senhadono"
@@ -95,7 +101,8 @@ describe "Dono da pousada se cadastra" do
 
   it "email e senha em branco" do
     visit root_path
-    click_on "Cadastrar pousada"
+    click_on "Entrar como dono de pousada"
+    click_on "Cadastre-se"
 
     fill_in "E-mail", with: ""
     fill_in "Senha", with: ""

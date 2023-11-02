@@ -10,7 +10,32 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_10_31_061302) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_02_012311) do
+  create_table "inns", force: :cascade do |t|
+    t.integer "owner_id", null: false
+    t.string "trade_name"
+    t.string "corporate_name"
+    t.string "cnpj"
+    t.string "phone"
+    t.string "email"
+    t.string "address"
+    t.string "address_number"
+    t.string "neighborhood"
+    t.string "state"
+    t.string "city"
+    t.string "cep"
+    t.string "description"
+    t.string "payment_methods"
+    t.boolean "pets_allowed"
+    t.string "polices"
+    t.time "checkin_time"
+    t.time "checkout_time"
+    t.boolean "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["owner_id"], name: "index_inns_on_owner_id"
+  end
+
   create_table "owners", force: :cascade do |t|
     t.string "email", default: "", null: false
     t.string "encrypted_password", default: "", null: false
@@ -35,4 +60,5 @@ ActiveRecord::Schema[7.0].define(version: 2023_10_31_061302) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  add_foreign_key "inns", "owners"
 end
