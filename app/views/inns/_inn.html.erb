@@ -1,0 +1,11 @@
+<h2><%= @inn.trade_name %></h2>
+
+<p><%= Inn.human_attribute_name(:address) %>: <%= @inn.address %>, <%= @inn.address_number %>, <%= @inn.neighborhood %>, <%= @inn.city %> - <%= @inn.state %></p>
+<p><%= Inn.human_attribute_name(:phone) %>: <%= @inn.phone %></p>
+<p><%= Inn.human_attribute_name(:email) %>: <%= @inn.email %></p>
+<p><%= Inn.human_attribute_name(:description) %>: <%= @inn.description %></p>
+<p><%= Inn.human_attribute_name(:payment_methods) %>: <%= @inn.payment_methods %>
+<p><%= Inn.human_attribute_name(:pets_allowed) %>: <%= @inn.pets_allowed? ? "Sim" : "Não" %></p>
+<p><%= Inn.human_attribute_name(:polices) %>: <%= @inn.polices %></p>
+<p><%= Inn.human_attribute_name(:checkin_time) %>: <%= @inn.checkin_time.strftime("%H:%M") %></p>
+<p><%= Inn.human_attribute_name(:checkout_time) %>: <%= @inn.checkout_time.strftime("%H:%M") %></p>

@@ -24,6 +24,23 @@ class InnsController < ApplicationController
     render :new
   end
 
+  def edit
+    @inn = Inn.find(params[:id])
+  end
+
+  def update
+    @inn = Inn.find(params[:id])
+    if @inn.update(inn_params)
+      return redirect_to @inn, notice: "Pousada atualizada com sucesso"
+    end
+    flash.now[:alert] = "Não foi possível atualizar a pousada"
+    render :edit
+  end
+
+  def my_inn
+    @inn = current_owner.inn
+  end
+
 
   private
 

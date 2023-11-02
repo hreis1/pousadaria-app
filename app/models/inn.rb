@@ -5,10 +5,11 @@ class Inn < ApplicationRecord
 
   validates :cnpj, uniqueness: true
   validates :cnpj, length: { is: 14 }
-  
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "formato inválido" }
+  validates :email, uniqueness: true
   validates :cep, format: { with: /\A\d{5}-?\d{3}\z/, message: "formato inválido" }
   validates :phone, format: { with: /\A[0-9]{11}\z/, message: "formato inválido" }
+  validates :phone, uniqueness: true
   
   validate :owner_has_inn, on: :create 
 
