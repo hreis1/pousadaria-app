@@ -26,10 +26,16 @@ class InnsController < ApplicationController
 
   def edit
     @inn = Inn.find(params[:id])
+    if @inn.owner != current_owner
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
   end
 
   def update
     @inn = Inn.find(params[:id])
+    if @inn.owner != current_owner
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
     if @inn.update(inn_params)
       return redirect_to @inn, notice: "Pousada atualizada com sucesso"
     end

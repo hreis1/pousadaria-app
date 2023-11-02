@@ -92,4 +92,17 @@ describe "Dono edita pousada" do
     expect(page).to have_content("Horário de checkin não pode ficar em branco")
     expect(page).to have_content("Horário de checkout não pode ficar em branco")
   end
+
+  it "e tenta editar outra pousada" do
+    outro_dono = Owner.create!(email: "outrodono@email.com", password: "senhaoutrodono")
+    outra_pousada = Inn.create!(owner: outro_dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores", state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+  
+    dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    login_as dono
+    
+    visit edit_inn_path(outra_pousada)
+
+    expect(current_path).to eq(root_path)
+    expect(page).to have_content("Você não tem permissão para acessar essa página")
+  end
 end
