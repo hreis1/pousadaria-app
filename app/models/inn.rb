@@ -1,6 +1,6 @@
 class Inn < ApplicationRecord
   validates :trade_name, :corporate_name, :cnpj, :phone, :email, :address,
-                         :address_number, :state, :city, :cep, :description,
+                         :address_number, :neighborhood, :state, :city, :cep, :description,
                          :payment_methods, :polices, :checkin_time, :checkout_time,presence: true
 
   validates :cnpj, uniqueness: true

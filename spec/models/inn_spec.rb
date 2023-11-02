@@ -52,6 +52,13 @@ RSpec.describe Inn, type: :model do
         expect(pousada.errors.full_messages_for(:address_number)).to include('Número não pode ficar em branco')
       end
 
+      it 'Bairro nao está presente' do
+        pousada = Inn.new
+        pousada.valid?
+        
+        expect(pousada.errors.full_messages_for(:neighborhood)).to include('Bairro não pode ficar em branco')
+      end
+        
       it 'Estado nao está presente' do
         pousada = Inn.new
         pousada.valid?
@@ -135,7 +142,7 @@ RSpec.describe Inn, type: :model do
     context "quando informações já estão cadastradas" do
       it "CNPJ já está cadastrado" do
         dono = Owner.create!(email: "dono@email.com", password: "senhadono")
-        Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+        Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade" ,state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
         
         pousada = Inn.new(cnpj: "12345678910111")
         pousada.valid?
@@ -152,7 +159,7 @@ RSpec.describe Inn, type: :model do
       it "Dono já possui uma pousada cadastrada" do
         dono = Owner.create!(email: "dono@email", password: "senhadono")
 
-        Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+        Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade",  state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
         
         outra_pousada = Inn.new(owner: dono, trade_name: "Pousada Estrela", corporate_name: "Pousada Estrela LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pe@email.com", address: "Avenida das Estrelas", address_number: "1", state: "Paraná", city: "Curitiba", cep: "123456", description: "Pousada para todos os bolsos", payment_methods: "Dinheiro", pets_allowed: true, polices: "Não aceitamos muito barulho", checkin_time: "12:00", checkout_time: "12")
 
