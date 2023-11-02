@@ -1,5 +1,13 @@
 <h2>Cadastrar pousada</h2>
 
+<% if @inn.errors.any? %>
+  <div>
+    <% @inn.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
+<% end %>
+
 <%= form_with model: @inn do |f| %>
   <div>
     <%= f.label :trade_name %>

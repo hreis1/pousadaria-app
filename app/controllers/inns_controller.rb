@@ -6,16 +6,20 @@ class InnsController < ApplicationController
   end
 
   def new
+    if current_owner.inn.present?
+      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
+    end
     @inn = Inn.new
   end
 
   def create
+    if current_owner.inn.present?
+      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
+    end
     @inn = Inn.new(inn_params)
     @inn.owner = current_owner
-    p @inn.checkin_time
-    p @inn.checkout_time
     if @inn.save
-      return redirect_to @inn
+      return redirect_to @inn, notice: "Pousada cadastrada com sucesso"
     end
     render :new
   end

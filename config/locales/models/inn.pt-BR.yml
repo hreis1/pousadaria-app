@@ -23,3 +23,5 @@ pt-BR:
         polices: 'Políticas'
         checkin_time: 'Horário de checkin'
         checkout_time: 'Horário de checkout'
+        owner: 'Dono'
+        owner_id: 'Dono'
