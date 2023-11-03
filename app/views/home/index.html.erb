@@ -1,0 +1,15 @@
+<h2>Pousadas</h2>
+
+<% if @inns.any? %>
+  <ul>
+    <% @inns.each do |inn| %>
+      <h3><%= inn.trade_name %></h3>
+      <p><%= Inn.human_attribute_name(:address) %>: <%= inn.full_address %></p>
+      <p><%= Inn.human_attribute_name(:phone) %>: <%= inn.phone %></p>
+      <p><%= Inn.human_attribute_name(:email) %>: <%= inn.email %></p>
+      <p><%= Inn.human_attribute_name(:description) %>: <%= inn.description %></p>
+    <% end %>
+  </ul>
+<% else %>
+  <p>Nenhuma pousada cadastrada</p>
+<% end %>

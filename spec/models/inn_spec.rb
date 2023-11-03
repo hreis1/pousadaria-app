@@ -180,5 +180,13 @@ RSpec.describe Inn, type: :model do
         expect(outra_pousada.errors.full_messages_for(:owner)).to include('Dono já possui uma pousada cadastrada')
       end
     end
+    describe "#full_address" do
+      it "retorna endereço completo" do
+        dono = Owner.create!(email: "dono@email", password: "senhadono")
+        pousada = Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade",  state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+
+        expect(pousada.full_address).to eq("Rua dos Bobos, 0, Liberdade, São Paulo - São Paulo")
+      end
+    end
   end
 end

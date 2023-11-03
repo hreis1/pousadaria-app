@@ -17,6 +17,10 @@ class Inn < ApplicationRecord
   belongs_to :owner
 
 
+  def full_address
+    "#{address}, #{address_number}, #{neighborhood}, #{city} - #{state}"
+  end
+
   private
 
   def owner_has_inn
