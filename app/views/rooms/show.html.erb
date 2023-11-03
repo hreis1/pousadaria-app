@@ -1,6 +1,7 @@
 <section id="room">
   <%= render 'room' %>
 
-  <%= link_to "Editar", edit_inn_room_path(@inn, @room) %>
-
+  <% if current_owner == @inn.owner %>
+    <%= link_to "Editar", edit_inn_room_path(@inn, @room) %>
+  <% end %>
 </section>

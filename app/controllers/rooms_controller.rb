@@ -1,6 +1,8 @@
 class RoomsController < ApplicationController
+  before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
+
   def show
-    @inn = current_owner.inn
+    @inn = Inn.find(params[:inn_id])
     @room = Room.find(params[:id])
   end
 
@@ -22,11 +24,17 @@ class RoomsController < ApplicationController
 
   def edit
     @inn = current_owner.inn
+    if @inn.nil? || @inn != Room.find(params[:id]).inn
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
     @room = @inn.rooms.find(params[:id])
   end
 
   def update
     @inn = current_owner.inn
+    if @inn.nil? || @inn != Room.find(params[:id]).inn
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
     @room = @inn.rooms.find(params[:id])
     if @room.update(room_params)
       return redirect_to inn_room_path(@inn, @room), notice: "Quarto atualizado com sucesso!"

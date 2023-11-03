@@ -27,7 +27,7 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 <summary>Cadastrar Quartos</summary>
 
 - [X] Permitir que donos de pousadas cadastrem quartos em sua pousada fornecendo nome, descrição, dimensão, quantidade máxima de pessoas, valor da diária, indicação se possui banheiro próprio, indicação se possui varanda, indicação se possui ar condicionado, indicação se possui TV, indicação se possui guarda-roupas, indicação se possui cofre e indicação se é acessível para pessoas com deficiência.
-- [ ] Permitir que somente os donos de pousadas editem os dados dos quartos de sua própria pousada.
+- [X] Permitir que somente os donos de pousadas editem os dados dos quartos de sua própria pousada.
 - [X] Não permitir que donos de pousadas excluam quartos de sua pousada.
 - [X] Permitir que cada dono de pousada possua quantos quartos desejar.
 - [X] Permitir que donos de pousadas indiquem se um quarto está disponível ou não para reservas.
@@ -38,7 +38,7 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 <details>
 <summary>Banco de Dados</summary>
 
-![Diagrama de Entidade e Relacionamento](/assets/db.png)
+![Diagrama de Entidade e Relacionamento](/assets/pousadaria_der.png)
 </details>
 
 ### Depêndencias para rodar o projeto

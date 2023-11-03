@@ -9,3 +9,4 @@
 <p><%= Inn.human_attribute_name(:polices) %>: <%= @inn.polices %></p>
 <p><%= Inn.human_attribute_name(:checkin_time) %>: <%= @inn.checkin_time.strftime("%H:%M") %></p>
 <p><%= Inn.human_attribute_name(:checkout_time) %>: <%= @inn.checkout_time.strftime("%H:%M") %></p>
+<p><%= Inn.human_attribute_name(:active) %>: <%= @inn.active? ? "Sim" : "Não" %></p>

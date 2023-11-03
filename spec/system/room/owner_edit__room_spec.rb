@@ -39,4 +39,24 @@ describe "Dono edita quarto" do
     expect(page).to have_content("Acessível: Sim")
     expect(page).to have_content("Disponível: Sim")
   end
+
+  it "e deve preencher todos os campos" do
+  end
+
+  it "e deve ser dono da pousada" do
+    outro_dono = Owner.create!(email: "outrodono@email.com", password: "senhaoutrodono")
+    outra_pousada = Inn.create!(owner: outro_dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores", state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    quarto = Room.create!(inn: outra_pousada, name: "Quarto Simples", description: "Quarto simples com cama de casal", dimension: "20m²", max_occupancy: 2, daily_rate: 100.00, has_bathroom: true, has_balcony: false, has_air_conditioning: true, has_tv: true, has_closet: false, has_safe: false, is_accessible: false, is_available: true)
+    dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    pousada = Inn.create!(owner: dono, trade_name: "Pousada Estrela do Mar", corporate_name: "Pousada Estrela do Mar LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pem@email.com", address: "Rua do Mar", address_number: "200", neighborhood: "Jardim do Mar", state: "SP",city: "São Paulo", cep: "12345677", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    login_as dono
+    
+    visit root_path
+    click_on "Pousadaria"
+    click_on "Pousada do Aconchego"
+    click_on "Quarto Simples"
+
+    expect(page).not_to have_link("Editar")
+
+  end
 end

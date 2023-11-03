@@ -1,5 +1,5 @@
 class InnsController < ApplicationController
-  before_action :authenticate_owner!
+  before_action :authenticate_owner! , only: [:new, :create, :edit, :update]
 
   def show
     @inn = Inn.find(params[:id])
