@@ -18,8 +18,8 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 - [X] Permitir que somente os donos de pousadas editem os dados de sua própria pousada.
 - [X] Não permitir que donos de pousadas excluam sua pousada.
 - [X] Permitir que cada dono de pousada possua somente uma pousada cadastrada.
-- [ ] Permitir que donos de pousadas indiquem se sua pousada está ativa ou não na plataforma.
-- [ ] Não permitir que pousadas desativadas sejam listadas nas buscas para visitantes.
+- [X] Permitir que donos de pousadas indiquem se sua pousada está ativa ou não na plataforma.
+- [X] Não permitir que pousadas desativadas sejam listadas nas buscas para visitantes.
 - [ ] Não permitir que pousadas desativadas aceitem novas reservas.
 </details>
 
