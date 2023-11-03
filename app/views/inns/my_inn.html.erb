@@ -5,5 +5,6 @@
   <p><%= Inn.human_attribute_name(:active) %>: <%= @inn.active? ? "Sim" : "Não" %></p>
 
   <%= link_to "Editar", edit_inn_path(@inn) %>
+  <%= link_to "Cadastrar Quarto", new_inn_room_path(@inn) %>
 
 </section>

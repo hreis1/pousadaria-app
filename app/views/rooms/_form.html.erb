@@ -1,0 +1,57 @@
+<%= form_with model: [@inn, @room] do |f| %>
+  <div>
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div>
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div>
+    <%= f.label :dimension %>
+    <%= f.number_field :dimension %>
+  </div>
+  <div>
+    <%= f.label :max_occupancy %>
+    <%= f.number_field :max_occupancy %>
+  </div>
+  <div>
+    <%= f.label :daily_rate %>
+    <%= f.number_field :daily_rate %>
+  </div>
+  <div>
+    <%= f.label :has_bathroom %>
+    <%= f.check_box :has_bathroom %>
+  </div>
+  <div>
+    <%= f.label :has_balcony %>
+    <%= f.check_box :has_balcony %>
+  </div>
+  <div>
+    <%= f.label :has_air_conditioning %>
+    <%= f.check_box :has_air_conditioning %>
+  </div>
+  <div>
+    <%= f.label :has_tv %>
+    <%= f.check_box :has_tv %>
+  </div>
+  <div>
+    <%= f.label :has_closet %>
+    <%= f.check_box :has_closet %>
+  </div>
+  <div>
+    <%= f.label :has_safe %>
+    <%= f.check_box :has_safe %>
+  </div>
+  <div>
+    <%= f.label :is_accessible %>
+    <%= f.check_box :is_accessible %>
+  </div>
+  <div>
+    <%= f.label :is_available %>
+    <%= f.check_box :is_available %>
+  </div>
+  <div>
+    <%= f.submit %>
+  </div>
+<% end %>

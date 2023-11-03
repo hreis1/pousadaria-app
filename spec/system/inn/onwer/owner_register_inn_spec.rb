@@ -62,6 +62,7 @@ describe "Dono registra pousada" do
 
     visit new_inn_path
 
+    expect(page).not_to have_content("Cadastrar pousada")
     expect(page).to have_content("Você já possui uma pousada cadastrada")
     expect(current_path).not_to eq(new_inn_path)
   end

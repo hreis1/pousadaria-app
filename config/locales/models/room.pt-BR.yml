@@ -1,0 +1,23 @@
+pt-BR:
+  activerecord:
+    models:
+      room:
+        one: 'Quarto'
+        other: 'Quartos'
+    attributes:
+      room:
+        name: 'Nome'
+        description: 'Descrição'
+        dimension: 'Dimensão'
+        max_occupancy: 'Ocupação máxima'
+        daily_rate: 'Diária'
+        has_bathroom: 'Banheiro'
+        has_balcony: 'Varanda'
+        has_air_conditioning: 'Ar condicionado'
+        has_tv: 'TV'
+        has_closet: 'Armário'
+        has_safe: 'Cofre'
+        is_accessible: 'Acessível'
+        is_available: 'Disponível'
+        inn_id: 'Pousada'
+        inn: 'Pousada'

@@ -16,9 +16,12 @@
     <nav>
       <ul>
         <li><%= link_to "Pousadaria", root_path %></li>
-        <% if owner_signed_in? %> 
-          <li><%= link_to "Cadastrar pousada", new_inn_path %></li>
-          <li><%= link_to "Minha Pousada", my_inn_path %></li>
+        <% if owner_signed_in? %>
+          <% if current_owner.inn.present? %>
+            <li><%= link_to "Minha Pousada", my_inn_path %></li>
+          <% else %>
+            <li><%= link_to "Cadastrar pousada", new_inn_path %></li>
+          <% end %>
           <li><%= button_to "Sair", destroy_owner_session_path, method: :delete %></li>
         <% else %>
           <li><%= link_to "Entrar como dono de pousada", new_owner_session_path %></li>
