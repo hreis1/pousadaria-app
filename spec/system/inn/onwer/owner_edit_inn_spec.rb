@@ -34,7 +34,7 @@ describe "Dono edita pousada" do
     fill_in "Horário de checkout", with: "12:00"
     click_button "Atualizar Pousada"
 
-    expect(current_path).to eq(my_inn_path)
+    expect(current_path).to eq(inn_path(pousada))
     expect(page).to have_content("Pousada atualizada com sucesso")
     expect(page).to have_content("Pousada Encanto")
     expect(page).to have_content("Endereço: Rua das Rosas, 200, Jardim das Rosas, São Paulo - SP")
@@ -118,7 +118,7 @@ describe "Dono edita pousada" do
     uncheck "Ativa"
     click_button "Atualizar Pousada"
 
-    expect(current_path).to eq(my_inn_path)
+    expect(current_path).to eq(inn_path(pousada))
     expect(page).to have_content("Pousada atualizada com sucesso")
     expect(page).to have_content("Ativa: Não")
   end

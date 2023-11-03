@@ -2,7 +2,7 @@ require "rails_helper"
 
 describe "Dono vê sua pousada" do
   it "deve estar logado" do
-    visit my_inn_path
+    visit inn_path(1)
 
     expect(current_path).to eq(new_owner_session_path)
   end
@@ -15,7 +15,7 @@ describe "Dono vê sua pousada" do
     visit root_path
     click_on "Minha Pousada"
 
-    expect(current_path).to eq(my_inn_path)
+    expect(current_path).to eq(inn_path(dono.inn))
     expect(page).to have_content("Pousada Ribeiropolis")
     expect(page).to have_content("Endereço: Rua dos Bobos, 0, Liberdade, São Paulo - São Paulo")
     expect(page).to have_content("Telefone de contato: 11999999999")

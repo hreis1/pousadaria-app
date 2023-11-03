@@ -1,12 +1,12 @@
-<section id="new-room">
-  <h2>Cadastrar Quarto</h2>
+<section id="edit-room">
+  <h2>Editar quarto</h2>
 
   <% if @room.errors.any? %>
     <div>
       <% @room.errors.full_messages.each do |message| %>
         <p><%= message %></p>
       <% end %>
-    </div>
+    </div>  
   <% end %>
 
   <%= render 'form' %>

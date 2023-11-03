@@ -18,7 +18,7 @@
         <li><%= link_to "Pousadaria", root_path %></li>
         <% if owner_signed_in? %>
           <% if current_owner.inn.present? %>
-            <li><%= link_to "Minha Pousada", my_inn_path %></li>
+            <li><%= link_to "Minha Pousada", inn_path(current_owner.inn) %></li>
           <% else %>
             <li><%= link_to "Cadastrar pousada", new_inn_path %></li>
           <% end %>

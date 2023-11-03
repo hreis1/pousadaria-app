@@ -37,7 +37,7 @@ class InnsController < ApplicationController
       return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
     end
     if @inn.update(inn_params)
-      return redirect_to my_inn_path, notice: "Pousada atualizada com sucesso"
+      return redirect_to @inn, notice: "Pousada atualizada com sucesso"
     end
     flash.now[:alert] = "Não foi possível atualizar a pousada"
     render :edit

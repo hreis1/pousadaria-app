@@ -20,6 +20,21 @@ class RoomsController < ApplicationController
     render :new
   end
 
+  def edit
+    @inn = current_owner.inn
+    @room = @inn.rooms.find(params[:id])
+  end
+
+  def update
+    @inn = current_owner.inn
+    @room = @inn.rooms.find(params[:id])
+    if @room.update(room_params)
+      return redirect_to inn_room_path(@inn, @room), notice: "Quarto atualizado com sucesso!"
+    end
+    flash.now[:alert] = "Não foi possível atualizar o quarto"
+    render :edit
+  end
+  
   
   private
 
