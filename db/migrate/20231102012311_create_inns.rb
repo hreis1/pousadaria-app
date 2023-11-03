@@ -19,7 +19,7 @@ class CreateInns < ActiveRecord::Migration[7.0]
       t.string :polices
       t.time :checkin_time
       t.time :checkout_time
-      t.boolean :status
+      t.boolean :active
 
       t.timestamps
     end

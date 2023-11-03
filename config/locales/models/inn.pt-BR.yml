@@ -25,3 +25,4 @@ pt-BR:
         checkout_time: 'Horário de checkout'
         owner: 'Dono'
         owner_id: 'Dono'
+        active: 'Ativa'

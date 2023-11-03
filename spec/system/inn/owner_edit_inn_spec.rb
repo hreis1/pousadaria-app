@@ -34,7 +34,7 @@ describe "Dono edita pousada" do
     fill_in "Horário de checkout", with: "12:00"
     click_button "Atualizar Pousada"
 
-    expect(current_path).to eq(inn_path(pousada))
+    expect(current_path).to eq(my_inn_path)
     expect(page).to have_content("Pousada atualizada com sucesso")
     expect(page).to have_content("Pousada Encanto")
     expect(page).to have_content("Endereço: Rua das Rosas, 200, Jardim das Rosas, São Paulo - SP")
@@ -46,6 +46,7 @@ describe "Dono edita pousada" do
     expect(page).to have_content("Políticas: Não aceitamos muito barulho")
     expect(page).to have_content("Horário de checkin: 12:00")
     expect(page).to have_content("Horário de checkout: 12:00")
+    expect(page).to have_content("Ativa: Sim")
   end
 
   it "com campos em branco" do
@@ -104,5 +105,21 @@ describe "Dono edita pousada" do
 
     expect(current_path).to eq(root_path)
     expect(page).to have_content("Você não tem permissão para acessar essa página")
+  end
+
+  it "edita situação da pousada" do
+    dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    pousada = Inn.create!(owner: dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores", state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+  
+    login_as dono
+    visit root_path
+    click_on "Minha Pousada"
+    click_on "Editar"
+    uncheck "Ativa"
+    click_button "Atualizar Pousada"
+
+    expect(current_path).to eq(my_inn_path)
+    expect(page).to have_content("Pousada atualizada com sucesso")
+    expect(page).to have_content("Ativa: Não")
   end
 end

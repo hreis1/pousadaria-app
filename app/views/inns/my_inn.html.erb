@@ -2,6 +2,8 @@
 
   <%= render 'inn' %>
 
+  <p><%= Inn.human_attribute_name(:active) %>: <%= @inn.active? ? "Sim" : "Não" %></p>
+
   <%= link_to "Editar", edit_inn_path(@inn) %>
 
 </section>
