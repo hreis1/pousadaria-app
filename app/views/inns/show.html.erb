@@ -9,9 +9,11 @@
   <section id="inn-rooms">
     <h2>Quartos</h2>
 
-    <% if @inn.rooms.present? %>
-      <% @inn.rooms.each do |room| %>
+    <% if @rooms.present? %>
+      <% @rooms.each do |room| %>
         <p><%= link_to room.name, inn_room_path(@inn, room) %></p>
+        <p><%= Room.human_attribute_name(:description) %>: <%= room.description %></p>
+        <p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.daily_rate) %></p>
       <% end %>
     <% else %>
       <p>Não há quartos cadastrados</p>

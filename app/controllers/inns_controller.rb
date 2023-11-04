@@ -3,6 +3,11 @@ class InnsController < ApplicationController
 
   def show
     @inn = Inn.find(params[:id])
+    if current_owner.present? && current_owner == @inn.owner
+      @rooms = @inn.rooms
+    else
+      @rooms = @inn.rooms.where(is_available: true)
+    end
   end
 
   def new
