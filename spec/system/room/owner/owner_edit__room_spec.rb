@@ -25,6 +25,7 @@ describe "Dono edita quarto" do
     uncheck "Disponível"
     click_on "Atualizar Quarto"
 
+    expect(current_path).to eq inn_room_path(Inn.last, Room.last)
     expect(page).to have_content("Quarto atualizado com sucesso!")
     expect(page).to have_content("Quarto Master")
     expect(page).to have_content("Descrição: Quarto com vista para o mar")

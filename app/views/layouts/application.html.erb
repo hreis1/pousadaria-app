@@ -26,6 +26,12 @@
         <% else %>
           <li><%= link_to "Entrar como dono de pousada", new_owner_session_path %></li>
         <% end %>
+        <li>
+          <%= form_with url: search_inns_path, method: :get do |f| %>
+            <%= f.text_field :query %> 
+            <%= submit_tag "Buscar" %>
+          <% end %>
+        </li>
       </ul>
     </nav>
   </header>

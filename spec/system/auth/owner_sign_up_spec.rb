@@ -9,10 +9,8 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: "dono@email.com"
     fill_in "Senha", with: "senhadono"
     fill_in "Confirme sua senha", with: "senhadono"
-    within "form" do
-      click_on "Cadastrar"
-    end
-
+    click_on "Cadastrar"
+    
     expect(Owner.count).to eq 1
     expect(page).to have_content "Bem vindo! Você realizou seu registro com sucesso."
   end
@@ -25,9 +23,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: "senhadono"
     fill_in "Confirme sua senha", with: "senhadono"
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 0
     expect(page).to have_content "E-mail não é válido"
@@ -41,9 +37,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: ""
     fill_in "Confirme sua senha", with: ""
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 0
     expect(page).to have_content "Senha não pode ficar em branco"
@@ -57,9 +51,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: "dono@email.com"
     fill_in "Senha", with: "senhadono"
     fill_in "Confirme sua senha", with: "senhadiferente"
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 0
     expect(page).to have_content "Confirme sua senha não é igual a Senha"
@@ -73,9 +65,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: "donoemail.com"
     fill_in "Senha", with: "12345"
     fill_in "Confirme sua senha", with: "12345"
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 0
     expect(page).to have_content "Senha é muito curto (mínimo: 6 caracteres)"
@@ -91,9 +81,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: owner.email
     fill_in "Senha", with: "senhadono"
     fill_in "Confirme sua senha", with: "senhadono"
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 1
     expect(page).to have_content "E-mail já está em uso"
@@ -107,9 +95,7 @@ describe "Dono da pousada se cadastra" do
     fill_in "E-mail", with: ""
     fill_in "Senha", with: ""
     fill_in "Confirme sua senha", with: ""
-    within "form" do
-      click_on "Cadastrar"
-    end
+    click_on "Cadastrar"
 
     expect(Owner.count).to eq 0
     expect(page).to have_content "E-mail não pode ficar em branco"

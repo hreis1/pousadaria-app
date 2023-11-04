@@ -48,10 +48,13 @@ class InnsController < ApplicationController
     render :edit
   end
 
-  def my_inn
-    @inn = current_owner.inn
-    if @inn.nil?
-      return redirect_to root_path, alert: "Você não possui uma pousada cadastrada"
+  def search
+    if params[:query].blank?
+      return redirect_to root_path, alert: "Digite o Nome da Pousada"
+    end
+    @inns = Inn.where("trade_name LIKE ?", "%#{params[:query]}%").where(active: true)
+    if @inns.empty?
+      flash.now[:alert] = "Nenhuma pousada encontrada"
     end
   end
 

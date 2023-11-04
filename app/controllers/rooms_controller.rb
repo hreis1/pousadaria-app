@@ -4,6 +4,9 @@ class RoomsController < ApplicationController
   def show
     @inn = Inn.find(params[:inn_id])
     @room = Room.find(params[:id])
+    if !@room.is_available && @inn.owner != current_owner
+      return redirect_to root_path, alert: "Quarto não disponível"
+    end
   end
 
   def new

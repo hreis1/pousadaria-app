@@ -1,0 +1,10 @@
+<section id="search-inns">
+    <h2>Resultados da busca por: <%= @query %></h2>
+  </div>
+
+  <%= @inns.count %> <%= Inn.model_name.human(count: @inns.count).downcase %> <%= t(:found, count: @inns.count) %>
+
+  <% @inns.each do |inn| %>
+    <%= render 'inn', inn: inn %>
+  <% end %>
+</section>

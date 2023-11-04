@@ -9,10 +9,8 @@ describe "Dono da pousada inicia sessão" do
 
     fill_in "E-mail", with: owner.email
     fill_in "Senha", with: owner.password
-    within "form" do
-      click_on "Entrar"
-    end
-
+    click_on "Entrar"
+    
     expect(page).to have_content "Login efetuado com sucesso."
     expect(page).to have_button "Sair"
     expect(page).not_to have_link "Entrar como dono de pousada"

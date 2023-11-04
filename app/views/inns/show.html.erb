@@ -1,5 +1,5 @@
 <section id="inn">
-  <%= render 'inn' %>
+  <%= render 'inn', inn: @inn %>
 
   <% if current_owner == @inn.owner %>
     <%= link_to "Editar", edit_inn_path(@inn) %>
@@ -14,6 +14,9 @@
         <p><%= link_to room.name, inn_room_path(@inn, room) %></p>
         <p><%= Room.human_attribute_name(:description) %>: <%= room.description %></p>
         <p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.daily_rate) %></p>
+        <% if @inn.owner == current_owner %>
+          <p><%= Room.human_attribute_name(:is_available) %>: <%= room.is_available? ? "Sim" : "Não" %></p>
+        <% end %>
       <% end %>
     <% else %>
       <p>Não há quartos cadastrados</p>
