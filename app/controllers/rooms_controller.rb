@@ -1,21 +1,16 @@
 class RoomsController < ApplicationController
   before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
-
-  def show
-    @inn = Inn.find(params[:inn_id])
-    @room = Room.find(params[:id])
-    if !@room.is_available && @inn.owner != current_owner
-      return redirect_to root_path, alert: "Quarto não disponível"
-    end
-  end
+  before_action :set_inn, only: [:new, :create, :edit, :update]
+  before_action :check_owner_and_set_room, only: [:edit, :update]
+  before_action :set_room, only: [:show]
+  
+  def show; end
 
   def new
-    @inn = current_owner.inn
     @room = Room.new
   end
 
   def create
-    @inn = current_owner.inn
     @room = Room.new(room_params)
     @room.inn = @inn
     if @room.save
@@ -25,20 +20,9 @@ class RoomsController < ApplicationController
     render :new
   end
 
-  def edit
-    @inn = current_owner.inn
-    if @inn.nil? || @inn != Room.find(params[:id]).inn
-      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
-    end
-    @room = @inn.rooms.find(params[:id])
-  end
+  def edit; end
 
   def update
-    @inn = current_owner.inn
-    if @inn.nil? || @inn != Room.find(params[:id]).inn
-      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
-    end
-    @room = @inn.rooms.find(params[:id])
     if @room.update(room_params)
       return redirect_to inn_room_path(@inn, @room), notice: "Quarto atualizado com sucesso!"
     end
@@ -51,5 +35,29 @@ class RoomsController < ApplicationController
 
   def room_params
     params.require(:room).permit(:name, :description, :dimension, :max_occupancy, :daily_rate, :has_bathroom, :has_balcony, :has_air_conditioning, :has_tv, :has_closet, :has_safe, :is_accessible, :is_available)
+  end
+
+  def set_inn
+    @inn = current_owner.inn
+    if @inn.nil?
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
+  end
+
+  def check_owner_and_set_room
+    unless Room.find(params[:id]).inn.owner == @inn.owner
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
+    @room = @inn.rooms.find(params[:id])
+  end
+
+  def set_room
+    @room = Room.find(params[:id])
+    if !@room.inn.active && @room.inn.owner != current_owner
+      return redirect_to root_path, alert: "Pousada inativa"
+    end
+    if !@room.is_available && @room.inn.owner != current_owner
+      return redirect_to root_path, alert: "Quarto não disponível"
+    end
   end
 end

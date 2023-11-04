@@ -1,8 +1,10 @@
 class InnsController < ApplicationController
   before_action :authenticate_owner! , only: [:new, :create, :edit, :update]
+  before_action :set_inn, only: [:show, :edit, :update]
+  before_action :owner_has_inn, only: [:new, :create]
+  before_action :check_owner, only: [:edit, :update]
 
   def show
-    @inn = Inn.find(params[:id])
     if current_owner.present? && current_owner == @inn.owner
       @rooms = @inn.rooms
     else
@@ -11,16 +13,10 @@ class InnsController < ApplicationController
   end
 
   def new
-    if current_owner.inn.present?
-      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
-    end
     @inn = Inn.new
   end
 
   def create
-    if current_owner.inn.present?
-      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
-    end
     @inn = Inn.new(inn_params)
     @inn.owner = current_owner
     if @inn.save
@@ -29,18 +25,9 @@ class InnsController < ApplicationController
     render :new
   end
 
-  def edit
-    @inn = Inn.find(params[:id])
-    if @inn.owner != current_owner
-      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
-    end
-  end
+  def edit; end
 
   def update
-    @inn = Inn.find(params[:id])
-    if @inn.owner != current_owner
-      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
-    end
     if @inn.update(inn_params)
       return redirect_to @inn, notice: "Pousada atualizada com sucesso"
     end
@@ -60,6 +47,25 @@ class InnsController < ApplicationController
 
 
   private
+
+  def set_inn
+    @inn = Inn.find(params[:id])
+    if !@inn.active && current_owner != @inn.owner
+      return redirect_to root_path, alert: "Pousada inativa"
+    end
+  end
+
+  def check_owner
+    if @inn.owner != current_owner
+      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
+  end
+
+  def owner_has_inn
+    if current_owner.inn.present?
+      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
+    end
+  end
 
   def inn_params
     inn_params = params.require(:inn).permit(:trade_name, :corporate_name, :cnpj, :phone, :email, :address, :address_number, :neighborhood, :state, :city, :cep, :description, :payment_methods, :pets_allowed, :polices, :checkin_time, :checkout_time, :active)

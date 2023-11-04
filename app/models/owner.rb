@@ -5,4 +5,5 @@ class Owner < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_one :inn
+  has_many :rooms, through: :inn
 end
