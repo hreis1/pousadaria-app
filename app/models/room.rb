@@ -3,4 +3,6 @@ class Room < ApplicationRecord
   validates :max_occupancy, :daily_rate, numericality: { greater_than: 0 }
 
   belongs_to :inn
+
+  has_many :custom_prices
 end

@@ -3,12 +3,12 @@
 <p><%= Room.human_attribute_name(:description) %>: <%= room.description %></p>
 <p><%= Room.human_attribute_name(:dimension) %>: <%= room.dimension %> m²</p>
 <p><%= Room.human_attribute_name(:max_occupancy) %>: <%= room.max_occupancy %> pessoas</p>
-<p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.daily_rate) %></p>
-<p><%= Room.human_attribute_name(:has_bathroom) %>: <%= room.has_bathroom? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:has_balcony) %>: <%= room.has_balcony? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:has_air_conditioning) %>: <%= room.has_air_conditioning? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:has_tv) %>: <%= room.has_tv? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:has_closet) %>: <%= room.has_closet? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:has_safe) %>: <%= room.has_safe? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:is_accessible) %>: <%= room.is_accessible? ? "Sim" : "Não" %></p>
-<p><%= Room.human_attribute_name(:is_available) %>: <%= room.is_available? ? "Sim" : "Não" %></p>
+<p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(@current_daily_rate) %></p>
+<p><%= Room.human_attribute_name(:has_bathroom) %>: <%= t(room.has_bathroom?) %></p>
+<p><%= Room.human_attribute_name(:has_balcony) %>: <%= t(room.has_balcony?) %></p>
+<p><%= Room.human_attribute_name(:has_air_conditioning) %>: <%= t(room.has_air_conditioning?) %></p>
+<p><%= Room.human_attribute_name(:has_tv) %>: <%= t(room.has_tv?) %></p>
+<p><%= Room.human_attribute_name(:has_closet) %>: <%= t(room.has_closet?) %></p>
+<p><%= Room.human_attribute_name(:has_safe) %>: <%= t(room.has_safe?) %></p>
+<p><%= Room.human_attribute_name(:is_accessible) %>: <%= t(room.is_accessible?) %></p>
+<p><%= Room.human_attribute_name(:is_available) %>: <%= t(room.is_available?) %></p>

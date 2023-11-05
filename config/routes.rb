@@ -4,6 +4,8 @@ Rails.application.routes.draw do
   root to: 'home#index'
   resources :inns, only: [:show, :new, :create, :edit, :update] do
     get 'search', on: :collection
-    resources :rooms, only: [:show, :new, :create, :edit, :update]
+    resources :rooms, only: [:show, :new, :create, :edit, :update] do
+      resources :custom_prices, only: [:new, :create]
+    end
   end
 end

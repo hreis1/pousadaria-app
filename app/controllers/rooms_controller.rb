@@ -4,7 +4,14 @@ class RoomsController < ApplicationController
   before_action :check_owner_and_set_room, only: [:edit, :update]
   before_action :set_room, only: [:show]
   
-  def show; end
+  def show
+    @current_daily_rate = @room.custom_prices.find_by("start_date <= ? AND end_date >= ?", Date.today, Date.today)
+    if @current_daily_rate.nil?
+      @current_daily_rate = @room.daily_rate
+    else
+      @current_daily_rate = @current_daily_rate.price
+    end
+  end
 
   def new
     @room = Room.new
