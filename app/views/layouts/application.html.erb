@@ -13,32 +13,43 @@
 
   <body>
   <header>
-    <nav>
-      <ul>
-        <li><%= link_to "Pousadaria", root_path %></li>
-        <% if owner_signed_in? %>
-          <% if current_owner.inn.present? %>
-            <li><%= link_to "Minha Pousada", inn_path(current_owner.inn) %></li>
-          <% else %>
-            <li><%= link_to "Cadastrar pousada", new_inn_path %></li>
-          <% end %>
-          <li><%= button_to "Sair", destroy_owner_session_path, method: :delete %></li>
-        <% else %>
-          <li><%= link_to "Entrar como dono de pousada", new_owner_session_path %></li>
-        <% end %>
-        <li>
-          <%= form_with url: search_inns_path, method: :get do |f| %>
-            <%= f.text_field :query %> 
-            <%= submit_tag "Buscar" %>
-          <% end %>
-        </li>
-      </ul>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" style="width: 100%">
+      <div class="container-fluid">
+        <%= link_to "Pousadaria", root_path, class: "navbar-brand" %>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+          <ul class="navbar-nav me-2 mb-2 mb-lg-0">
+            <% if owner_signed_in? %>
+              <%= render '/layouts/logged' %>
+            <% else %>
+              <li class="nav-item"><%= link_to "Entrar como dono de pousada", new_owner_session_path, class: "nav-link" %></li>
+            <% end %>
+            <li class="nav-item">
+              <%= form_with url: search_inns_path, method: :get, class: "d-flex me-4" do |f| %>
+                <%= f.text_field :query, class: "form-control me-2" %> 
+                <%= submit_tag "Buscar", class: "btn btn-sm btn-outline-secondary" %>
+              <% end %>
+            </li>
+          </ul>
+        </div>
+      </div>
     </nav>
   </header>
-  <main>
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
-    <%= yield %>
-  </main>
+  <div class="container">
+        <% if flash[:notice] %> 
+          <div class="mt-3 alert alert-primary" role="alert">
+            <%= flash[:notice] %>
+          </div>
+        <% end %>
+        <% if flash[:alert] %> 
+          <div class="mt-3 alert alert-danger" role="alert">
+            <%= flash[:alert] %>
+          </div>
+        <% end %>
+        <%= yield %>
+      </div>
+    </main>
   </body>
 </html>
