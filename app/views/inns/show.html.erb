@@ -2,6 +2,8 @@
   <%= render 'inn', inn: @inn %>
 
   <% if current_owner == @inn.owner %>
+    <p><%= Inn.human_attribute_name(:cnpj) %>: <%= @inn.cnpj %>
+    <p><%= Inn.human_attribute_name(:corporate_name) %>: <%= @inn.corporate_name %>  
     <%= link_to "Editar", edit_inn_path(@inn) %>
     <%= link_to "Cadastrar Quarto", new_inn_room_path(@inn) %>
   <% end %>

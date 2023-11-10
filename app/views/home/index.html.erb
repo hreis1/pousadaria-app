@@ -2,12 +2,20 @@
 
 <% if @inns.any? %>
   <ul>
+    <div id="mais-recentes">
+      <h4>mais recentes</h4>
+      <% 3.times do |num| %>
+        <% inn = @inns.pop%>
+        <% if inn %>
+          <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
+          <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
+        <% end %>
+      <% end %>
+    </div>
+    <hr>
     <% @inns.each do |inn| %>
       <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
-      <p><%= Inn.human_attribute_name(:address) %>: <%= inn.full_address %></p>
-      <p><%= Inn.human_attribute_name(:phone) %>: <%= inn.phone %></p>
-      <p><%= Inn.human_attribute_name(:email) %>: <%= inn.email %></p>
-      <p><%= Inn.human_attribute_name(:description) %>: <%= inn.description %></p>
+      <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
     <% end %>
   </ul>
 <% else %>

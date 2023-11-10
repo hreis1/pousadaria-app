@@ -13,11 +13,9 @@ describe "Usuário vê pousadas" do
     expect(page).not_to have_link("Sair")
     expect(page).to have_content("Pousadas")
     expect(page).to have_content("Pousada Enseada")
-    expect(page).to have_content("Endereço: Avenida das Margaridas, 10, Enseada, São Paulo - São Paulo")
-    expect(page).to have_content("Telefone de contato: 11999999998")
+    expect(page).to have_content("Cidade: São Paulo")
     expect(page).to have_content("Pousada Itanhaem")
-    expect(page).to have_content("Endereço: Rua das Violetas, 13, Itanhaem, São Paulo - São Paulo")
-    expect(page).to have_content("Telefone de contato: 11999999997")
+    expect(page).to have_content("Cidade: São Paulo")
   end
 
   it "e não há pousadas cadastradas" do

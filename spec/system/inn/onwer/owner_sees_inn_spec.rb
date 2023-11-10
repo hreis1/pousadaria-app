@@ -21,6 +21,8 @@ describe "Dono vê sua pousada" do
     expect(page).to have_content("Horário de checkout: 12:00")
     expect(page).to have_content("Ativa: Sim")
     expect(page).not_to have_link("Editar")
+    expect(page).not_to have_content "Pousada Ribeiropolis LTDA"
+    expect(page).not_to have_content "12345678910111"
   end
   
   it "com sucesso" do
@@ -43,6 +45,8 @@ describe "Dono vê sua pousada" do
     expect(page).to have_content("Horário de checkin: 12:00")
     expect(page).to have_content("Horário de checkout: 12:00")
     expect(page).to have_content("Ativa: Sim")
+    expect(page).to have_content("CNPJ: 12345678910111")
+    expect(page).to have_content("Razão Social: Pousada Ribeiropolis LTDA")
     expect(page).to have_link("Editar")
   end
 end
