@@ -11,6 +11,7 @@ class RoomsController < ApplicationController
     else
       @current_daily_rate = @current_daily_rate.price
     end
+    @custom_prices = @room.custom_prices
   end
 
   def new

@@ -1,0 +1,17 @@
+pt-BR:
+  true: 'Sim'
+  false: 'Não'
+  found:
+    one: 'encontrada'
+    other: 'encontradas'
+  activerecord:
+    models:
+      custom_price:
+        one: 'Preço Personalizado'
+        other: 'Preços Personalizados'
+    attributes:
+      custom_price:
+        price: 'Preço'
+        start_date: 'Data de início'
+        end_date: 'Data de término'
+        room_id: 'quarto'
