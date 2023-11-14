@@ -39,7 +39,8 @@ class InnsController < ApplicationController
     if params[:query].blank?
       return redirect_to root_path, alert: "Digite o Nome da Pousada"
     end
-    @inns = Inn.where("trade_name LIKE ?", "%#{params[:query]}%").where(active: true)
+    @query = params[:query]
+    @inns = Inn.where("trade_name LIKE ? or neighborhood LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%").order(:trade_name)
     if @inns.empty?
       flash.now[:alert] = "Nenhuma pousada encontrada"
     end
