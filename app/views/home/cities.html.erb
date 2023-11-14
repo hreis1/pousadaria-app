@@ -1,0 +1,9 @@
+<div class="col">
+  <h2>Pousadas em <%= @city %></h2>
+
+  <ul>
+  <% @inns.each do |inn| %>
+    <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
+  <% end %>
+  </ul>
+</div>

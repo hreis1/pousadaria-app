@@ -1,23 +1,31 @@
-<h2>Pousadas</h2>
+<div class="col">
+  <h2>Pousadas</h2>
 
-<% if @inns.any? %>
-  <ul>
-    <div id="mais-recentes">
-      <h4>mais recentes</h4>
-      <% 3.times do |num| %>
-        <% inn = @inns.pop%>
-        <% if inn %>
-          <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
-          <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
+  <% if @inns.any? %>
+    <ul>
+      <div id="mais-recentes">
+        <h4>mais recentes</h4>
+        <% 3.times do |num| %>
+          <% inn = @inns.pop%>
+          <% if inn %>
+            <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
+            <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
+          <% end %>
         <% end %>
+      </div>
+      <hr>
+      <% @inns.each do |inn| %>
+        <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
+        <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
       <% end %>
-    </div>
-    <hr>
-    <% @inns.each do |inn| %>
-      <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
-      <p><%= Inn.human_attribute_name(:city) %>: <%= inn.city %></p>
-    <% end %>
-  </ul>
-<% else %>
-  <p>Nenhuma pousada cadastrada</p>
+    </ul>
+  <% else %>
+    <p>Nenhuma pousada cadastrada</p>
+  <% end %>
+</div>
+
+<% if @inns %>
+<div class="col-sm-3">
+  <%= render 'menucities' %>
+  </div>
 <% end %>

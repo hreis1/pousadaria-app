@@ -1,0 +1,6 @@
+<ul class="list-group">
+  <h2>Cidades</h2>
+  <% @cities.each do |city| %>
+    <%= link_to city, cities_path(city: city), class: "list-group-item" %>
+  <% end %>
+</ul>
