@@ -12,7 +12,28 @@ describe "Usuário vê quartos de uma pousada" do
 
     expect(page).to have_content("Quarto Rosa")
     expect(page).to have_content("Descrição: Quarto com cama de casal, TV e ar condicionado")
+    expect(page).to have_content("Dimensão: 20 m²")
+    expect(page).to have_content("Ocupação máxima: 2 pessoas")
     expect(page).to have_content("Diária: R$ 100,00")
+    expect(page).to have_content("Banheiro: Não")
+    expect(page).to have_content("Varanda: Não")
+    expect(page).to have_content("Ar condicionado: Sim")
+    expect(page).to have_content("TV: Não")
+    expect(page).to have_content("Guarda-roupa: Não")
+    expect(page).to have_content("Cofre: Não")
+    expect(page).to have_content("Acessível: Não")
+    expect(page).to have_content("Suíte Azul")
+    expect(page).to have_content("Descrição: Suíte com cama de casal, TV e ar condicionado")
+    expect(page).to have_content("Dimensão: 30 m²")
+    expect(page).to have_content("Ocupação máxima: 2 pessoas")
+    expect(page).to have_content("Diária: R$ 150,00")
+    expect(page).to have_content("Banheiro: Sim")
+    expect(page).to have_content("Varanda: Sim")
+    expect(page).to have_content("Ar condicionado: Sim")
+    expect(page).to have_content("TV: Sim")
+    expect(page).to have_content("Guarda-roupa: Sim")
+    expect(page).to have_content("Cofre: Sim")
+    expect(page).to have_content("Acessível: Sim")
   end
 
   it "e não existem quartos cadastrados" do
@@ -48,7 +69,6 @@ describe "Usuário vê quartos de uma pousada" do
 
     visit root_path
     click_on "Pousada Ribeiropolis"
-    click_on "Quarto Rosa"
     
     expect(page).not_to have_content("Preços Personalizados:")
     expect(page).not_to have_content("R$ 10,00 de #{1.day.ago.strftime("%d/%m/%Y")} até #{3.day.from_now.strftime("%d/%m/%Y")}")

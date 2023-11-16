@@ -17,7 +17,7 @@ describe "Dono registra quarto" do
     check "Banheiro"
     check "Ar condicionado"
     check "TV"
-    check "Armário"
+    check "Guarda-roupa"
     check "Cofre"
     check "Acessível"
     check "Disponível"
@@ -32,7 +32,7 @@ describe "Dono registra quarto" do
     expect(page).to have_content("Banheiro: Sim")
     expect(page).to have_content("Ar condicionado: Sim")
     expect(page).to have_content("TV: Sim")
-    expect(page).to have_content("Armário: Sim")
+    expect(page).to have_content("Guarda-roupa: Sim")
     expect(page).to have_content("Cofre: Sim")
     expect(page).to have_content("Acessível: Sim")
     expect(page).to have_content("Disponível: Sim")

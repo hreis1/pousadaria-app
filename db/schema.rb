@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_05_212926) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_15_020136) do
   create_table "custom_prices", force: :cascade do |t|
     t.integer "room_id", null: false
     t.date "start_date"
@@ -58,6 +58,17 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_212926) do
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
   end
 
+  create_table "reservations", force: :cascade do |t|
+    t.date "checkin"
+    t.date "checkout"
+    t.integer "number_of_guests"
+    t.integer "status", default: 0
+    t.integer "room_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["room_id"], name: "index_reservations_on_room_id"
+  end
+
   create_table "rooms", force: :cascade do |t|
     t.integer "inn_id", null: false
     t.string "name"
@@ -92,5 +103,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_05_212926) do
 
   add_foreign_key "custom_prices", "rooms"
   add_foreign_key "inns", "owners"
+  add_foreign_key "reservations", "rooms"
   add_foreign_key "rooms", "inns"
 end

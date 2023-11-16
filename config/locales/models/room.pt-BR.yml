@@ -17,7 +17,7 @@ pt-BR:
         has_balcony: 'Varanda'
         has_air_conditioning: 'Ar condicionado'
         has_tv: 'TV'
-        has_closet: 'Armário'
+        has_closet: 'Guarda-roupa'
         has_safe: 'Cofre'
         is_accessible: 'Acessível'
         is_available: 'Disponível'

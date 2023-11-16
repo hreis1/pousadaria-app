@@ -38,7 +38,6 @@ class RoomsController < ApplicationController
     render :edit
   end
   
-  
   private
 
   def room_params

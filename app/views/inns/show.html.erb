@@ -2,23 +2,35 @@
   <%= render 'inn', inn: @inn %>
 
   <% if current_owner == @inn.owner %>
+    <p><%= Inn.human_attribute_name(:active) %>: <%= t(@inn.active?) %></p>
     <p><%= Inn.human_attribute_name(:cnpj) %>: <%= @inn.cnpj %>
     <p><%= Inn.human_attribute_name(:corporate_name) %>: <%= @inn.corporate_name %>  
-    <%= link_to "Editar", edit_inn_path(@inn) %>
-    <%= link_to "Cadastrar Quarto", new_inn_room_path(@inn) %>
+    <p><%= link_to "Editar", edit_inn_path(@inn) %> |
+    <%= link_to "Cadastrar Quarto", new_inn_room_path(@inn) %></p>
   <% end %>
   
   <section id="inn-rooms">
     <h2>Quartos</h2>
-
+ 
     <% if @rooms.present? %>
       <% @rooms.each do |room| %>
-        <p><%= link_to room.name, inn_room_path(@inn, room) %></p>
-        <p><%= Room.human_attribute_name(:description) %>: <%= room.description %></p>
-        <p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.daily_rate) %></p>
-        <% if @inn.owner == current_owner %>
-          <p><%= Room.human_attribute_name(:is_available) %>: <%= room.is_available? ? "Sim" : "Não" %></p>
-        <% end %>
+        <div id="room-<%= room.id %>">
+          <%= render '/rooms/room', room: room %>
+          <% if room.is_available? %>
+            <p><%= link_to "Reservar", new_room_reservation_path(room) %></p>
+          <% end %>
+          <% if current_owner == @inn.owner %>
+            <% if room.custom_prices %>
+              <p><%= CustomPrice.model_name.human(count: 2) %>:</p>
+              <% room.custom_prices.each do |cp| %>
+                <p><%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %>
+                <%= button_to "Apagar Preço Personalizado",  inn_room_custom_price_path(@inn, room, cp), method: :delete %> </p>
+              <% end %>
+            <% end %>
+            <%= link_to "Editar", edit_inn_room_path(@inn, room) %>
+            <%= link_to "Adicionar Preço Personalizado", new_inn_room_custom_price_path(@inn, room) %>
+          <% end %>
+        </div>
       <% end %>
     <% else %>
       <p>Não há quartos cadastrados</p>

@@ -19,7 +19,6 @@ describe "Dono vê sua pousada" do
     expect(page).to have_content("Políticas: Não aceitamos animais de grande porte")
     expect(page).to have_content("Horário de checkin: 12:00")
     expect(page).to have_content("Horário de checkout: 12:00")
-    expect(page).to have_content("Ativa: Sim")
     expect(page).not_to have_link("Editar")
     expect(page).not_to have_content "Pousada Ribeiropolis LTDA"
     expect(page).not_to have_content "12345678910111"

@@ -1,0 +1,31 @@
+<div class="col">
+  <%= render '/rooms/room', room: @room %>
+</div>
+
+<div class="col">
+  <h2>Verificar disponibilidade</h2>
+
+  <% if @reservation.errors.any? %>
+    <div>
+    <% @reservation.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+      <% end %>
+    </div>
+  <% end %>
+  
+  <%= form_with model: @reservation, url: check_availability_room_reservations_path(@room), method: :get do |f| %> 
+    <div class="mb-3">
+      <%= f.label :checkin, "Data de entrada" %>
+      <%= f.date_field :checkin, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :checkout, "Data de saída" %>
+      <%= f.date_field :checkout, class: "form-control" %>
+    </div>
+    <div class="mb-3">
+      <%= f.label :number_of_guests, "Quantidade de hóspedes" %>
+      <%= f.number_field :number_of_guests, class: "form-control" %>
+    </div>
+    <%= f.submit "Verificar disponibilidade", class: "btn btn-primary" %>
+  <% end %>
+</div>

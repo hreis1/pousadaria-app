@@ -1,0 +1,11 @@
+<h2>Confirmar Reserva</h2>
+
+<p>Confirme os dados da sua reserva:</p>
+
+<p>Quarto: <%= @room.name %></p>
+<p>Checkin: <%= @reservation.checkin %></p>
+<p>Checkout: <%= @reservation.checkout %></p>
+<p>Número de hóspedes: <%= @reservation.number_of_guests %></p>
+<p>Valor total: <%= number_to_currency(@reservation.total_value) %></p>
+
+<%= link_to "Confirmar", room_reservations_path(@room, @reservation), method: :post %>
