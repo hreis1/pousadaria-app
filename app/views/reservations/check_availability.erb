@@ -3,8 +3,8 @@
 <p>Confirme os dados da sua reserva:</p>
 
 <p>Quarto: <%= @room.name %></p>
-<p>Checkin: <%= @reservation.checkin %></p>
-<p>Checkout: <%= @reservation.checkout %></p>
+<p>Checkin: <%= @reservation.checkin.strftime("%d/%m/%Y") %></p>
+<p>Checkout: <%= @reservation.checkout.strftime("%d/%m/%Y") %></p>
 <p>Número de hóspedes: <%= @reservation.number_of_guests %></p>
 <p>Valor total: <%= number_to_currency(@reservation.total_value) %></p>
 
