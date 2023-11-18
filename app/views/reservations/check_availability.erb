@@ -8,4 +8,4 @@
 <p>Número de hóspedes: <%= @reservation.number_of_guests %></p>
 <p>Valor total: <%= number_to_currency(@reservation.total_value) %></p>
 
-<%= link_to "Confirmar", room_reservations_path(@room, @reservation), method: :post %>
+<%= button_to "Confirmar Reserva", room_reservations_path(@room, @reservation), method: :post %>

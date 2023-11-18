@@ -1,0 +1,15 @@
+<h2>Reservas</h2>
+
+<% if @reservations.any? %>
+  <% @reservations.each do |reservation| %>
+    <div>
+      <p><%= reservation.room.inn.trade_name %></p>
+      <p><%= reservation.room.name %></p>
+      <p>Data de entrada: <%= reservation.checkin.strftime("%d/%m/%Y") %></p>
+      <p>Data de saída: <%= reservation.checkout.strftime("%d/%m/%Y") %></p>
+      <p>Total: R$ <%= reservation.total_value %></p>
+    </div>
+  <% end %>
+<% else %>
+  <p>Você ainda não possui reservas</p>
+<% end %>

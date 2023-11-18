@@ -14,7 +14,7 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :reservations, only: [:new, :create] do
       get 'check_availability', on: :collection
-      get 'confirm', on: :collection
     end
   end
+  get 'my_reservations', to: 'reservations#my_reservations'
 end
