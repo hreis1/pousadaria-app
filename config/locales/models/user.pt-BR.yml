@@ -1,0 +1,13 @@
+pt-BR:
+  activerecord:
+    models:
+      user:
+        one: 'Hóspede'
+        other: 'Hóspedes'
+    attributes:
+      user:
+        name: 'Nome completo'
+        cpf: 'CPF'
+        email: 'E-mail'
+        password: 'Senha'
+        password_confirmation: 'Confirmação de senha'
