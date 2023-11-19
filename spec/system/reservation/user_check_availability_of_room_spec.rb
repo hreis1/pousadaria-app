@@ -19,6 +19,11 @@ describe "Usuário verifica disponibilidade de quarto" do
     click_on "Verificar disponibilidade"
 
     expect(page).to have_content("Quarto Rosa")
+    expect(page).to have_content("Data de entrada: #{data_entrada}")
+    expect(page).to have_content("Check-in: #{Inn.last.checkin_time.strftime("%H:%M")}")
+    expect(page).to have_content("Data de saída: #{data_saida}")
+    expect(page).to have_content("Check-out: #{Inn.last.checkout_time.strftime("%H:%M")}")
+    expect(page).to have_content("Número de hóspedes: 2")
     expect(page).to have_content("Valor total: R$ 400,00")
   end
 
