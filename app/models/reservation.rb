@@ -1,12 +1,14 @@
 class Reservation < ApplicationRecord
+  enum status: { pending: 0, canceled: 5, active: 10 }
+
   validates :checkin, :checkout, :number_of_guests, :room, presence: true
   validates :number_of_guests, numericality: { greater_than: 0 }
   validates :code, uniqueness: true
 
-  validate :checkin_cannot_be_less_than_today
-  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy
-  validate :checkin_cannot_be_greater_than_checkout
-  validate :range_cannot_be_booked
+  validate :checkin_cannot_be_less_than_today, on: :create
+  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy, on: :create
+  validate :checkin_cannot_be_greater_than_checkout, on: :create
+  validate :range_cannot_be_booked, on: :create
 
   before_validation :generate_code, on: :create
 

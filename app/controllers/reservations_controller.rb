@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+  DAYS_TO_CANCEL_RESERVATION = 7
   before_action :authenticate_user!, only: [:index, :create]
 
   def my_reservations
@@ -38,6 +39,15 @@ class ReservationsController < ApplicationController
     render :new
   end
 
+  def cancel_reservation
+    @reservation = Reservation.find(params[:id])
+    if @reservation.pending? && @reservation.checkin >= DAYS_TO_CANCEL_RESERVATION.days.from_now
+      @reservation.canceled!
+      return redirect_to my_reservations_path, notice: "Reserva cancelada com sucesso"
+    end
+    flash[:alert] = "Não foi possível cancelar a reserva"
+    redirect_to my_reservations_path
+  end
   
   private
 

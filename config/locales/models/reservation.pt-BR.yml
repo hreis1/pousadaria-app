@@ -1,4 +1,7 @@
 pt-BR:
+  pending: 'Pendente'
+  canceled: 'Cancelada'
+  active: 'Ativa'
   activerecord:
     models:
       reservation:
@@ -9,3 +12,5 @@ pt-BR:
         checkin: 'Data de entrada'
         checkout: 'Data de saída'
         number_of_guests: 'Quantidade de hóspedes'
+        status: 'Situação'
+

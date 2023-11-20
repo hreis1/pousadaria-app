@@ -49,11 +49,11 @@ describe "Usuário reserva quarto" do
     expect(page).to have_content("Código da reserva: ABC12345")
     expect(page).to have_content("Reservas")
     expect(page).to have_content("Quarto Rosa")
-    expect(page).to have_content("Check-in: #{Inn.last.checkin_time.strftime("%H:%M")}")
+    expect(page).to have_content("Horário de checkin: #{Inn.last.checkin_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de entrada: #{data_entrada}")
-    expect(page).to have_content("Check-out: #{Inn.last.checkout_time.strftime("%H:%M")}")
+    expect(page).to have_content("Horário de checkout: #{Inn.last.checkout_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de saída: #{data_saida}")
     expect(page).to have_content("Total: R$ 300,00")
-    expect(page).to have_content("Meios de pagamento: Dinheiro, cartão de crédito ou débito")
+    expect(page).to have_content("Formas de pagamento: Dinheiro, cartão de crédito ou débito")
   end
 end

@@ -17,4 +17,5 @@ Rails.application.routes.draw do
     end
   end
   get 'my_reservations', to: 'reservations#my_reservations'
+  post 'cancel_reservation/:id', to: 'reservations#cancel_reservation', as: :cancel_reservation
 end
