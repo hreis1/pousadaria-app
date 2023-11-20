@@ -93,6 +93,14 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 - [X] Um usuário autenticado e que já efetivou uma reserva pode cancelar esta reserva até 7 dias antes da data agendada para o check-in.
 </details>
 
+<details>
+<summary>Check-in</summary>
+
+- [X] Os usuários donos de pousadas devem ser capazes de ver as reservas agendadas através de uma opção "Reservas" no menu. Deve haver uma listagem com todas reservas de sua pousada e para cada reserva o dono da pousada deve poder ver o quarto escolhido, a data de entrada e saída, a quantidade de hóspedes e o código da reserva.
+- [X] Ao acessar uma reserva, o dono da pousada deve ter a opção de realizar o check-in caso o dia atual seja igual ou maior do que o dia definido para entrada na reserva. O check-in deve alterar o status da reserva, que agora passa a ser uma estadia ativa. Devem ser registrados também o dia e a hora exatos do check-in. Todas reservas que já passaram pelo check-in devem aparecer em uma opção separada do menu chamada "Estadias Ativas".
+- [X] Caso tenham se passado 2 dias desde o dia previsto para o check-in e os hóspedes não tenham feito o check-in, o dono da pousada pode cancelar a reserva, deixando o quarto disponível para novas reservas.
+</details>
+
 ### Diagrama de Entidade e Relacionamento
 <details>
 <summary>Banco de Dados</summary>

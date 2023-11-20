@@ -16,6 +16,7 @@ class Inn < ApplicationRecord
   
   belongs_to :owner
   has_many :rooms
+  has_many :reservations, through: :rooms
 
 
   def full_address

@@ -1,9 +1,14 @@
 class ReservationsController < ApplicationController
   DAYS_TO_CANCEL_RESERVATION = 7
-  before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:index, :create, :my_reservations, :cancel_reservation]
+  before_action :authenticate_owner!, only: [:owner_reservations]
 
   def my_reservations
     @reservations = current_user.reservations
+  end
+
+  def owner_reservations
+    @reservations = current_owner.inn.reservations
   end
 
   def new
