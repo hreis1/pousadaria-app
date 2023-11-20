@@ -39,12 +39,58 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 
 - [X] Permitir que donos de pousadas cadastrem preços personalizados para um quarto de sua pousada fornecendo uma data início, uma data fim e o valor a ser cobrado por diária durante este período.
 - [X] Não permitir que donos de pousadas cadastrem preços personalizados com datas que se sobreponham.
-- [ ] Permitir que somente os donos de pousadas editem os preços personalizados de um quarto de sua própria pousada.
-- [ ] Permitir que cada quarto possua quantos preços personalizados desejar.
-- [ ] Permitir que donos de pousadas excluam preços personalizados de um quarto de sua pousada.
+- [X] Permitir que cada quarto possua quantos preços personalizados desejar.
+- [X] Permitir que somente os donos de pousadas editem os preços personalizados de um quarto de sua própria pousada.
+- [X] Permitir que donos de pousadas excluam preços personalizados de um quarto de sua pousada.
+- [X] Exibir a lista de preços personalizados dentro da tela de detalhes de um quarto.
 - [ ] Permitir que donos de pousadas indiquem se um preço personalizado está ativo ou não.
-- [ ] Exibir a lista de preços personalizados dentro da tela de detalhes de um quarto.
 
+</details>
+
+<details>
+<summary>Listagem de Pousadas</summary>
+
+- [X] Um visitante, não autenticado, deve ser capaz de ver todas as pousadas cadastradas no site. As pousadas devem ser exibidas na tela inicial da aplicação e devem ser separadas em 2 blocos: primeiro uma lista com as 3 pousadas mais recentes e, abaixo, o restante das pousadas cadastradas e ativas.
+- [X] Para cada pousada, deve ser exibido seu nome e a cidade. Ao clicar no nome da pousada, devem ser exibidos todos os demais detalhes cadastrados pelos donos de cada estabelecimento, exceto o CNPJ e a razão social.
+</details>
+
+<details>
+<summary>Pousadas por cidade</summary>
+
+- [X] Um visitante, não autenticado, deve ter acesso, na tela inicial, a um menu de cidades onde, ao clicar em uma das cidades listadas, deve ser direcionado para uma tela onde são listadas todas as pousadas daquela cidade.
+- [X] A lista de pousadas de uma cidade deve ser exibida em ordem alfabética, considerando seu nome fantasia. Ao clicar no nome de uma das pousadas, o usuário deve ter acesso à mesma tela de detalhes descrita no item anterior.
+</details>
+
+<details>
+<summary>Busca de Pousadas</summary>
+
+- [X] Um visitante, não autenticado, deve ter acesso, a partir de qualquer tela da aplicação, a um campo de busca de pousadas. O usuário deve poder buscar uma pousada pelo seu nome fantasia, pelo bairro ou pela cidade.
+- [X] A tela de resultados da busca deve listar o termo informado para busca, a quantidade de registros encontrados e, caso exista, uma listagem com as pousadas encontradas.
+- [X] A lista de pousadas deve ser exibida em ordem alfabética, considerando seu nome fantasia. Ao clicar no nome de uma das pousadas, o usuário deve ter acesso à mesma tela de detalhes descrita anteriormente.
+- [ ] Além da busca por texto, você pode tentar criar uma página separada de busca avançada que inclua opções como: aceita pets, acessível para PcD, ar-condicionado no quarto, TV no quarto etc. Você pode usar a mesma página de resultados detalhada anteriormente para exibir as pousadas encontradas após a busca.
+</details>
+
+<details>
+<summary>Ver quartos</summary>
+
+- [X] Um visitante, não autenticado, deve poder ver todos os quartos disponíveis para uma pousada. A listagem de quartos deve ser exibida na mesma tela de detalhes de uma pousada. Para cada quarto, devem ser exibidas todas as informações cadastradas pelo dono da pousada exceto a tabela de preços por período.
+</details>
+
+<details>
+<summary>Disponibilidade de quartos</summary>
+
+- [X] Um visitante pode escolher um quarto de uma pousada e clicar em um botão para reservar. Ao tomar esta ação, o usuário será redirecionado para uma tela onde deve ver os detalhes do quarto selecionado e um formulário que solicita a data de entrada, a data de saída e a quantidade de hóspedes. Os três campos são obrigatórios. Após preenchê-los e submeter o formulário, a aplicacão deve consultar se existe disponibilidade para o período selecionado. Caso sim, deve ser informado o valor total das diárias, mas a reserva ainda não deve ser efetuada.
+- [X] Caso não haja disponibilidade, uma mensagem deve ser exibida para o usuário e ele deve voltar para o formulário inicial. A quantidade de hóspedes informada deve ser usada para validar se o quarto selecionado atende à solicitacão. Em caso negativo, uma mensagem de erro deve ser exibida.
+- [ ] A consulta de disponibilidade deve considerar as reservas feitas para um quarto, tanto as pendentes quanto aquelas que já estão em andamento. As reservas canceladas no entanto devem ser desconsideradas.
+</details>
+
+<details>
+<summary>Reservar quarto</summary>
+
+- [X] Um visitante pode, após verificar a disponibilidade de um quarto e obter retorno positivo, prosseguir com a reserva. Para isto, o visitante deve primeiro criar uma conta como usuário informando seu nome completo, email, CPF e senha. Este usuário é um usuário regular ou um cliente, escolha o termo que preferir, mas lembre-se de que este tipo de usuário é diferente dos donos de pousadas, com ações diferentes dentro do sistema.
+- [X] Um usuário, agora autenticado, a partir do resultado positivo de disponibilidade, pode prosseguir com a reserva. Deve ser exibido um resumo com data de entrada e horário de check-in (conforme padrão da pousada), data de saída e horário de check-out (conforme padrão da pousada), o quarto escolhido e o valor total. Devem ser exibidos também os meios de pagamentos aceitos pela pousada e, por último, um botão para confirmar a reserva.
+- [X] Ao confirmar sua reserva, ela deve ser armazenada no banco de dados e passa a ficar disponível tanto para o usuário, em um menu "Minhas Reservas". Cada reserva deve ser identificada por um código de 8 caracteres aleatórios, o código deve ser sempre único.
+- [X] Um usuário autenticado e que já efetivou uma reserva pode cancelar esta reserva até 7 dias antes da data agendada para o check-in.
 </details>
 
 ### Diagrama de Entidade e Relacionamento

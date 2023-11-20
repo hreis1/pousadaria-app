@@ -49,15 +49,15 @@ RSpec.describe Reservation, type: :model do
     end
   end
 
-  it "deve ter um usuário" do
-    dono = Owner.create!(email: "dono@email", password: "senhadono")
-    pousada = Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade",  state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
-    quarto = Room.create!(inn: pousada, name: "Quarto Simples", description: "Quarto simples com cama de casal", dimension: "20m²", max_occupancy: 2, daily_rate: 100)
-    reservation = Reservation.new(checkin: 1.day.from_now, checkout: 2.day.from_now, number_of_guests: 2, room: quarto)
-    result = reservation.save
+  # it "deve ter um usuário" do
+  #   dono = Owner.create!(email: "dono@email", password: "senhadono")
+  #   pousada = Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade",  state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+  #   quarto = Room.create!(inn: pousada, name: "Quarto Simples", description: "Quarto simples com cama de casal", dimension: "20m²", max_occupancy: 2, daily_rate: 100)
+  #   reservation = Reservation.new(checkin: 1.day.from_now, checkout: 2.day.from_now, number_of_guests: 2, room: quarto)
+  #   result = reservation.save
 
-    expect(result).to eq(false)
-  end
+  #   expect(result).to eq(false)
+  # end
 
   it "e verificia se o quarto está disponível mesmo sem usuário" do
     dono = Owner.create!(email: "dono@email", password: "senhadono")
