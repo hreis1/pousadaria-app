@@ -17,6 +17,10 @@ Rails.application.routes.draw do
     end
   end
   get 'owner_reservations', to: 'reservations#owner_reservations'
+  get 'owner_reservations/:id', to: 'reservations#owner_reservation', as: :owner_reservation
+  post 'owner_reservations/:id/checkin', to: 'reservations#checkin', as: :checkin
+  get 'active_stays', to: 'reservations#active_stays'
+
   get 'my_reservations', to: 'reservations#my_reservations'
   post 'cancel_reservation/:id', to: 'reservations#cancel_reservation', as: :cancel_reservation
 end

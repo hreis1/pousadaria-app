@@ -13,4 +13,6 @@ pt-BR:
         checkout: 'Data de saída'
         number_of_guests: 'Quantidade de hóspedes'
         status: 'Situação'
+        checkin_at: 'Estadia iniciada'
+        checkout_at: 'Estadia finalizada'
 

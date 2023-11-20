@@ -1,0 +1,17 @@
+<h2>Reserva</h2>
+
+<div>
+  <h4>Código da reserva: <%= link_to @reservation.code, owner_reservation_path(@reservation) %></h4>
+  <p><%= @reservation.room.inn.trade_name %></p>
+  <p><%= Room.model_name.human %>: <%= @reservation.room.name %></p>
+  <p><%= Reservation.human_attribute_name(:checkin) %>: <%= @reservation.checkin.strftime("%d/%m/%Y") %></p>
+  <p><%= Reservation.human_attribute_name(:checkout) %>: <%= @reservation.checkout.strftime("%d/%m/%Y") %></p>
+  <p>Total: <%= number_to_currency(@reservation.total_value) %></p>
+  <p><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= @reservation.number_of_guests %></p>
+  <p><%= Reservation.human_attribute_name(:status) %>: <%= @reservation.status %></p>
+  <% if @reservation.pending? %>
+    <% if @reservation.checkin.to_date >= Date.today %>
+      <%= link_to "Check-in", checkin_path(@reservation), method: :post, class: "btn btn-primary" %>
+    <% end %>
+  <% end %>
+</div>
