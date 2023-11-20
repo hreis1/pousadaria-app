@@ -3,6 +3,7 @@
 <% if @reservations.any? %>
   <% @reservations.each do |reservation| %>
     <div>
+      <h4>Código da reserva: <%= reservation.code %></h4>
       <p><%= reservation.room.inn.trade_name %></p>
       <p><%= reservation.room.name %></p>
       <p>Data de entrada: <%= reservation.checkin.strftime("%d/%m/%Y") %></p>

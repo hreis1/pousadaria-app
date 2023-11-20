@@ -30,6 +30,8 @@ describe "Usuário reserva quarto" do
     hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
     login_as hospede, scope: :user
 
+    allow(SecureRandom).to receive(:alphanumeric).with(8).and_return('ABC12345')
+
     visit root_path
     click_on "Pousada Ribeiropolis"
     within("div#room-#{Room.last.id}") do
@@ -44,13 +46,14 @@ describe "Usuário reserva quarto" do
     click_on "Confirmar Reserva"
 
     expect(page).to have_content("Reserva efetuada com sucesso")
+    expect(page).to have_content("Código da reserva: ABC12345")
     expect(page).to have_content("Reservas")
     expect(page).to have_content("Quarto Rosa")
     expect(page).to have_content("Check-in: #{Inn.last.checkin_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de entrada: #{data_entrada}")
     expect(page).to have_content("Check-out: #{Inn.last.checkout_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de saída: #{data_saida}")
-    expect(page).to have_content("Total: R$ 400,00")
+    expect(page).to have_content("Total: R$ 300,00")
     expect(page).to have_content("Meios de pagamento: Dinheiro, cartão de crédito ou débito")
   end
 end

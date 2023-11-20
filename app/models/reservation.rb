@@ -1,20 +1,22 @@
 class Reservation < ApplicationRecord
-  validates :checkin, :checkout, :number_of_guests, presence: true
+  validates :checkin, :checkout, :number_of_guests, :room, presence: true
   validates :number_of_guests, numericality: { greater_than: 0 }
+  validates :code, uniqueness: true
 
   validate :checkin_cannot_be_less_than_today
   validate :number_of_guests_cannot_be_greater_than_room_max_occupancy
   validate :checkin_cannot_be_greater_than_checkout
   validate :range_cannot_be_booked
 
-  before_save :calculate_total_price
+  before_validation :generate_code, on: :create
 
   belongs_to :room
+  belongs_to :user, optional: true
 
 
   def total_value
     total_value = 0
-    (checkin..checkout).each do |date|
+    (checkin...checkout).each do |date|
       if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
         total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
       else
@@ -28,10 +30,8 @@ class Reservation < ApplicationRecord
   private
 
 
-  def calculate_total_price
-    if checkin && checkout && room
-      total_price = (checkout - checkin).to_i * room.current_daily_rate
-    end
+  def generate_code
+    self.code = SecureRandom.alphanumeric(8).upcase
   end
   
   def range_cannot_be_booked
