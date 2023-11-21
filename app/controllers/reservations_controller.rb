@@ -60,14 +60,23 @@ class ReservationsController < ApplicationController
 
   def checkin
     @reservation = Reservation.find(params[:id])
-    if @reservation.pending? && Time.now >= @reservation.checkin
+    if @reservation.pending?
       @reservation.active!
-      @reservation.checkin_at = Time.zone.now
       if @reservation.save
         return redirect_to active_stays_path, notice: "Check-in realizado com sucesso"
       end
     end
     flash[:alert] = "Não foi possível realizar o check-in"
+    redirect_to owner_reservations_path(@reservation)
+  end
+
+  def cancel
+    @reservation = Reservation.find(params[:id])
+    if @reservation.pending?
+      @reservation.canceled!
+      return redirect_to owner_reservations_path, notice: "Reserva cancelada com sucesso"
+    end
+    flash[:alert] = "Não foi possível cancelar a reserva"
     redirect_to owner_reservations_path
   end
 

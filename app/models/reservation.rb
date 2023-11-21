@@ -16,6 +16,12 @@ class Reservation < ApplicationRecord
   belongs_to :user, optional: true
 
 
+  def active!
+    self.status = :active
+    self.checkin_at = Time.zone.now
+  end
+
+
   def total_value
     total_value = 0
     (checkin...checkout).each do |date|
