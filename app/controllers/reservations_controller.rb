@@ -70,6 +70,26 @@ class ReservationsController < ApplicationController
     redirect_to owner_reservations_path(@reservation)
   end
 
+  def checkout
+    @reservation = Reservation.find(params[:id])
+    @payment_methods = @reservation.room.inn.payment_methods.split(",")
+  end
+
+  def finish
+    @reservation = Reservation.find(params[:id])
+    payment_method = params[:payment_method]
+    if @reservation.active?
+      @reservation.payment_method = payment_method
+      @reservation.amount_paid = @reservation.current_total_value
+      @reservation.finished!
+      if @reservation.save
+        return redirect_to owner_reservations_path, notice: "Check-out realizado com sucesso"
+      end
+    end
+    flash[:alert] = "Não foi possível realizar o check-out"
+    redirect_to owner_reservations_path(@reservation)
+  end
+  
   def cancel
     @reservation = Reservation.find(params[:id])
     if @reservation.pending?

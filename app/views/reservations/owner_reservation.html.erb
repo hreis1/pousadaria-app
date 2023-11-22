@@ -15,5 +15,7 @@
       <%= button_to "Check-in", checkin_path(@reservation), method: :post, class: "btn btn-primary" %>
       <% end %>
     <%= button_to "Cancelar reserva", cancel_path(@reservation), method: :post, class: "btn btn-danger" %>
+  <% elsif @reservation.active? %>
+    <%= button_to "Check-out", checkout_path(@reservation), method: :post, class: "btn btn-primary" %>
   <% end %>
 </div>

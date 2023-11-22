@@ -4,8 +4,13 @@
   <% @reservations.each do |reservation| %>
     <div>
       <h4>Código da reserva: <%= link_to reservation.code, owner_reservation_path(reservation) %></h4>
-      <% if reservation.active? %>
+      <% if reservation.active? || reservation.finished? %>
         <p><%= Reservation.human_attribute_name(:checkin_at) %>: <%= reservation.checkin_at.strftime("%d/%m/%Y %H:%M") %></p>
+      <% end %>
+      <% if reservation.finished? %>
+        <p><%= Reservation.human_attribute_name(:checkout_at) %>: <%= reservation.checkout_at.strftime("%d/%m/%Y %H:%M") %></p>
+        <p><%= Reservation.human_attribute_name(:payment_method) %>: <%= reservation.payment_method %></p>
+        <p><%= Reservation.human_attribute_name(:amount_paid) %>: <%= number_to_currency(reservation.amount_paid) %></p>
       <% end %>
       <p><%= Room.model_name.human %>: <%= reservation.room.name %></p>
       <p><%= Reservation.human_attribute_name(:checkin) %>: <%= reservation.checkin.strftime("%d/%m/%Y") %></p>

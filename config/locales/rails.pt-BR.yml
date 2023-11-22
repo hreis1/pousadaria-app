@@ -1,4 +1,5 @@
 pt-BR:
+  payment_method: 'Forma de pagamento'
   activerecord:
     errors:
       messages:

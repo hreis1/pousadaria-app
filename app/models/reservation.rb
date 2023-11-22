@@ -1,5 +1,5 @@
 class Reservation < ApplicationRecord
-  enum status: { pending: 0, canceled: 5, active: 10 }
+  enum status: { pending: 0, canceled: 5, active: 10 , finished: 15 }
 
   validates :checkin, :checkout, :number_of_guests, :room, presence: true
   validates :number_of_guests, numericality: { greater_than: 0 }
@@ -21,6 +21,10 @@ class Reservation < ApplicationRecord
     self.checkin_at = Time.zone.now
   end
 
+  def finished!
+    self.status = :finished
+    self.checkout_at = Time.zone.now
+  end
 
   def total_value
     total_value = 0
@@ -33,6 +37,26 @@ class Reservation < ApplicationRecord
     end
     total_value
   end
+
+  def current_total_value
+    total_value = 0
+    (checkin...Date.today).each do |date|
+      if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
+        total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
+      else
+        total_value += self.room.daily_rate
+      end
+      if date == Date.today && Time.zone.now.hour >= room.inn.checkout_time.hour
+        if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
+          total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
+        else
+          total_value += self.room.daily_rate
+        end
+      end
+    end
+    total_value
+  end
+
 
 
   private

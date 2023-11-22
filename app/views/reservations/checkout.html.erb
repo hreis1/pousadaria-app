@@ -1,0 +1,12 @@
+<h2>Check out</h2>
+
+<div>
+  <p>Total: <%= number_to_currency(@reservation.total_value) %></p>
+  <%= form_with url: finish_path(@reservation), method: :post do |form| %>
+    <div class="form-group">
+      <%= form.label :payment_method, "Selecionar forma de pagamento" %>
+      <%= form.select :payment_method, @payment_methods, { :prompt=> true }, class: "form-control" %>
+    </div>
+    <%= form.submit "Finalizar", class: "btn btn-primary mt-2" %>
+  <% end %>
+</div>
