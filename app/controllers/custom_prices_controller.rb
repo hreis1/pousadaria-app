@@ -1,6 +1,8 @@
 class CustomPricesController < ApplicationController
   before_action :authenticate_owner!
-  before_action :check_owner
+  before_action do
+    check_owner(params[:inn_id])
+  end
 
   def new
     @room = Room.find(params[:room_id])

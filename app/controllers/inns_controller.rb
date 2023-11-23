@@ -2,9 +2,12 @@ class InnsController < ApplicationController
   before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
   before_action :set_inn, only: [:show, :edit, :update]
   before_action :owner_has_inn, only: [:new, :create]
-  before_action :check_owner, only: [:edit, :update]
+  before_action only: [:edit, :update] do
+    check_owner(params[:id])
+  end
 
   def show
+    @inn = Inn.find(params[:id])
     if current_owner.present? && current_owner == @inn.owner
       @rooms = @inn.rooms
     else
@@ -36,14 +39,14 @@ class InnsController < ApplicationController
   end
 
   def search
-    if params[:query].blank?
+    @query = params[:query]
+    if @query.blank?
       return redirect_to root_path, alert: "Digite o Nome da Pousada"
     end
-    @query = params[:query]
-    @inns = Inn.where("trade_name LIKE ? or neighborhood LIKE ?", "%#{params[:query]}%", "%#{params[:query]}%").order(:trade_name)
-    if @inns.empty?
-      flash.now[:alert] = "Nenhuma pousada encontrada"
-    end
+    @inns = Inn.where("trade_name LIKE :query OR neighborhood LIKE :query OR city LIKE :query", query: "%#{@query}%")
+               .where(active: true)
+               .order(:trade_name)
+    flash.now[:alert] = "Nenhuma pousada encontrada" if @inns.empty?
   end
 
 
@@ -56,12 +59,6 @@ class InnsController < ApplicationController
     end
   end
 
-  def check_owner
-    if @inn.owner != current_owner
-      return redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
-    end
-  end
-
   def owner_has_inn
     if current_owner.inn.present?
       return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
@@ -69,6 +66,9 @@ class InnsController < ApplicationController
   end
 
   def inn_params
-    inn_params = params.require(:inn).permit(:trade_name, :corporate_name, :cnpj, :phone, :email, :address, :address_number, :neighborhood, :state, :city, :cep, :description, :payment_methods, :pets_allowed, :polices, :checkin_time, :checkout_time, :active)
+    inn_params = params.require(:inn).permit(:trade_name, :corporate_name, :cnpj, :phone, :email, :address,
+                                             :address_number, :neighborhood, :state, :city, :cep, :description,
+                                             :payment_methods, :pets_allowed, :polices, :checkin_time, :checkout_time,
+                                             :active)
   end
 end
