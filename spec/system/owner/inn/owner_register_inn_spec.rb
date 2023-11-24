@@ -66,4 +66,48 @@ describe "Dono registra pousada" do
     expect(page).to have_content("Você já possui uma pousada cadastrada")
     expect(current_path).not_to eq(new_inn_path)
   end
+
+  it "e deve preencher todos os campos" do
+    dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    login_as dono
+
+    visit new_inn_path
+    fill_in "Nome Fantasia", with: ""
+    fill_in "Razão Social", with: ""
+    fill_in "CNPJ", with: ""
+    fill_in "E-mail de contato", with: ""
+    fill_in "Telefone de contato", with: ""
+    fill_in "Endereço", with: ""
+    fill_in "Número", with: ""
+    fill_in "Bairro", with: ""
+    fill_in "Estado", with: ""
+    fill_in "Cidade", with: ""
+    fill_in "CEP", with: ""
+    fill_in "Descrição", with: ""
+    fill_in "Formas de pagamento", with: ""
+    uncheck "Aceita pets"
+    fill_in "Políticas", with: ""
+    fill_in "Horário de checkin", with: ""
+    fill_in "Horário de checkout", with: ""
+    within "section#new-inn" do
+      click_button "Cadastrar Pousada"
+    end
+
+    expect(page).to have_content("Nome Fantasia não pode ficar em branco")
+    expect(page).to have_content("Razão Social não pode ficar em branco")
+    expect(page).to have_content("CNPJ não pode ficar em branco")
+    expect(page).to have_content("E-mail de contato não pode ficar em branco")
+    expect(page).to have_content("Telefone de contato não pode ficar em branco")
+    expect(page).to have_content("Endereço não pode ficar em branco")
+    expect(page).to have_content("Número não pode ficar em branco")
+    expect(page).to have_content("Bairro não pode ficar em branco")
+    expect(page).to have_content("Estado não pode ficar em branco")
+    expect(page).to have_content("Cidade não pode ficar em branco")
+    expect(page).to have_content("CEP não pode ficar em branco")
+    expect(page).to have_content("Descrição não pode ficar em branco")
+    expect(page).to have_content("Formas de pagamento não pode ficar em branco")
+    expect(page).to have_content("Políticas não pode ficar em branco")
+    expect(page).to have_content("Horário de checkin não pode ficar em branco")
+    expect(page).to have_content("Horário de checkout não pode ficar em branco")
+  end
 end

@@ -1,11 +1,13 @@
 <h2><%= inn.trade_name %></h2>
-
-<p><%= Inn.human_attribute_name(:address) %>: <%= inn.full_address %></p>
-<p><%= Inn.human_attribute_name(:description) %>: <%= inn.description %></p>
-<p><%= Inn.human_attribute_name(:phone) %>: <%= inn.phone %> |
-<%= Inn.human_attribute_name(:email) %>: <%= inn.email %></p>
-<p><%= Inn.human_attribute_name(:payment_methods) %>: <%= inn.payment_methods %>
-<p><%= Inn.human_attribute_name(:pets_allowed) %>: <%= t(inn.pets_allowed?) %></p>
-<p><%= Inn.human_attribute_name(:polices) %>: <%= inn.polices %></p>
-<p><%= Inn.human_attribute_name(:checkin_time) %>: <%= inn.checkin_time.strftime("%H:%M") %>  |
-<%= Inn.human_attribute_name(:checkout_time) %>: <%= inn.checkout_time.strftime("%H:%M") %></p>
+<hr>
+<ul>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:address) %>: <%= inn.full_address %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:description) %>: <%= inn.description %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:polices) %>: <%= inn.polices %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:pets_allowed) %>: <%= t(inn.pets_allowed?) %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:phone) %>: <%= inn.phone %> |
+    <%= Inn.human_attribute_name(:email) %>: <%= inn.email %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:payment_methods) %>: <%= inn.payment_methods %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:checkin_time) %>: <%= inn.checkin_time.strftime("%H:%M") %>  |
+    <%= Inn.human_attribute_name(:checkout_time) %>: <%= inn.checkout_time.strftime("%H:%M") %></li>
+</ul>

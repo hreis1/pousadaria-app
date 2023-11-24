@@ -1,8 +1,8 @@
 <section id="inns" class="row">
   <h2><%= Inn.model_name.human(count: 2) %></h2>
   <hr>
-  <div class="col">
 
+  <div class="col">
     <% if @inns.any? %>
       <ul>
         <div id="mais-recentes" class="row">
@@ -19,7 +19,7 @@
         </div>
         <hr>
         <% @inns.each do |inn| %>
-        <h5><%= link_to inn.trade_name, inn_path(inn) %></h5>
+          <h5><%= link_to inn.trade_name, inn_path(inn) %></h5>
           <p><%= inn.city %></p>
         <% end %>
       </ul>

@@ -2,7 +2,7 @@
   <h2>Editar pousada</h2>
 
   <% if @inn.errors.any? %>
-    <div>
+    <div class="alert alert-danger" role="alert">
       <% @inn.errors.full_messages.each do |message| %>
         <p><%= message %></p>
       <% end %>

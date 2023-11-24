@@ -1,23 +1,20 @@
 class Inn < ApplicationRecord
   validates :trade_name, :corporate_name, :cnpj, :phone, :email, :address,
-                         :address_number, :neighborhood, :state, :city, :cep, :description,
-                         :payment_methods, :polices, :checkin_time, :checkout_time,presence: true
+                         :address_number, :neighborhood, :state, :city, :cep,
+                         :description, :payment_methods, :polices, :checkin_time,
+                         :checkout_time, presence: true
 
-  validates :cnpj, uniqueness: true
+  validates :cnpj, :phone, :email, :phone, uniqueness: true
   validates :cnpj, length: { is: 14 }
   validates :email, format: { with: /\A[^@\s]+@[^@\s]+\z/, message: "formato inválido" }
-  validates :email, uniqueness: true
   validates :cep, format: { with: /\A\d{5}-?\d{3}\z/, message: "formato inválido" }
   validates :phone, format: { with: /\A[0-9]{11}\z/, message: "formato inválido" }
-  validates :phone, uniqueness: true
   
   validate :owner_has_inn, on: :create
 
-  
   belongs_to :owner
   has_many :rooms
   has_many :reservations, through: :rooms
-
 
   def full_address
     "#{address}, #{address_number}, #{neighborhood}, #{city} - #{state}"

@@ -7,7 +7,7 @@ class InnsController < ApplicationController
   def show
     begin
       @inn = Inn.find(params[:id])
-    rescue ActiveRecord::RecordNotFound
+    rescue
       return redirect_to root_path, alert: "Pousada não encontrada"
     end
 

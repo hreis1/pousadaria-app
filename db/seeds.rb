@@ -13,4 +13,4 @@ Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "4
 
 dono_d = Owner.create!(email: "d@email.com", password: "password")
 Inn.create!(owner: dono_d, trade_name: "Pousada Diamante", corporate_name: "Pousada Diamante LTDA", cnpj: "12345678910115", phone: "11999999995", email: "pd@email.com", address: "Avenida das Araras", address_number: "10", neighborhood:"Araras", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro", polices: "Não aceitamos som automotivo", checkin_time: "12:00", checkout_time: "12:00")
-Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "40m²", max_occupancy: 2, daily_rate: 200, has_bathroom: true, has_balcony: true, has_air_conditioning: true, has_tv: true, has_closet: true, has_safe: true, is_accessible: true, inn: Inn.last)
+# Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "40m²", max_occupancy: 2, daily_rate: 200, has_bathroom: true, has_balcony: true, has_air_conditioning: true, has_tv: true, has_closet: true, has_safe: true, is_accessible: true, inn: Inn.last)
