@@ -11,8 +11,8 @@ describe "Dono da pousada inicia sessão" do
     fill_in "Senha", with: owner.password
     click_on "Entrar"
     
-    expect(page).to have_content "Login efetuado com sucesso."
     expect(page).to have_button "Sair"
+    expect(page).to have_content "Você precisa cadastrar uma pousada para continuar."
     expect(page).not_to have_link "Entrar como dono de pousada"
   end
 
@@ -34,8 +34,7 @@ describe "Dono da pousada inicia sessão" do
     login_as owner
     visit new_owner_session_path
 
-    expect(current_path).to eq root_path
-    expect(page).to have_content "Você já está autenticado."
+    expect(current_path).to eq new_inn_path
     expect(page).not_to have_link "Entrar como dono de pousada"
   end
 
@@ -45,8 +44,7 @@ describe "Dono da pousada inicia sessão" do
     login_as owner
     visit new_owner_registration_path
 
-    expect(current_path).to eq root_path
-    expect(page).to have_content "Você já está autenticado."
-    expect(page).not_to have_link "Entrar como dono de pousada"
+    expect(current_path).to eq new_inn_path
+    expect(page).to have_content "Você precisa cadastrar uma pousada para continuar."
   end
 end

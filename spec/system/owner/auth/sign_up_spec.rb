@@ -11,9 +11,8 @@ describe "Dono da pousada se cadastra" do
     fill_in "Confirme sua senha", with: "senhadono"
     click_on "Cadastrar"
     
-    expect(current_path).to eq root_path
+    expect(current_path).to eq new_inn_path
     expect(Owner.count).to eq 1
-    expect(page).to have_content "Bem vindo! Você realizou seu registro com sucesso."
   end
 
   it "email inválido" do

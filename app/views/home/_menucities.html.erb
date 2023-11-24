@@ -1,6 +1,11 @@
-<ul class="list-group">
-  <h2>Cidades</h2>
-  <% @cities.each do |city| %>
-    <%= link_to city, cities_path(city: city), class: "list-group-item" %>
-  <% end %>
-</ul>
+<aside id="inns-cities">
+
+  <ul>
+    <h4>Cidades</h4>
+    <% @cities.each do |city| %>
+      <li>
+        <%= link_to city, cities_path(city: city) %>
+      </li>
+    <% end %>
+  </ul>
+</aside>

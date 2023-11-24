@@ -11,7 +11,7 @@ class Inn < ApplicationRecord
   validates :phone, format: { with: /\A[0-9]{11}\z/, message: "formato inválido" }
   validates :phone, uniqueness: true
   
-  validate :owner_has_inn, on: :create 
+  validate :owner_has_inn, on: :create
 
   
   belongs_to :owner
@@ -23,6 +23,7 @@ class Inn < ApplicationRecord
     "#{address}, #{address_number}, #{neighborhood}, #{city} - #{state}"
   end
 
+  
   private
 
   def owner_has_inn

@@ -17,8 +17,15 @@ describe "Usuário vê pousada" do
 
     get inn_path(1)
 
-    expect(response).to redirect_to root_path
     expect(flash[:alert]).to eq "Pousada inativa"
+    expect(response).to redirect_to root_path
+  end
+
+  it "e tenta vê pousada inexistente" do
+    get inn_path(1)
+
+    expect(flash[:alert]).to eq "Pousada não encontrada"
+    expect(response).to redirect_to root_path
   end
 
   context "está logado" do

@@ -13,9 +13,9 @@ describe "Usuário vê pousadas" do
     expect(page).not_to have_link("Sair")
     expect(page).to have_content("Pousadas")
     expect(page).to have_content("Pousada Enseada")
-    expect(page).to have_content("Cidade: São Paulo")
+    expect(page).to have_content("São Paulo")
     expect(page).to have_content("Pousada Itanhaem")
-    expect(page).to have_content("Cidade: São Paulo")
+    expect(page).to have_content("São Paulo")
   end
 
   it "e não há pousadas cadastradas" do
@@ -36,7 +36,7 @@ describe "Usuário vê pousadas" do
     Inn.create!(owner: dono_c, trade_name: "Pousada Pão de Queijo", corporate_name: "Pousada Pão de Queijo LTDA", cnpj: "12345678910114", phone: "11999999996", email: "ppdq@email.com", address: "Rua das Rosas", address_number: "7", neighborhood:"Santa Mônica", state: "Minas Gerais", city: "Belo Horizonte", cep: "31525-420", description: "Pousada para quem gosta de pão de queijo", payment_methods: "Dinheiro", polices: "Não aceitamos som automotivo", checkin_time: "12:00", checkout_time: "12:00")
   
     visit root_path
-    within("ul.list-group") do
+    within "aside#inns-cities" do
       click_on "Belo Horizonte"
     end
 

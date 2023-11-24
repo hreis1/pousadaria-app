@@ -99,6 +99,8 @@ describe "Dono edita pousada" do
     outra_pousada = Inn.create!(owner: outro_dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores", state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
   
     dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    pousada = Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+
     login_as dono
     
     visit edit_inn_path(outra_pousada)
@@ -109,13 +111,18 @@ describe "Dono edita pousada" do
 
   it "edita situação da pousada" do
     dono = Owner.create!(email: "dono@email.com", password: "senhadono")
-    pousada = Inn.create!(owner: dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores", state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    pousada = Inn.create!(owner: dono, trade_name: "Pousada do Aconchego", corporate_name: "Pousada do Aconchego LTDA",
+                          cnpj: "12345678910111", phone: "11999999999", email: "pa@email.com", 
+                          address: "Rua das Flores", address_number: "100", neighborhood: "Jardim das Flores",
+                          state: "SP",city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos",
+                          payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true,
+                          polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
   
     login_as dono
     visit root_path
     click_on "Minha Pousada"
     click_on "Editar"
-    uncheck "Ativa"
+    choose "Não"
     click_button "Atualizar Pousada"
 
     expect(current_path).to eq(inn_path(pousada))

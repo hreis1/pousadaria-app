@@ -1,27 +1,33 @@
 class InnsController < ApplicationController
   before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
-  before_action :owner_has_inn, only: [:new, :create]
   before_action only: [:edit, :update] do
     check_owner(params[:id])
   end
-  before_action :set_inn, only: [:show] 
 
   def show
-    @inn = Inn.find(params[:id])
+    begin
+      @inn = Inn.find(params[:id])
+    rescue ActiveRecord::RecordNotFound
+      return redirect_to root_path, alert: "Pousada não encontrada"
+    end
+
     if current_owner.present? && current_owner == @inn.owner
       @rooms = @inn.rooms
-    else
+    elsif @inn.active?
       @rooms = @inn.rooms.where(is_available: true)
+    else
+      return redirect_to root_path, alert: "Pousada inativa"
     end
   end
 
   def new
+    return redirect_to root_path, alert: "Você já possui uma pousada cadastrada" if current_owner.inn
     @inn = Inn.new
   end
 
   def create
-    @inn = Inn.new(inn_params)
-    @inn.owner = current_owner
+    return redirect_to root_path, alert: "Você já possui uma pousada cadastrada" if current_owner.inn
+    @inn = current_owner.build_inn(inn_params)
     if @inn.save
       return redirect_to @inn, notice: "Pousada cadastrada com sucesso"
     end
@@ -51,19 +57,6 @@ class InnsController < ApplicationController
 
 
   private
-
-  def set_inn
-    @inn = Inn.find(params[:id])
-    if !@inn.active && current_owner != @inn.owner
-      return redirect_to root_path, alert: "Pousada inativa"
-    end
-  end
-
-  def owner_has_inn
-    if current_owner.inn.present?
-      return redirect_to root_path, alert: "Você já possui uma pousada cadastrada"
-    end
-  end
 
   def inn_params
     inn_params = params.require(:inn).permit(:trade_name, :corporate_name, :cnpj, :phone, :email, :address,

@@ -35,7 +35,7 @@ describe "Usuário vê a página inicial" do
     visit root_path
 
     within '#mais-recentes' do
-    expect(page).to have_content "mais recentes"
+    expect(page).to have_content "Mais recentes"
       expect(page).to have_content "Pousada Ribeiropolis"
       expect(page).to have_content "Pousada Santos"
       expect(page).to have_content "Pousada Itanhaem"

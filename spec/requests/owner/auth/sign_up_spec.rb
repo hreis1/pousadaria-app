@@ -19,4 +19,24 @@ describe "Dono da pousada se cadastra", type: :request do
     expect(response).to redirect_to(root_path)
     expect(flash[:alert]).to eq("Você já está autenticado.")
   end
+
+  it "e tenta acessar página de login" do
+    dono = Owner.create!(email: "dono@email.com", password: "senhadono")
+    login_as dono
+
+    get new_owner_session_path
+
+    expect(response).to redirect_to(root_path)
+    expect(flash[:alert]).to eq("Você já está autenticado.")
+  end
+
+  it "e é redirecionado para a página de cadastro de pousada" do
+    dono = Owner.create!(email: "dono@email.com", password:"senhadono")
+    login_as dono
+
+    get root_path
+
+    expect(response).to redirect_to(new_inn_path)
+    expect(flash[:alert]).to eq("Você precisa cadastrar uma pousada para continuar.")
+  end
 end
