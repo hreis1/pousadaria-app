@@ -121,4 +121,6 @@ describe "Dono edita quarto" do
     expect(page).to have_content("Preço personalizado apagado com sucesso!")
     expect(page).not_to have_content("R$ 50,00 de #{1.day.ago.strftime("%d/%m/%Y")} até #{1.day.from_now.strftime("%d/%m/%Y")}")
   end
+
+  
 end

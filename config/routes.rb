@@ -6,12 +6,11 @@ Rails.application.routes.draw do
   get 'cities', to: 'home#cities'
 
   resources :inns, only: [:show, :new, :create, :edit, :update] do
+    resources :rooms, only: [:show, :new, :create, :edit, :update]
     get 'search', on: :collection
-    resources :rooms, only: [:show, :new, :create, :edit, :update] do
-      resources :custom_prices, only: [:new, :create, :destroy]
-    end
   end
   resources :rooms do
+    resources :custom_prices, only: [:new, :create, :destroy]
     resources :reservations, only: [:new, :create] do
       get 'check_availability', on: :collection
     end

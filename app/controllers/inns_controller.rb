@@ -1,10 +1,10 @@
 class InnsController < ApplicationController
   before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
-  before_action :set_inn, only: [:show, :edit, :update]
   before_action :owner_has_inn, only: [:new, :create]
   before_action only: [:edit, :update] do
     check_owner(params[:id])
   end
+  before_action :set_inn, only: [:show] 
 
   def show
     @inn = Inn.find(params[:id])

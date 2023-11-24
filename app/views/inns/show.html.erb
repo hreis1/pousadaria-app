@@ -24,11 +24,11 @@
               <p><%= CustomPrice.model_name.human(count: 2) %>:</p>
               <% room.custom_prices.each do |cp| %>
                 <p><%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %>
-                <%= button_to "Apagar Preço Personalizado",  inn_room_custom_price_path(@inn, room, cp), method: :delete %> </p>
+                <%= button_to "Apagar Preço Personalizado",  room_custom_price_path(@inn, room, cp), method: :delete %> </p>
               <% end %>
             <% end %>
             <%= link_to "Editar", edit_inn_room_path(@inn, room) %>
-            <%= link_to "Adicionar Preço Personalizado", new_inn_room_custom_price_path(@inn, room) %>
+            <%= link_to "Adicionar Preço Personalizado", new_room_custom_price_path(@inn, room) %>
           <% end %>
         </div>
       <% end %>

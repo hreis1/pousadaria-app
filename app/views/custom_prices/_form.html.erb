@@ -1,4 +1,4 @@
-<%= form_with model:[@room.inn, @room, @custom_price] do |f| %>
+<%= form_with model:[@room, @custom_price] do |f| %>
 
   <%= f.label :start_date, "Data de início" %>
   <%= f.date_field :start_date %>
