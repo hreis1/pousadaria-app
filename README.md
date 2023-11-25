@@ -12,15 +12,19 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 <details>
 <summary>Cadastrar Pousada</summary>
 
-- [X] Permitir que donos de pousadas cadastrem sua pousada fornecendo nome fantasia, razão social, CNPJ, telefone para contato, e-mail para contato e endereço completo com endereço, bairro, estado, cidade e CEP.
-- [X] Permitir que donos de pousadas cadastrem uma descrição de sua pousada, os meios de pagamentos aceitos, informar se a pousada aceita ou não pets e cadastrar um texto com políticas de uso da pousada.
+- [X] Permitir que donos de pousadas cadastrem sua pousada fornecendo nome fantasia,
+ razão social, CNPJ, telefone para contato, e-mail para contato e endereço completo
+ com endereço, bairro, estado, cidade e CEP.
+- [X] Permitir que donos de pousadas cadastrem uma descrição de sua pousada, os
+ meios de pagamentos aceitos, informar se a pousada aceita ou não pets e cadastrar 
+ um texto com políticas de uso da pousada.
 - [X] Permitir que donos de pousadas cadastrem um horário padrão para check-in e check-out.
 - [X] Permitir que somente os donos de pousadas editem os dados de sua própria pousada.
 - [X] Não permitir que donos de pousadas excluam sua pousada.
 - [X] Permitir que cada dono de pousada possua somente uma pousada cadastrada.
 - [X] Permitir que donos de pousadas indiquem se sua pousada está ativa ou não na plataforma.
 - [X] Não permitir que pousadas desativadas sejam listadas nas buscas para visitantes.
-- [ ] Não permitir que pousadas desativadas aceitem novas reservas.
+- [X] Não permitir que pousadas desativadas aceitem novas reservas.
 </details>
 
 <details>

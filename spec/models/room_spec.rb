@@ -67,6 +67,20 @@ RSpec.describe Room, type: :model do
       end
     end
   end
+
+  describe "#is_available?" do
+    it "Quando quarto está disponível" do
+      quarto = Room.new(is_available: true)
+
+      expect(quarto.is_available?).to eq true
+    end
+
+    it "Quando quarto não está disponível" do
+      quarto = Room.new(is_available: false)
+
+      expect(quarto.is_available?).to eq false
+    end
+  end
 end
 
 

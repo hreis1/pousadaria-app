@@ -4,11 +4,12 @@ class Reservation < ApplicationRecord
   validates :checkin, :checkout, :number_of_guests, :room, presence: true
   validates :number_of_guests, numericality: { greater_than: 0 }
   validates :code, uniqueness: true
-
+  
   validate :checkin_cannot_be_less_than_today, on: :create
-  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy, on: :create
+  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy
   validate :checkin_cannot_be_greater_than_checkout, on: :create
   validate :range_cannot_be_booked, on: :create
+  validate :room_cannot_be_unavailable, on: :create
 
   before_validation :generate_code, on: :create
 
@@ -58,12 +59,16 @@ class Reservation < ApplicationRecord
   end
 
 
-
   private
-
 
   def generate_code
     self.code = SecureRandom.alphanumeric(8).upcase
+  end
+  
+  def room_cannot_be_unavailable
+    if room && !room.is_available
+      errors.add(:room, 'não está disponível')
+    end
   end
   
   def range_cannot_be_booked
@@ -77,7 +82,6 @@ class Reservation < ApplicationRecord
       end
     end
   end
-
 
   def checkin_cannot_be_greater_than_checkout
     if checkin && checkout && checkin >= checkout

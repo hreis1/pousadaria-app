@@ -1,6 +1,6 @@
 class ReservationsController < ApplicationController
   DAYS_TO_CANCEL_RESERVATION = 7
-  before_action :authenticate_user!, only: [:index, :create, :my_reservations, :cancel_reservation]
+  before_action :authenticate_user!, only: [:index, :create]
   before_action :authenticate_owner!, only: [:owner_reservations]
 
   def my_reservations
@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
 
   def create
     @room = Room.find(params[:room_id])
-    @reservation = Reservation.new(session[:reservation])
+    @reservation = Reservation.new(reservation_params)
     @reservation.room = @room
     @reservation.user_id = current_user.id
     if @reservation.save
@@ -41,7 +41,6 @@ class ReservationsController < ApplicationController
     if @reservation.valid?
       @total_value = @reservation.total_value
       flash.now[:notice] = "Reserva disponível"
-      session[:reservation] = @reservation.attributes
       return render :check_availability
     end
     flash.now[:alert] = "Reserva não disponível"
