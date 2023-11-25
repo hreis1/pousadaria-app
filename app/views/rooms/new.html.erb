@@ -2,7 +2,7 @@
   <h2>Cadastrar Quarto</h2>
 
   <% if @room.errors.any? %>
-    <div>
+    <div class="alert alert-danger">
       <% @room.errors.full_messages.each do |message| %>
         <p><%= message %></p>
       <% end %>

@@ -5,7 +5,7 @@ class HomeController < ApplicationController
   end
 
   def cities
-    @inns = Inn.where(city: params[:city], active: true).order(trade_name: :desc)
+    @inns = Inn.where(city: params[:city], active: true).order(trade_name: :asc)
     @city = params[:city]
   end
 end

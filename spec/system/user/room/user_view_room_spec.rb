@@ -72,6 +72,6 @@ describe "Usuário vê quartos de uma pousada" do
     
     expect(page).not_to have_content("Preços Personalizados:")
     expect(page).not_to have_content("R$ 10,00 de #{1.day.ago.strftime("%d/%m/%Y")} até #{3.day.from_now.strftime("%d/%m/%Y")}")
-    expect(page).not_to have_content("R$ 10,00 de #{5.day.ago.strftime("%d/%m/%Y")} até #{10.day.from_now.strftime("%d/%m/%Y")}")
+    expect(page).not_to have_content("R$ 13,00 de #{5.day.from_now.strftime("%d/%m/%Y")} até #{10.day.from_now.strftime("%d/%m/%Y")}")
   end
 end

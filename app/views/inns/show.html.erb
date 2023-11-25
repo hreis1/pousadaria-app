@@ -8,36 +8,10 @@
       <li class="list-group-item"><%= Inn.human_attribute_name(:corporate_name) %>: <%= @inn.corporate_name %></li>
     </ul>
     <div>
-      <%= link_to "Editar", edit_inn_path(@inn), class: "btn btn-secondary btn-sm" %>
       <%= link_to "Cadastrar Quarto", new_inn_room_path(@inn), class: "btn btn-primary btn-sm" %>
+      <%= link_to "Editar", edit_inn_path(@inn), class: "btn btn-secondary btn-sm" %>
     </div>
   <% end %>
 </section>
-
-<section id="inn-rooms">
-  <h2>Quartos</h2>
-
-  <% if @rooms.present? %>
-    <% @rooms.each do |room| %>
-      <div id="room-<%= room.id %>">
-        <%= render '/rooms/room', room: room %>
-        <% if room.is_available? %>
-          <p><%= link_to "Reservar", new_room_reservation_path(room) %></p>
-        <% end %>
-        <% if current_owner == @inn.owner %>
-          <% if room.custom_prices %>
-            <p><%= CustomPrice.model_name.human(count: 2) %>:</p>
-            <% room.custom_prices.each do |cp| %>
-              <p><%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %>
-              <%= button_to "Apagar Preço Personalizado",  room_custom_price_path(@inn, room, cp), method: :delete %> </p>
-            <% end %>
-          <% end %>
-          <%= link_to "Editar", edit_inn_room_path(@inn, room) %>
-          <%= link_to "Adicionar Preço Personalizado", new_room_custom_price_path(@inn, room) %>
-        <% end %>
-      </div>
-    <% end %>
-  <% else %>
-    <p>Não há quartos cadastrados</p>
-  <% end %>
-</section>
+<hr>
+<%= render 'rooms/index', rooms: @rooms %>

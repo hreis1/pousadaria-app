@@ -1,9 +1,15 @@
 <% if @custom_price.errors.any? %>
-<div>
-  <% @custom_price.errors.full_messages.each do |message| %>
-    <p><%= message %></p>
-  <% end %>
-</div>
+  <div class="alert alert-danger">
+    <% @custom_price.errors.full_messages.each do |message| %>
+      <p><%= message %></p>
+    <% end %>
+  </div>
 <% end %>
 
-<%= render 'form' %>
+<section id="new-custom-price" class="row">
+  <h2>Cadastrar Preço Personalizado</h2>
+  <hr>
+  <div class="col-sm-3">
+    <%= render 'form' %>
+  </div>
+</section>

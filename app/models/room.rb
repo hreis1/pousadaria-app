@@ -4,6 +4,7 @@ class Room < ApplicationRecord
 
   belongs_to :inn
 
+  has_one :owner, through: :inn
   has_many :custom_prices
   has_many :reservations
 

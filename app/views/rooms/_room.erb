@@ -1,14 +1,16 @@
-<h2><%= room.name %></h2>
+<h3><%= room.name %></h3>
 
-<p><%= Room.human_attribute_name(:description) %>: <%= room.description %></p>
-<p><%= Room.human_attribute_name(:dimension) %>: <%= room.dimension %> m²</p>
-<p><%= Room.human_attribute_name(:max_occupancy) %>: <%= room.max_occupancy %> pessoas</p>
-<p><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.current_daily_rate) %></p>
-<p><%= Room.human_attribute_name(:has_bathroom) %>: <%= t(room.has_bathroom?) %></p>
-<p><%= Room.human_attribute_name(:has_balcony) %>: <%= t(room.has_balcony?) %></p>
-<p><%= Room.human_attribute_name(:has_air_conditioning) %>: <%= t(room.has_air_conditioning?) %></p>
-<p><%= Room.human_attribute_name(:has_tv) %>: <%= t(room.has_tv?) %></p>
-<p><%= Room.human_attribute_name(:has_closet) %>: <%= t(room.has_closet?) %></p>
-<p><%= Room.human_attribute_name(:has_safe) %>: <%= t(room.has_safe?) %></p>
-<p><%= Room.human_attribute_name(:is_accessible) %>: <%= t(room.is_accessible?) %></p>
-<p><%= Room.human_attribute_name(:is_available) %>: <%= t(room.is_available?) %></p>
+<ul>
+  <li class="list-group-item"><%= Room.human_attribute_name(:description) %>: <%= room.description %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:dimension) %>: <%= room.dimension %> m²</li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:max_occupancy) %>: <%= room.max_occupancy %> pessoas</li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:daily_rate) %>: <%= number_to_currency(room.current_daily_rate) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_bathroom) %>: <%= t(room.has_bathroom?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_balcony) %>: <%= t(room.has_balcony?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_air_conditioning) %>: <%= t(room.has_air_conditioning?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_tv) %>: <%= t(room.has_tv?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_closet) %>: <%= t(room.has_closet?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:has_safe) %>: <%= t(room.has_safe?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:is_accessible) %>: <%= t(room.is_accessible?) %></li>
+  <li class="list-group-item"><%= Room.human_attribute_name(:is_available) %>: <%= t(room.is_available?) %></li>
+</ul>

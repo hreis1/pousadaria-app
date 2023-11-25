@@ -1,9 +1,6 @@
 class CustomPricesController < ApplicationController
   before_action :authenticate_owner!
-  before_action do
-    set_room
-    check_owner(@room.inn.id)
-  end
+  before_action :set_room_and_inn
 
   def new
     @custom_price = CustomPrice.new
@@ -12,7 +9,7 @@ class CustomPricesController < ApplicationController
   def create
     @custom_price = @room.custom_prices.build(custom_price_params)
     if @custom_price.save
-      return redirect_to inn_room_path(@room.inn, @room), notice: "Preço personalizado cadastrado com sucesso!"
+      return redirect_to inn_path(@room.inn), notice: "Preço personalizado cadastrado com sucesso!"
     end
     flash[:alert] = "Não foi possível cadastrar o preço personalizado"
     render :new
@@ -28,10 +25,18 @@ class CustomPricesController < ApplicationController
     end
   end
 
+  
   private
 
-  def set_room
-    @room = Room.find(params[:room_id])
+  def set_room_and_inn
+    begin
+      @room = Room.find(params[:room_id])
+    rescue ActiveRecord::RecordNotFound
+      redirect_to root_path, alert: "Quarto não encontrado"
+    end
+    if current_owner != @room.owner
+      redirect_to root_path, alert: "Você não tem permissão para acessar essa página"
+    end
   end
 
   def custom_price_params

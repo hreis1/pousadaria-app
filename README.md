@@ -47,7 +47,6 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 - [X] Permitir que somente os donos de pousadas editem os preços personalizados de um quarto de sua própria pousada.
 - [X] Permitir que donos de pousadas excluam preços personalizados de um quarto de sua pousada.
 - [X] Exibir a lista de preços personalizados dentro da tela de detalhes de um quarto.
-- [ ] Permitir que donos de pousadas indiquem se um preço personalizado está ativo ou não.
 
 </details>
 

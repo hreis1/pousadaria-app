@@ -1,0 +1,43 @@
+<section id="inn-rooms">
+  <h2><%= Room.model_name.human(count: 2) %></h2>
+
+  <% if @rooms.present? %>
+    <% @rooms.each do |room| %>
+      <div id="room-<%= room.id %>" class="row">
+        
+        <div class="col-sm-6">
+          <%= render '/rooms/room', room: room %>
+          
+          <% if room.is_available? %>
+            <%= link_to "Reservar", new_room_reservation_path(room), class: "btn btn-primary btn-sm" %>
+          <% end %>
+          
+          <% if current_owner == @inn.owner %>
+            <%= link_to "Editar", edit_inn_room_path(@inn, room), class: "btn btn-secondary btn-sm" %>
+            <%= link_to "Adicionar Preço Personalizado", new_room_custom_price_path(room), class: "btn btn-secondary btn-sm" %>
+        </div>
+
+        <div class="col-sm-6">
+            <% if room.custom_prices.any? %>
+              <h4><%= CustomPrice.model_name.human(count: 2) %>:</h4>
+                <ul>
+                  <% room.custom_prices.each do |cp| %>
+                    <li class="row">
+                      <div class="col-7">
+                        <%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %>
+                      </div>
+                      <div class="col-5">
+                        <%= button_to "Apagar",  room_custom_price_path(room, cp), method: :delete, class: "btn btn-danger btn-sm" %>
+                      </div>
+                    </li>
+                  <% end %>
+                </ul>
+            <% end %>
+          <% end %>
+        </div>
+      </div>
+    <% end %>
+  <% else %>
+    <p>Não há quartos cadastrados</p>
+  <% end %>
+</section>

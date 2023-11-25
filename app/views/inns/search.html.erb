@@ -1,11 +1,12 @@
-<section id="search-inns">
+<section id="search-inns" class="row">
     <h2>Resultados da busca por: <%= @query %></h2>
+    <hr>
   </div>
 
-  <%= @inns.count %> <%= Inn.model_name.human(count: @inns.count).downcase %> <%= t(:found, count: @inns.count) %>
+  <h4><%= @inns.count %> <%= Inn.model_name.human(count: @inns.count).downcase %> <%= t(:found, count: @inns.count) %></h4>
 
   <% @inns.each do |inn| %>
-    <h3><%= link_to inn.trade_name, inn_path(inn) %></h3>
-    <p><%= inn.full_address %></p>
+    <h5><%= link_to inn.trade_name, inn_path(inn) %></h5>
+    <p><%= inn.city %></p>
   <% end %>
 </section>
