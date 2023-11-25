@@ -1,23 +1,12 @@
 class InnsController < ApplicationController
   before_action :authenticate_owner!, only: [:new, :create, :edit, :update]
-  before_action only: [:edit, :update] do
-    check_owner(params[:id])
-  end
+  before_action :set_inn, only: [:show, :edit, :update]
+  before_action :check_owner, only: [:edit, :update]
 
   def show
-    begin
-      @inn = Inn.find(params[:id])
-    rescue
-      return redirect_to root_path, alert: "Pousada não encontrada"
-    end
-
-    if current_owner.present? && current_owner == @inn.owner
-      @rooms = @inn.rooms
-    elsif @inn.active?
-      @rooms = @inn.rooms.where(is_available: true)
-    else
-      return redirect_to root_path, alert: "Pousada inativa"
-    end
+    return @rooms = @inn.rooms if current_owner.present? && current_owner == @inn.owner
+    return @rooms = @inn.rooms.where(is_available: true) if @inn.active?
+    redirect_to root_path, alert: "Pousada inativa"
   end
 
   def new
@@ -28,27 +17,22 @@ class InnsController < ApplicationController
   def create
     return redirect_to root_path, alert: "Você já possui uma pousada cadastrada" if current_owner.inn
     @inn = current_owner.build_inn(inn_params)
-    if @inn.save
-      return redirect_to @inn, notice: "Pousada cadastrada com sucesso"
-    end
+    return redirect_to @inn, notice: "Pousada cadastrada com sucesso" if @inn.save
+    flash.now[:alert] = "Não foi possível cadastrar a pousada"
     render :new
   end
 
   def edit; end
 
   def update
-    if @inn.update(inn_params)
-      return redirect_to @inn, notice: "Pousada atualizada com sucesso"
-    end
+    return redirect_to @inn, notice: "Pousada atualizada com sucesso" if @inn.update(inn_params)
     flash.now[:alert] = "Não foi possível atualizar a pousada"
     render :edit
   end
 
   def search
     @query = params[:query]
-    if @query.blank?
-      return redirect_to root_path, alert: "Digite o Nome da Pousada"
-    end
+    return redirect_to root_path, alert: "Digite o Nome da Pousada" if @query.blank?
     @inns = Inn.where("trade_name LIKE :query OR neighborhood LIKE :query OR city LIKE :query", query: "%#{@query}%")
                .where(active: true)
                .order(:trade_name)
@@ -57,6 +41,18 @@ class InnsController < ApplicationController
 
 
   private
+
+  def set_inn
+    begin
+      @inn = Inn.find(params[:id])
+    rescue
+      return redirect_to root_path, alert: "Pousada não encontrada"
+    end
+  end
+
+  def check_owner
+    redirect_to root_path, alert: "Você não tem permissão para acessar essa página" unless current_owner == @inn.owner
+  end
 
   def inn_params
     inn_params = params.require(:inn).permit(:trade_name, :corporate_name, :cnpj, :phone, :email, :address,

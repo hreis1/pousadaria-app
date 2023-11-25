@@ -10,15 +10,15 @@ describe "Usuário cancela reserva" do
     login_as hospede, scope: :user
 
     visit root_path
-    click_on "Minhas reservas"
+    click_on "Minhas Reservas"
     click_on "Cancelar"
 
     expect(page).to have_content("Reserva cancelada com sucesso")
     expect(page).to have_content("Reservas")
     expect(page).to have_content("Quarto Rosa")
-    expect(page).to have_content("Horário de checkin: #{Inn.last.checkin_time.strftime("%H:%M")}")
+    expect(page).to have_content("Horário de check-in: #{Inn.last.checkin_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de entrada: #{reserva.checkin.strftime("%d/%m/%Y")}")
-    expect(page).to have_content("Horário de checkout: #{Inn.last.checkout_time.strftime("%H:%M")}")
+    expect(page).to have_content("Horário de check-out: #{Inn.last.checkout_time.strftime("%H:%M")}")
     expect(page).to have_content("Data de saída: #{reserva.checkout.strftime("%d/%m/%Y")}")
     expect(page).to have_content("Total: R$ 200,00")
     expect(page).to have_content("Formas de pagamento: Dinheiro, cartão de crédito ou débito")
@@ -34,7 +34,7 @@ describe "Usuário cancela reserva" do
     login_as hospede, scope: :user
 
     visit root_path
-    click_on "Minhas reservas"
+    click_on "Minhas Reservas"
     
     expect(page).not_to have_content("Cancelar")
   end
@@ -48,7 +48,7 @@ describe "Usuário cancela reserva" do
     login_as hospede, scope: :user
 
     visit root_path
-    click_on "Minhas reservas"
+    click_on "Minhas Reservas"
     
     expect(page).not_to have_content("Cancelar")
   end

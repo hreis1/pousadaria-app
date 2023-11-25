@@ -6,7 +6,7 @@ class Reservation < ApplicationRecord
   validates :code, uniqueness: true
   
   validate :checkin_cannot_be_less_than_today, on: :create
-  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy
+  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy, on: :create
   validate :checkin_cannot_be_greater_than_checkout, on: :create
   validate :range_cannot_be_booked, on: :create
   validate :room_cannot_be_unavailable, on: :create
@@ -41,7 +41,7 @@ class Reservation < ApplicationRecord
 
   def current_total_value
     total_value = 0
-    (checkin...Date.today).each do |date|
+    (checkin...Time.zone.today).each do |date|
       if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
         total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
       else
@@ -73,12 +73,8 @@ class Reservation < ApplicationRecord
   
   def range_cannot_be_booked
     if checkin && checkout && room
-      room.reservations.each do |reservation|
-        if checkin.between?(reservation.checkin, reservation.checkout) ||
-          checkout.between?(reservation.checkin, reservation.checkout)
-          errors.add(:checkin, 'já está reservado')
-          errors.add(:checkout, 'já está reservado')
-        end
+      if room.reservations.find_by("? between checkin and checkout OR ? between checkin and checkout", checkin, checkout)
+        errors.add(:room_id, 'já está reservado')
       end
     end
   end
@@ -96,7 +92,7 @@ class Reservation < ApplicationRecord
   end
 
   def checkin_cannot_be_less_than_today
-    if checkin && checkin < Date.today
+    if checkin && checkin < Time.zone.today
       errors.add(:checkin, 'deve ser maior que a data atual')
     end
   end

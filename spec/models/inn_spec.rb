@@ -105,14 +105,14 @@ RSpec.describe Inn, type: :model do
         pousada = Inn.new
         pousada.valid?
       
-        expect(pousada.errors.full_messages_for(:checkin_time)).to include('Horário de checkin não pode ficar em branco')
+        expect(pousada.errors.full_messages_for(:checkin_time)).to include('Horário de check-in não pode ficar em branco')
       end
 
       it 'Horário de checkout nao está presente' do
         pousada = Inn.new
         pousada.valid?
       
-        expect(pousada.errors.full_messages_for(:checkout_time)).to include('Horário de checkout não pode ficar em branco')
+        expect(pousada.errors.full_messages_for(:checkout_time)).to include('Horário de check-out não pode ficar em branco')
       end
 
       it 'Dono nao está presente' do

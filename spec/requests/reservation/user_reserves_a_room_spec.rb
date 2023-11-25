@@ -37,7 +37,7 @@ describe "Usuário faz reserva de pousada" do
     hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
     login_as hospede, scope: :user
 
-    post room_reservations_path(Inn.last), params: { reservation: { checkin: 2.days.from_now, checkout: 4.days.from_now, number_of_guests: 2 } }
+    post room_reservations_path(Inn.last), params: { reservation: { checkin: 2.days.from_now, checkout: 4.days.from_now, number_of_guests: 2 , room_id: Room.last.id} }
 
     expect(flash[:notice]).to eq "Reserva efetuada com sucesso"
     expect(Reservation.count).to eq 1

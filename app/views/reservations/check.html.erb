@@ -1,0 +1,13 @@
+<h3>Confirmar Reserva</h3>
+
+<ul>
+  <li class="list-group-item"><%= Reservation.human_attribute_name(:room) %>: <%= @room.name %></li>
+  <li class="list-group-item"><%= Reservation.human_attribute_name(:checkin) %>: <%= @reservation.checkin.strftime("%d/%m/%Y") %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:checkin_time) %>: <%= @room.inn.checkin_time.strftime("%H:%M") %></li>
+  <li class="list-group-item"><%= Reservation.human_attribute_name(:checkout) %>: <%= @reservation.checkout.strftime("%d/%m/%Y") %></li>
+  <li class="list-group-item"><%= Inn.human_attribute_name(:checkout_time) %>: <%= @room.inn.checkout_time.strftime("%H:%M") %></li>
+  <li class="list-group-item"><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= @reservation.number_of_guests %></li>
+  <li class="list-group-item"><%= Reservation.human_attribute_name(:total_value) %>: <%= number_to_currency(@reservation.total_value) %></li>
+</ul>
+
+<%= button_to "Confirmar Reserva", room_reservations_path(@room, @reservation), params: { reservation: { checkin: @reservation.checkin, checkout: @reservation.checkout, number_of_guests: @reservation.number_of_guests, room_id: @room.id } }, method: :post, class: "btn btn-primary btn-sm" %>

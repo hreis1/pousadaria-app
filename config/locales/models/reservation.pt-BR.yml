@@ -18,3 +18,6 @@ pt-BR:
         checkout_at: 'Estadia finalizada'
         payment_method: 'Forma de pagamento'
         amount_paid: 'Valor pago'
+        room_id: 'Quarto'
+        total_amount: 'Valor total'
+        total_value: 'Valor total'

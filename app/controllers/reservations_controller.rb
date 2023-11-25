@@ -6,11 +6,9 @@ class ReservationsController < ApplicationController
   def my_reservations
     @reservations = current_user.reservations
   end
-
   def owner_reservations
     @reservations = current_owner.inn.reservations
   end
-
   def owner_reservation
     @reservation = Reservation.find(params[:id])
   end
@@ -20,11 +18,21 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.new
   end
 
+  def check
+    @room = Room.find(params[:room_id])
+    @reservation = @room.reservations.build(reservation_params)
+    if @reservation.valid?
+      @total_value = @reservation.total_value
+      flash.now[:notice] = "Reserva disponível"
+      return render :check
+    end
+    flash.now[:alert] = "Reserva não disponível"
+    render :new
+  end
+  
   def create
     @room = Room.find(params[:room_id])
-    @reservation = Reservation.new(reservation_params)
-    @reservation.room = @room
-    @reservation.user_id = current_user.id
+    @reservation = current_user.reservations.build(reservation_params)
     if @reservation.save
       flash[:notice] = "Reserva efetuada com sucesso"
       redirect_to my_reservations_path
@@ -32,19 +40,6 @@ class ReservationsController < ApplicationController
       flash.now[:alert] = "Não foi possível efetuar a reserva"
       render :new
     end
-  end
-
-  def check_availability
-    @room = Room.find(params[:room_id])
-    @reservation = Reservation.new(reservation_params)
-    @reservation.room = @room
-    if @reservation.valid?
-      @total_value = @reservation.total_value
-      flash.now[:notice] = "Reserva disponível"
-      return render :check_availability
-    end
-    flash.now[:alert] = "Reserva não disponível"
-    render :new
   end
 
   def cancel_reservation
@@ -104,6 +99,7 @@ class ReservationsController < ApplicationController
     render :owner_reservations
   end
   
+
   private
 
   def reservation_params

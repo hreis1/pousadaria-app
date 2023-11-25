@@ -30,8 +30,8 @@ describe "Dono edita pousada" do
     fill_in "Formas de pagamento", with: "Dinheiro, cartão de crédito ou débito"
     uncheck "Aceita pets"
     fill_in "Políticas", with: "Não aceitamos muito barulho"
-    fill_in "Horário de checkin", with: "12:00"
-    fill_in "Horário de checkout", with: "12:00"
+    fill_in "Horário de check-in", with: "12:00"
+    fill_in "Horário de check-out", with: "12:00"
     click_button "Atualizar Pousada"
 
     expect(current_path).to eq(inn_path(pousada))
@@ -44,8 +44,8 @@ describe "Dono edita pousada" do
     expect(page).to have_content("Formas de pagamento: Dinheiro, cartão de crédito ou débito")
     expect(page).to have_content("Aceita pets: Não")
     expect(page).to have_content("Políticas: Não aceitamos muito barulho")
-    expect(page).to have_content("Horário de checkin: 12:00")
-    expect(page).to have_content("Horário de checkout: 12:00")
+    expect(page).to have_content("Horário de check-in: 12:00")
+    expect(page).to have_content("Horário de check-out: 12:00")
     expect(page).to have_content("Ativa: Sim")
   end
 
@@ -71,8 +71,8 @@ describe "Dono edita pousada" do
     fill_in "Descrição", with: ""
     fill_in "Formas de pagamento", with: ""
     fill_in "Políticas", with: ""
-    fill_in "Horário de checkin", with: ""
-    fill_in "Horário de checkout", with: ""
+    fill_in "Horário de check-in", with: ""
+    fill_in "Horário de check-out", with: ""
     click_button "Atualizar Pousada"
     
     expect(page).to have_content("Não foi possível atualizar a pousada")
@@ -90,8 +90,8 @@ describe "Dono edita pousada" do
     expect(page).to have_content("Descrição não pode ficar em branco")
     expect(page).to have_content("Formas de pagamento não pode ficar em branco")
     expect(page).to have_content("Políticas não pode ficar em branco")
-    expect(page).to have_content("Horário de checkin não pode ficar em branco")
-    expect(page).to have_content("Horário de checkout não pode ficar em branco")
+    expect(page).to have_content("Horário de check-in não pode ficar em branco")
+    expect(page).to have_content("Horário de check-out não pode ficar em branco")
   end
 
   it "e tenta editar outra pousada" do

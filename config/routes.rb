@@ -12,9 +12,12 @@ Rails.application.routes.draw do
   resources :rooms do
     resources :custom_prices, only: [:new, :create, :destroy]
     resources :reservations, only: [:new, :create] do
-      get 'check_availability', on: :collection
+      get 'check', on: :collection
     end
   end
+
+  resources :reservations, only: [:index, :show]
+
   get 'owner_reservations', to: 'reservations#owner_reservations'
   get 'owner_reservations/:id', to: 'reservations#owner_reservation', as: :owner_reservation
   post 'owner_reservations/:id/checkin', to: 'reservations#checkin', as: :checkin

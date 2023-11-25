@@ -17,8 +17,8 @@ describe "Dono vê sua pousada" do
     expect(page).to have_content("Formas de pagamento: Dinheiro, cartão de crédito ou débito")
     expect(page).to have_content("Aceita pets: Sim")
     expect(page).to have_content("Políticas: Não aceitamos animais de grande porte")
-    expect(page).to have_content("Horário de checkin: 12:00")
-    expect(page).to have_content("Horário de checkout: 12:00")
+    expect(page).to have_content("Horário de check-in: 12:00")
+    expect(page).to have_content("Horário de check-out: 12:00")
     expect(page).not_to have_link("Editar")
     expect(page).not_to have_content "Pousada Ribeiropolis LTDA"
     expect(page).not_to have_content "12345678910111"
@@ -41,8 +41,8 @@ describe "Dono vê sua pousada" do
     expect(page).to have_content("Formas de pagamento: Dinheiro, cartão de crédito ou débito")
     expect(page).to have_content("Aceita pets: Sim")
     expect(page).to have_content("Políticas: Não aceitamos animais de grande porte")
-    expect(page).to have_content("Horário de checkin: 12:00")
-    expect(page).to have_content("Horário de checkout: 12:00")
+    expect(page).to have_content("Horário de check-in: 12:00")
+    expect(page).to have_content("Horário de check-out: 12:00")
     expect(page).to have_content("Ativa: Sim")
     expect(page).to have_content("CNPJ: 12345678910111")
     expect(page).to have_content("Razão Social: Pousada Ribeiropolis LTDA")

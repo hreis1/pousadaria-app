@@ -47,6 +47,19 @@ RSpec.describe Reservation, type: :model do
 
       expect(reservation.errors[:number_of_guests]).to include('deve ser menor ou igual a capacidade máxima do quarto')
     end
+
+    it "não deve ser possível reservar um quarto que não está disponível" do
+      dono = Owner.create!(email: "d@email.com", password: "password")
+      Inn.create!(owner: dono, trade_name: "Pousada Diamante", corporate_name: "Pousada Diamante LTDA", cnpj: "12345678910115", phone: "11999999995", email: "pd@email.com", address: "Avenida das Araras", address_number: "10", neighborhood:"Araras", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro", polices: "Não aceitamos som automotivo", checkin_time: "12:00", checkout_time: "12:00")
+      quarto = Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "40m²", max_occupancy: 2, daily_rate: 200, has_bathroom: true, has_balcony: true, has_air_conditioning: true, has_tv: true, has_closet: true, has_safe: true, is_accessible: true, inn: Inn.last)
+      hospede = User.create!(name: "hospede", email: "h@email.com", cpf: "12345678910", password: "password")
+      primeira_reserva = Reservation.create!(checkin: 1.day.from_now, checkout: 4.day.from_now, number_of_guests: 2, room: quarto, user: hospede)
+      segunda_reserva = Reservation.new(checkin: 1.day.from_now, checkout: 4.day.from_now, number_of_guests: 2, room: quarto, user: hospede)
+
+      segunda_reserva.valid?
+
+      expect(segunda_reserva.errors[:room_id]).to include('já está reservado')
+    end
   end
 
   # it "deve ter um usuário" do
@@ -59,7 +72,7 @@ RSpec.describe Reservation, type: :model do
   #   expect(result).to eq(false)
   # end
 
-  it "e verificia se o quarto está disponível mesmo sem usuário" do
+  it "e verificia se o quarto está disponível mesmo sem estar logado" do
     dono = Owner.create!(email: "dono@email", password: "senhadono")
     pousada = Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood: "Liberdade",  state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
     quarto = Room.create!(inn: pousada, name: "Quarto Simples", description: "Quarto simples com cama de casal", dimension: "20m²", max_occupancy: 2, daily_rate: 100)
