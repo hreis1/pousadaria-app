@@ -1,7 +1,6 @@
 class ReservationsController < ApplicationController
-  DAYS_TO_CANCEL_RESERVATION = 7
   before_action :authenticate_user!, only: [:create]
-  before_action :authenticate_owner!, only: [:owner_reservations]
+  before_action :authenticate_owner!, only: [:owner_reservations, :cancel]
 
   def owner_reservations
     @reservations = current_owner.inn.reservations
@@ -41,17 +40,12 @@ class ReservationsController < ApplicationController
 
   def cancel
     @reservation = Reservation.find(params[:id])
-
-    if @reservation.owner == current_owner && @reservation.status == "pending"
+    if @reservation.owner == current_owner && @reservation.status == "pending" && @reservation.checkin < 2.days.from_now
       @reservation.canceled!
       return redirect_to owner_reservations_path, notice: "Reserva cancelada com sucesso"
     end
-    if @reservation.user == current_user && @reservation.status == "pending" && @reservation.checkin > 7.days.from_now
-      @reservation.canceled!
-      redirect_to user_reservations_path, notice: "Reserva cancelada com sucesso"
-    else
-      redirect_to root_path, alert: "Não foi possível cancelar a reserva"
-    end
+    flash.now[:alert] = "Não foi possível cancelar a reserva"
+    redirect_to owner_reservations_path
   end
 
   def checkin

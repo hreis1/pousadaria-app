@@ -74,7 +74,7 @@ class Reservation < ApplicationRecord
   
   def range_cannot_be_booked
     if checkin && checkout && room
-      if room.reservations.find_by("? between checkin and checkout OR ? between checkin and checkout", checkin, checkout)
+      if room.reservations.where(status: [:pending, :active]).find_by("? between checkin and checkout OR ? between checkin and checkout", checkin, checkout)
         errors.add(:room_id, 'já está reservado')
       end
     end

@@ -1,6 +1,6 @@
 <h2>Reservas</h2>
 
-<% if @reservations.any? %>
+<% if @reservations.present? %>
   <% @reservations.each do |reservation| %>
     <div>
       <h4>Código da reserva: <%= link_to reservation.code, owner_reservation_path(reservation) %></h4>
