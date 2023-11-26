@@ -1,0 +1,30 @@
+<section class="index-reservations row">
+  <h2>Reservas</h2>
+  <hr>
+  
+  <% if @reservations.present? %>
+      <% @reservations.each do |reservation| %>
+        <div class="col-sm-6">
+          
+          <h4>Código da reserva: <%= reservation.code %></h4>
+          <ul>
+            <li class="list-group-item"><%= reservation.room.inn.trade_name %></li>
+            <li class="list-group-item"><%= Room.model_name.human %>: <%= reservation.room.name %></li>
+            <li class="list-group-item"><%= Reservation.human_attribute_name(:checkin) %>: <%= reservation.checkin.strftime("%d/%m/%Y") %></li>
+            <li class="list-group-item"><%= Inn.human_attribute_name(:checkin_time) %>: <%= reservation.room.inn.checkin_time.strftime("%H:%M") %></li>
+            <li class="list-group-item"><%= Reservation.human_attribute_name(:checkout) %>: <%= reservation.checkout.strftime("%d/%m/%Y") %></li>
+            <li class="list-group-item"><%= Inn.human_attribute_name(:checkout_time) %>: <%= reservation.room.inn.checkout_time.strftime("%H:%M") %></li>
+            <li class="list-group-item">Total: <%= number_to_currency(reservation.total_value) %></li>
+            <li class="list-group-item"><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= reservation.number_of_guests %></li>
+            <li class="list-group-item"><%= Inn.human_attribute_name(:payment_methods) %>: <%= reservation.room.inn.payment_methods %></li>
+            <li class="list-group-item"><%= Reservation.human_attribute_name(:status) %>: <%= t(reservation.status) %></li>
+            <% if reservation.pending? && reservation.checkin > 7.days.from_now %>
+              <%= button_to "Cancelar", cancel_user_reservation_path(reservation), method: :post, class: "btn btn-danger" %>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+  <% else %>
+    <p>Você ainda não possui reservas</p>
+  <% end %>
+</section>

@@ -14,6 +14,7 @@ class Reservation < ApplicationRecord
   before_validation :generate_code, on: :create
 
   belongs_to :room
+  has_one :owner, through: :room
   belongs_to :user, optional: true
 
 

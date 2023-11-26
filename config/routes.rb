@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   post 'owner_reservations/:id/cancel', to: 'reservations#cancel', as: :cancel
   get 'active_stays', to: 'reservations#active_stays'
 
-  get 'my_reservations', to: 'reservations#my_reservations'
+  resources :user_reservations, only: [:index] do
+    post 'cancel', on: :member
+  end
+
   post 'cancel_reservation/:id', to: 'reservations#cancel_reservation', as: :cancel_reservation
 end

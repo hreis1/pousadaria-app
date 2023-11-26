@@ -1,11 +1,8 @@
 class ReservationsController < ApplicationController
   DAYS_TO_CANCEL_RESERVATION = 7
-  before_action :authenticate_user!, only: [:index, :create]
+  before_action :authenticate_user!, only: [:create]
   before_action :authenticate_owner!, only: [:owner_reservations]
 
-  def my_reservations
-    @reservations = current_user.reservations
-  end
   def owner_reservations
     @reservations = current_owner.inn.reservations
   end
@@ -35,21 +32,26 @@ class ReservationsController < ApplicationController
     @reservation = current_user.reservations.build(reservation_params)
     if @reservation.save
       flash[:notice] = "Reserva efetuada com sucesso"
-      redirect_to my_reservations_path
+      redirect_to user_reservations_path
     else
       flash.now[:alert] = "Não foi possível efetuar a reserva"
       render :new
     end
   end
 
-  def cancel_reservation
+  def cancel
     @reservation = Reservation.find(params[:id])
-    if @reservation.pending? && @reservation.checkin >= DAYS_TO_CANCEL_RESERVATION.days.from_now
+
+    if @reservation.owner == current_owner && @reservation.status == "pending"
       @reservation.canceled!
-      return redirect_to my_reservations_path, notice: "Reserva cancelada com sucesso"
+      return redirect_to owner_reservations_path, notice: "Reserva cancelada com sucesso"
     end
-    flash[:alert] = "Não foi possível cancelar a reserva"
-    redirect_to my_reservations_path
+    if @reservation.user == current_user && @reservation.status == "pending" && @reservation.checkin > 7.days.from_now
+      @reservation.canceled!
+      redirect_to user_reservations_path, notice: "Reserva cancelada com sucesso"
+    else
+      redirect_to root_path, alert: "Não foi possível cancelar a reserva"
+    end
   end
 
   def checkin
@@ -82,16 +84,6 @@ class ReservationsController < ApplicationController
     end
     flash[:alert] = "Não foi possível realizar o check-out"
     redirect_to owner_reservations_path(@reservation)
-  end
-  
-  def cancel
-    @reservation = Reservation.find(params[:id])
-    if @reservation.pending?
-      @reservation.canceled!
-      return redirect_to owner_reservations_path, notice: "Reserva cancelada com sucesso"
-    end
-    flash[:alert] = "Não foi possível cancelar a reserva"
-    redirect_to owner_reservations_path
   end
 
   def active_stays
