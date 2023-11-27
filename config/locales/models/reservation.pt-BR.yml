@@ -21,3 +21,5 @@ pt-BR:
         room_id: 'Quarto'
         total_amount: 'Valor total'
         total_value: 'Valor total'
+        rating: 'Nota'
+        review: 'Comentário'

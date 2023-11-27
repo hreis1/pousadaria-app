@@ -53,4 +53,24 @@ describe "Usuário vê reservas" do
     expect(page).not_to have_content("Quantidade de hóspedes: 1")
     expect(page).not_to have_content("Total: R$ 100,00")
   end
+
+  it "e faz avaliação de reserva" do
+    dono = Owner.create!(email: "d@email.com", password: "senhadono")
+    Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+    hospede = User.create!(name: "hospede", email: "h@email.com", password: "password", cpf: "12345678910")
+    reserva = Reservation.create!(room: Room.last, checkin: 0.days.ago , checkout: 5.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: 0.days.ago, checkout_at: 5.days.from_now, amount_paid: 600)
+    login_as hospede, scope: :user
+
+    visit root_path
+    click_on "Minhas Reservas"
+    click_on reserva.code
+    select "5", from: "Nota"
+    fill_in "Comentário", with: "Ótima pousada, recomendo!"
+    click_on "Avaliar"
+
+    expect(page).to have_content("Avaliação enviada com sucesso!")
+    expect(page).to have_content("Nota: 5")
+    expect(page).to have_content("Comentário: Ótima pousada, recomendo!")
+  end
 end

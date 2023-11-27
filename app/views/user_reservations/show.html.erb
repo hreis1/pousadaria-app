@@ -1,0 +1,19 @@
+<section class="user-reservations row">
+  <h2><%= Reservation.model_name.human %> <%= @reservation.code %></h2>
+  <hr>
+  <div class="col-md-6">
+    <%= render "reservation", reservation: @reservation %>
+  </div>
+  <div class="col-md-6">
+    <% if @reservation.finished? %>
+      <% if @reservation.rating.present? %>
+        <h3>Avaliação</h3>
+          <li class="list-group-item"><%= Reservation.human_attribute_name(:rating) %>: <%= @reservation.rating %></li>
+          <li class="list-group-item"><%= Reservation.human_attribute_name(:review) %>: <%= @reservation.review %></li>
+        </ul>
+      <% else %>
+        <%= render "rate", reservation: @reservation %>
+      <% end %>
+    <% end %>
+  </div>
+</section>

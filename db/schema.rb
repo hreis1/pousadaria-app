@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_22_031705) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_27_230710) do
   create_table "custom_prices", force: :cascade do |t|
     t.integer "room_id", null: false
     t.date "start_date"
@@ -73,6 +73,8 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_22_031705) do
     t.string "payment_method"
     t.string "amount_paid"
     t.string "integer"
+    t.integer "rating"
+    t.text "review"
     t.index ["room_id"], name: "index_reservations_on_room_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end

@@ -22,7 +22,8 @@ Rails.application.routes.draw do
     post 'checkout', on: :member
     post 'finish', on: :member
   end
-  resources :user_reservations, only: [:index] do
+  resources :user_reservations, only: [:index, :show] do
     post 'cancel', on: :member
+    patch 'rate', on: :member
   end
 end
