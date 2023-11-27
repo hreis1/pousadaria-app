@@ -1,23 +1,26 @@
-<h2>Reservas</h2>
+<section class="index-reservation row">
+  <h2>Reservas</h2>
+  <hr>
 
-<% if @reservations.present? %>
-  <% @reservations.each do |reservation| %>
-    <div>
-      <h4>Código da reserva: <%= link_to reservation.code, reservation_path(reservation) %></h4>
-      <% if reservation.active? || reservation.finished? %>
-        <p><%= Reservation.human_attribute_name(:checkin_at) %>: <%= reservation.checkin_at.strftime("%d/%m/%Y %H:%M") %></p>
+  <% if @reservations.present? %>
+    <% @reservations.each do |reservation| %>
+      <div>
+        <h4>Código da reserva: <%= link_to reservation.code, reservation_path(reservation) %></h4>
+        <% if reservation.active? || reservation.finished? %>
+          <p><%= Reservation.human_attribute_name(:checkin_at) %>: <%= reservation.checkin_at.strftime("%d/%m/%Y %H:%M") %></p>
+        <% end %>
+        <% if reservation.finished? %>
+          <p><%= Reservation.human_attribute_name(:checkout_at) %>: <%= reservation.checkout_at.strftime("%d/%m/%Y %H:%M") %></p>
+          <p><%= Reservation.human_attribute_name(:payment_method) %>: <%= reservation.payment_method %></p>
+          <p><%= Reservation.human_attribute_name(:amount_paid) %>: <%= number_to_currency(reservation.amount_paid) %></p>
+        <% end %>
+        <p><%= Room.model_name.human %>: <%= reservation.room.name %></p>
+        <p><%= Reservation.human_attribute_name(:checkin) %>: <%= reservation.checkin.strftime("%d/%m/%Y") %></p>
+        <p><%= Reservation.human_attribute_name(:checkout) %>: <%= reservation.checkout.strftime("%d/%m/%Y") %></p>
+        <p><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= reservation.number_of_guests %></p>
+        <p><%= Reservation.human_attribute_name(:status) %>: <%= t reservation.status %></p>
       <% end %>
-      <% if reservation.finished? %>
-        <p><%= Reservation.human_attribute_name(:checkout_at) %>: <%= reservation.checkout_at.strftime("%d/%m/%Y %H:%M") %></p>
-        <p><%= Reservation.human_attribute_name(:payment_method) %>: <%= reservation.payment_method %></p>
-        <p><%= Reservation.human_attribute_name(:amount_paid) %>: <%= number_to_currency(reservation.amount_paid) %></p>
-      <% end %>
-      <p><%= Room.model_name.human %>: <%= reservation.room.name %></p>
-      <p><%= Reservation.human_attribute_name(:checkin) %>: <%= reservation.checkin.strftime("%d/%m/%Y") %></p>
-      <p><%= Reservation.human_attribute_name(:checkout) %>: <%= reservation.checkout.strftime("%d/%m/%Y") %></p>
-      <p><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= reservation.number_of_guests %></p>
-      <p><%= Reservation.human_attribute_name(:status) %>: <%= t reservation.status %></p>
-    <% end %>
-<% else %>
-  <p>Você ainda não possui reservas</p>
-<% end %>
+  <% else %>
+    <p>Você ainda não possui reservas</p>
+  <% end %>
+</section>

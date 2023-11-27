@@ -29,34 +29,33 @@ class Reservation < ApplicationRecord
   end
 
   def total_value
-    total_value = 0
+    total = 0
     (checkin...checkout).each do |date|
-      if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
-        total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
-      else
-        total_value += self.room.daily_rate
-      end
+      total += calculate_price_for_date(date)
     end
-    total_value
+    total
   end
 
   def current_total_value
-    total_value = 0
-    (checkin...Time.zone.today).each do |date|
-      if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
-        total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
-      else
-        total_value += self.room.daily_rate
-      end
-      if date == Date.today && Time.zone.now.hour >= room.inn.checkout_time.hour
-        if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
-          total_value += self.room.custom_prices.find_by("? between start_date and end_date", date).price
-        else
-          total_value += self.room.daily_rate
-        end
-      end
+    total = 0
+    if checkout_at - checkin.to_datetime < 1.day
+      return calculate_price_for_date(checkin)
     end
-    total_value
+    (checkin...checkout_at.to_date).each do |date|
+      total += calculate_price_for_date(date)
+    end
+    if checkout_at.time.hour >= room.inn.checkout_time.hour
+      total += calculate_price_for_date(checkout_at.to_date)
+    end
+    total
+  end
+
+  def calculate_price_for_date(date)
+    if room.custom_prices && room.custom_prices.find_by("? between start_date and end_date", date)
+      room.custom_prices.find_by("? between start_date and end_date", date).price
+    else
+      room.daily_rate
+    end
   end
 
 

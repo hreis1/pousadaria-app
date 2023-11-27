@@ -143,4 +143,106 @@ RSpec.describe Reservation, type: :model do
       expect(reservation.status).to eq('pending')
     end
   end
+
+  describe  "#current_total_value" do
+    it "deve ser igual ao valor da diária se for feito o checkin e checkout no mesmo dia" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      hoje_ao_meio_dia_e_um_minuto = Time.zone.now.beginning_of_day + 12.hours + 1.minute
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: 1.day.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: hoje_ao_meio_dia_e_um_minuto)
+
+      expect(reserva.current_total_value).to eq(100)
+    end
+
+    it "deve ser igual ao valor da diária se for somente um dia de hospedagem" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      amanha_ao_meio_dia = 1.day.from_now.beginning_of_day + 11.hours + 59.minutes
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: amanha_ao_meio_dia, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: amanha_ao_meio_dia)
+
+      expect(reserva.current_total_value).to eq(100)
+    end
+
+    it "deve ser duas vezes o valor da diária se for dois dias de hospedagem" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      depois_de_amanha_ao_meio_dia = 2.days.from_now.beginning_of_day + 11.hours + 59.minutes
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: depois_de_amanha_ao_meio_dia, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: depois_de_amanha_ao_meio_dia)
+
+      expect(reserva.current_total_value).to eq(200)
+    end
+
+    it "deve ser duas vezes o valor da diária se passar um minuto do checkout" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      amanha_ao_meio_dia = 1.day.from_now.beginning_of_day + 11.hours + 59.minutes
+      amanha_ao_meio_dia_e_um_minuto = 1.day.from_now.beginning_of_day + 12.hours + 1.minute
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia.to_date , checkout: amanha_ao_meio_dia.to_date, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: amanha_ao_meio_dia_e_um_minuto)
+
+      expect(reserva.current_total_value).to eq(200)
+    end
+
+    it "deve ser igual ao valor da diária se for somente um dia de hospedagem com preço personalizado" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      CustomPrice.create!(room: Room.last, start_date: 1.day.ago, end_date: 3.days.from_now, price: 150)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      amanha_ao_meio_dia = 1.day.from_now.beginning_of_day + 11.hours + 59.minutes
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: amanha_ao_meio_dia, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: amanha_ao_meio_dia)
+
+      expect(reserva.current_total_value).to eq(150)
+    end
+
+    it "deve ser igual ao valor do preço personalizado se for somente um dia de hospedagem com preço personalizado e checkout no mesmo dia" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      CustomPrice.create!(room: Room.last, start_date: 1.day.ago, end_date: 3.days.from_now, price: 150)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      hoje_ao_meio_dia_e_um_minuto = Time.zone.now.beginning_of_day + 12.hours + 1.minute
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: 1.day.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: hoje_ao_meio_dia_e_um_minuto)
+
+      expect(reserva.current_total_value).to eq(150)
+    end
+
+    it "deve ser igual ao valor da diária multiplicado pelo número de dias" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      daqui_a_cinco_dias = 5.days.from_now.beginning_of_day + 11.hours + 59.minutes
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: daqui_a_cinco_dias, number_of_guests: 2, user: hospede, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: daqui_a_cinco_dias)
+
+      expect(reserva.current_total_value).to eq(500)
+    end
+
+    it "devem ser somados os valores das diárias com preço personalizado e das diárias com preço padrão" do
+      dono = Owner.create!(email: "d@email.com", password: "senhadono")
+      Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+      CustomPrice.create!(room: Room.last, start_date: 1.day.ago, end_date: 3.days.from_now, price: 10)
+      hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+      hoje_ao_meio_dia = Time.zone.now.beginning_of_day + 12.hours
+      daqui_a_cinco_dias = 5.days.from_now.beginning_of_day + 11.hours + 59.minutes
+      reserva = Reservation.create!(room: Room.last, checkin: hoje_ao_meio_dia , checkout: daqui_a_cinco_dias, number_of_guests: 2, status: :finished, checkin_at: hoje_ao_meio_dia, checkout_at: daqui_a_cinco_dias, user: hospede)
+
+      expect(reserva.current_total_value).to eq(140)
+    end
+  end
 end

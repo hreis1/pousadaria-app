@@ -22,7 +22,7 @@
               <h4><%= CustomPrice.model_name.human(count: 2) %>:</h4>
                 <ul>
                   <% room.custom_prices.each do |cp| %>
-                    <li class="row">
+                    <li class="row mt-2">
                       <div class="col-7">
                         <%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %>
                       </div>

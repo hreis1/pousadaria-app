@@ -16,14 +16,12 @@ Rails.application.routes.draw do
     end
   end
   resources :reservations, only: [:index, :show] do
+    get 'active', on: :collection
     post 'cancel', on: :member
     post 'checkin', on: :member
     post 'checkout', on: :member
     post 'finish', on: :member
   end
-
-  get 'active_stays', to: 'reservations#active_stays'
-
   resources :user_reservations, only: [:index] do
     post 'cancel', on: :member
   end

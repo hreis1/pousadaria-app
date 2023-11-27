@@ -1,5 +1,5 @@
 class ReservationsController < ApplicationController
-  before_action :authenticate_owner!, only: [:index, :cancel, :checkin]
+  before_action :authenticate_owner!, only: [:index, :show, :cancel, :active, :checkin, :checkout, :finish]
   before_action :authenticate_user!, only: [:create]
   
   def index
@@ -8,6 +8,8 @@ class ReservationsController < ApplicationController
   
   def show
     @reservation = Reservation.find(params[:id])
+    return render :show if @reservation.owner == current_owner
+    redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página"
   end
 
   def new
@@ -51,6 +53,7 @@ class ReservationsController < ApplicationController
 
   def checkin
     @reservation = Reservation.find(params[:id])
+    return redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página" if @reservation.owner != current_owner
     if @reservation.pending? && @reservation.checkin.to_date <= Time.zone.today
       @reservation.active!
       if @reservation.save
@@ -63,25 +66,30 @@ class ReservationsController < ApplicationController
 
   def checkout
     @reservation = Reservation.find(params[:id])
-    @payment_methods = @reservation.room.inn.payment_methods.split(",")
+    return redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página" if @reservation.owner != current_owner
+    if @reservation.active? && @reservation.finished!
+      @reservation.checkout_at = Time.zone.now
+      @reservation.amount_paid = @reservation.current_total_value
+      @payment_methods = @reservation.room.inn.payment_methods.split(",")
+      if @reservation.save
+        flash.now[:notice] = "Check-out realizado com sucesso"
+      end
+    else
+      redirect_to reservation_path(@reservation), alert: "Não foi possível realizar o check-out"
+    end
   end
 
   def finish
     @reservation = Reservation.find(params[:id])
-    payment_method = params[:payment_method]
-    if @reservation.active?
-      @reservation.payment_method = payment_method
-      @reservation.amount_paid = @reservation.current_total_value
-      @reservation.finished!
+    if @reservation.finished?
+      @reservation.payment_method = params[:payment_method]
       if @reservation.save
-        return redirect_to reservations_path, notice: "Check-out realizado com sucesso"
+        return redirect_to reservations_path, notice: "Reserva finalizada com sucesso"
       end
     end
-    flash[:alert] = "Não foi possível realizar o check-out"
-    redirect_to reservations_path(@reservation)
   end
 
-  def active_stays
+  def active
     @reservations = current_owner.inn.reservations.active
     render :index
   end
