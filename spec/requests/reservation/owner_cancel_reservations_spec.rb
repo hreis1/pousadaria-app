@@ -25,7 +25,7 @@ describe "Dono cancela reserva" do
 
     post cancel_reservation_path(reserva)
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:alert]).to eq("Não foi possível cancelar a reserva")
     expect(reserva.reload.status).to eq("pending")
   end
@@ -42,7 +42,7 @@ describe "Dono cancela reserva" do
       post cancel_reservation_path(reserva)
     end
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:notice]).to eq("Reserva cancelada com sucesso")
     expect(reserva.reload.status).to eq("canceled")
   end
@@ -57,7 +57,7 @@ describe "Dono cancela reserva" do
 
     post cancel_reservation_path(reserva)
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:alert]).to eq("Não foi possível cancelar a reserva")
     expect(reserva.reload.status).to eq("active")
   end
@@ -73,7 +73,7 @@ describe "Dono cancela reserva" do
 
     post cancel_reservation_path(reserva)
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:alert]).to eq("Não foi possível cancelar a reserva")
     expect(reserva.reload.status).to eq("finished")
   end
@@ -88,7 +88,7 @@ describe "Dono cancela reserva" do
 
     post cancel_reservation_path(reserva)
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:alert]).to eq("Não foi possível cancelar a reserva")
     expect(reserva.reload.status).to eq("canceled")
   end
@@ -107,7 +107,7 @@ describe "Dono cancela reserva" do
       post cancel_reservation_path(reserva)
     end
 
-    expect(response).to redirect_to owner_reservations_path
+    expect(response).to redirect_to reservations_path
     expect(flash[:alert]).to eq("Não foi possível cancelar a reserva")
     expect(reserva.reload.status).to eq("pending")
   end

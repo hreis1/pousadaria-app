@@ -1,4 +1,4 @@
-<h3><%= room.name %></h3>
+<h3><%= link_to room.name, room %></h3>
 
 <ul>
   <li class="list-group-item"><%= Room.human_attribute_name(:description) %>: <%= room.description %></li>

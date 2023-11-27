@@ -1,14 +1,18 @@
 <section id="room">
-  <%= render 'room' , room: @room %>
+  <%= render 'room', room: @room %>
+</section>
 
-  <% if current_owner == @room.inn.owner %>
-    <% if @custom_prices %>
-      <p><%= CustomPrice.model_name.human(count: 2) %>:</p>
-      <% @custom_prices.each do |cp| %>
-        <p><%= number_to_currency(cp.price) %> de <%= cp.start_date.strftime('%d/%m/%Y') %> até <%= cp.end_date.strftime('%d/%m/%Y') %> </p>
+  <section id="room">
+    <% if current_owner == @room.inn.owner %>
+      <% if @room.reservations.any? %>
+        <h3><%= Reservation.model_name.human(count: @room.reservations.count) %>:</h3>
+        <ul>
+          <% @room.reservations.each do |r| %>
+            <li class="list-group-item"><%= link_to r.code, reservation_path(r) %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p>Não há reservas para este quarto</p>
       <% end %>
     <% end %>
-    <%= link_to "Editar", edit_inn_room_path(@room.inn, @room) %>
-    <%= link_to "Adicionar Preço Personalizado", new_room_custom_price_path(@room.inn, @room) %>
-  <% end %>
-</section>
+  </section>

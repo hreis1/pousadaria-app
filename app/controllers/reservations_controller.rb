@@ -1,11 +1,12 @@
 class ReservationsController < ApplicationController
+  before_action :authenticate_owner!, only: [:index, :cancel, :checkin]
   before_action :authenticate_user!, only: [:create]
-  before_action :authenticate_owner!, only: [:owner_reservations, :cancel]
-
-  def owner_reservations
+  
+  def index
     @reservations = current_owner.inn.reservations
   end
-  def owner_reservation
+  
+  def show
     @reservation = Reservation.find(params[:id])
   end
 
@@ -42,22 +43,22 @@ class ReservationsController < ApplicationController
     @reservation = Reservation.find(params[:id])
     if @reservation.owner == current_owner && @reservation.status == "pending" && @reservation.checkin < 2.days.from_now
       @reservation.canceled!
-      return redirect_to owner_reservations_path, notice: "Reserva cancelada com sucesso"
+      return redirect_to reservations_path, notice: "Reserva cancelada com sucesso"
     end
     flash.now[:alert] = "Não foi possível cancelar a reserva"
-    redirect_to owner_reservations_path
+    redirect_to reservations_path
   end
 
   def checkin
     @reservation = Reservation.find(params[:id])
-    if @reservation.pending?
+    if @reservation.pending? && @reservation.checkin.to_date <= Time.zone.today
       @reservation.active!
       if @reservation.save
-        return redirect_to active_stays_path, notice: "Check-in realizado com sucesso"
+        return redirect_to reservation_path(@reservation), notice: "Check-in realizado com sucesso"
       end
     end
     flash[:alert] = "Não foi possível realizar o check-in"
-    redirect_to owner_reservations_path(@reservation)
+    redirect_to reservation_path(@reservation)
   end
 
   def checkout
@@ -73,16 +74,16 @@ class ReservationsController < ApplicationController
       @reservation.amount_paid = @reservation.current_total_value
       @reservation.finished!
       if @reservation.save
-        return redirect_to owner_reservations_path, notice: "Check-out realizado com sucesso"
+        return redirect_to reservations_path, notice: "Check-out realizado com sucesso"
       end
     end
     flash[:alert] = "Não foi possível realizar o check-out"
-    redirect_to owner_reservations_path(@reservation)
+    redirect_to reservations_path(@reservation)
   end
 
   def active_stays
     @reservations = current_owner.inn.reservations.active
-    render :owner_reservations
+    render :index
   end
   
 

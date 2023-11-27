@@ -1,0 +1,34 @@
+<section class="show-reservation row">
+  <h2>Reserva <%= @reservation.code %></h2>
+  <hr>
+
+  <ul>
+    <% if @reservation.active? %>
+      <li class="list-group-item"><%= Reservation.human_attribute_name(:checkin_at) %>: <%= @reservation.checkin_at.strftime("%d/%m/%Y %H:%M") %></li>
+    <% end %>
+    <li class="list-group-item"><%= Room.model_name.human %>: <%= @reservation.room.name %></li>
+    <li class="list-group-item"><%= Reservation.human_attribute_name(:checkin) %>: <%= @reservation.checkin.strftime("%d/%m/%Y") %></li>
+    <li class="list-group-item"><%= Reservation.human_attribute_name(:checkout) %>: <%= @reservation.checkout.strftime("%d/%m/%Y") %></li>
+    <li class="list-group-item">Total: <%= number_to_currency(@reservation.total_value) %></li>
+    <li class="list-group-item"><%= Reservation.human_attribute_name(:number_of_guests) %>: <%= @reservation.number_of_guests %></li>
+    <li class="list-group-item"><%= Reservation.human_attribute_name(:status) %>: <%= t @reservation.status %></li>
+  </ul>
+    <div>
+      <% if @reservation.pending? %>
+        <div class="btn-group">
+          <% if @reservation.checkin.to_date <= Time.zone.today %>
+            <%= button_to "Check-in", checkin_reservation_path(@reservation), method: :post, class: "btn btn-primary btn-sm" %>
+          <% end %>
+        </div>
+        <div class="btn-group">
+          <%= button_to "Cancelar reserva", cancel_reservation_path(@reservation), method: :post, class: "btn btn-danger btn-sm" %>  
+        </div>
+        <div class="btn-group">
+          <% elsif @reservation.active? %>
+            <%= button_to "Check-out", checkout_reservation_path(@reservation), method: :post, class: "btn btn-primary btn-sm" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</section>
+
