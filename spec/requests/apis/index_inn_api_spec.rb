@@ -71,7 +71,7 @@ describe "index Inn API" do
       expect(response).to have_http_status(500)
       expect(response.content_type).to include "application/json"
       json_response = JSON.parse(response.body)
-      expect(json_response["messagem"]).to eq "Erro interno"
+      expect(json_response["menssagem"]).to eq "Erro interno"
     end
     it "com parâmetros" do
       dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
@@ -107,7 +107,7 @@ describe "index Inn API" do
       expect(response).to have_http_status(500)
       expect(response.content_type).to include "application/json"
       json_response = JSON.parse(response.body)
-      expect(json_response["messagem"]).to eq "Erro interno"
+      expect(json_response["menssagem"]).to eq "Erro interno"
     end
     it "com parâmetros e não exibe inativos" do
       dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
