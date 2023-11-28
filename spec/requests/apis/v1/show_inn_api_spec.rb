@@ -42,7 +42,7 @@ describe "show Inn API" do
       expect(response).to have_http_status(404)
       expect(response.content_type).to include "application/json"
       json_response = JSON.parse(response.body)
-      expect(json_response["mensagem"]).to eq "Pousada não encontrada"
+      expect(json_response["mensagem"]).to eq "Não encontrado"
     end
     it "e pousada inativa" do
       dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
@@ -53,7 +53,7 @@ describe "show Inn API" do
       expect(response).to have_http_status(404)
       expect(response.content_type).to include "application/json"
       json_response = JSON.parse(response.body)
-      expect(json_response["mensagem"]).to eq "Pousada não encontrada"
+      expect(json_response["mensagem"]).to eq "Não encontrado"
     end
     it "erro interno" do
       dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
