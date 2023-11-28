@@ -26,4 +26,10 @@ Rails.application.routes.draw do
     post 'cancel', on: :member
     patch 'rate', on: :member
   end
+  
+  namespace :api do
+    namespace :v1 do
+      resources :inns, only: [:index]
+    end
+  end
 end
