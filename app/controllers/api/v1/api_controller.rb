@@ -6,7 +6,7 @@ class Api::V1::ApiController < ActionController::API
   private
 
   def internal_server_error
-    render status:500, json: {menssagem: "Erro interno"}
+    render status:500, json: {mensagem: "Erro interno"}
   end
 
   def not_found_error

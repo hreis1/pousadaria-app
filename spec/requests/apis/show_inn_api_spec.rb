@@ -1,7 +1,7 @@
 require "rails_helper"
 
 describe "show Inn API" do
-  context "GET /inns/:id" do
+  context "GET /api/v1/inns/:id" do
     it "com sucesso" do
       dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
       Inn.create!(owner: dono_a, trade_name: "Pousada Enseada", corporate_name: "Pousada Enseada LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pe@email.com", address: "Avenida das Margaridas", address_number: "10", neighborhood:"Enseada", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
@@ -54,6 +54,20 @@ describe "show Inn API" do
       expect(response.content_type).to include "application/json"
       json_response = JSON.parse(response.body)
       expect(json_response["mensagem"]).to eq "Pousada não encontrada"
+    end
+    it "erro interno" do
+      dono_a = Owner.create!(email: "a@email.com", password: "senhadonoa")
+      Inn.create!(owner: dono_a, trade_name: "Pousada Enseada", corporate_name: "Pousada Enseada LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pe@email.com", address: "Avenida das Margaridas", address_number: "10", neighborhood:"Enseada", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+      
+      allow_any_instance_of(Inn).to receive(:as_json).and_raise(ActiveRecord::ActiveRecordError)
+
+      get "/api/v1/inns/1"
+
+      expect(response).to have_http_status(500)
+      expect(response.content_type).to include "application/json"
+      json_response = JSON.parse(response.body)
+      
+      expect(json_response["mensagem"]).to eq "Erro interno"
     end
     pending "e existem avaliações"
     pending "e não existem avaliações"
