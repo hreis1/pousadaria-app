@@ -84,7 +84,7 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 
 - [X] Um visitante pode escolher um quarto de uma pousada e clicar em um botão para reservar. Ao tomar esta ação, o usuário será redirecionado para uma tela onde deve ver os detalhes do quarto selecionado e um formulário que solicita a data de entrada, a data de saída e a quantidade de hóspedes. Os três campos são obrigatórios. Após preenchê-los e submeter o formulário, a aplicacão deve consultar se existe disponibilidade para o período selecionado. Caso sim, deve ser informado o valor total das diárias, mas a reserva ainda não deve ser efetuada.
 - [X] Caso não haja disponibilidade, uma mensagem deve ser exibida para o usuário e ele deve voltar para o formulário inicial. A quantidade de hóspedes informada deve ser usada para validar se o quarto selecionado atende à solicitacão. Em caso negativo, uma mensagem de erro deve ser exibida.
-- [ ] A consulta de disponibilidade deve considerar as reservas feitas para um quarto, tanto as pendentes quanto aquelas que já estão em andamento. As reservas canceladas no entanto devem ser desconsideradas.
+- [X] A consulta de disponibilidade deve considerar as reservas feitas para um quarto, tanto as pendentes quanto aquelas que já estão em andamento. As reservas canceladas no entanto devem ser desconsideradas.
 </details>
 
 <details>
@@ -102,6 +102,31 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 - [X] Os usuários donos de pousadas devem ser capazes de ver as reservas agendadas através de uma opção "Reservas" no menu. Deve haver uma listagem com todas reservas de sua pousada e para cada reserva o dono da pousada deve poder ver o quarto escolhido, a data de entrada e saída, a quantidade de hóspedes e o código da reserva.
 - [X] Ao acessar uma reserva, o dono da pousada deve ter a opção de realizar o check-in caso o dia atual seja igual ou maior do que o dia definido para entrada na reserva. O check-in deve alterar o status da reserva, que agora passa a ser uma estadia ativa. Devem ser registrados também o dia e a hora exatos do check-in. Todas reservas que já passaram pelo check-in devem aparecer em uma opção separada do menu chamada "Estadias Ativas".
 - [X] Caso tenham se passado 2 dias desde o dia previsto para o check-in e os hóspedes não tenham feito o check-in, o dono da pousada pode cancelar a reserva, deixando o quarto disponível para novas reservas.
+</details>
+
+<details>
+<summary>Check-out</summary>
+
+- [X] Ao acessar o menu "Estadias Ativas" são listadas todas reservas que já passaram pelo processo de check-in e agora são consideradas hospedagens em andamento. Estas hospedagens podem ser finalizadas pelo usuário dono da pousada a qualquer momento. Ao encerrar a hospedagem, o sistema deve calcular o valor a ser pago baseado nos período entre a data início e a data atual. A hospedagem se encerra após a confirmação do usuário dono da pousada. Deve ser registrado no sistema a data e a hora do check-out, o total pago e o meio de pagamento escolhido.
+- [X] O cálculo do valor proporcional deve considerar o horário padrão para check-out da pousada. Caso o horário já tenha sido ultrapassado, mesmo que por poucos minutos, o valor da diária deve ser cobrado integralmente.
+</details>
+
+<details>
+<summary>Avaliações de estadia</summary>
+
+- [X] Após o checkout, o usuário que se hospedou em um quarto da pousada pode acessar a aplicação e ver suas reservas já finalizadas na aba "Minhas Reservas". Dentro dessa opção, ao acessar uma reserva encerrada, deve existir a opção de fazer uam avaliação. Uma avaliação deve conter uma nota de 0 a 5, onde zero é pessima e cinco é ótima e um campo de texto longo para escrever a avaliação.
+- [ ] Todas avaliações cadastradas podem ser visualizadas pelo usuário dono da pousada, em uma opção "Avaliações" do menu da aplicação. O dono da pousada pode responder uma avaliação e esta resposta pode ser visualizada pelo hóspede em sua conta.
+- [ ] Para os visitantes e para os usuários autenticados deve ser possível ver a nota média de cada pousada e na página de detalhes de uma pousada deve haver um espaço onde são exibidas as últimas 3 avaliações recebidas. Deve existir também uma opção para ver todas as avaliações de uma pousada em uma página separada.
+</details>
+
+<details>
+<summary>API</summary>
+
+- [ ] A Pousadaria está avaliando a criação de outras aplicações integradas ao sistema de gestão de pousadas e reservas, para isto, precisamos começar a construir uma API acessível via requisições HTTP e com retornos em formato JSON. Toda API deve ser documentada e, abaixo, segue uma relação dos endpoints esperados neste momento:
+- [ ] Listagem de pousadas: uma listagem completa das pousadas cadastradas e ativas na plataforma. Deve haver uma opção de informar um texto e usar como filtro de busca pelo nome da pousada.
+- [ ] Listagem de quartos de uma pousada: a partir do ID de uma pousada, uma lista com informações sobre os tipos de quartos disponíveis para hospedagem nesta pousada.
+- [ ] Detalhes de uma pousada: a partir do ID de uma pousada, todos os detalhes da pousada exceto CNPJ e razão social. O retorno deve incluir a nota média da pousada a partir de suas avaliações. Caso não existam avaliações o campo deve vir em branco.
+- [ ] Consulta de disponibilidade: informando um ID de um quarto, a data de entrada, data de saída e quantidade de hóspedes, deve ser possível verificar a disponibilidade para reserva. Em caso positivo deve ser retornado o valor da reserva, em caso negativo deve haver uma mensagem de erro no corpo da resposta.
 </details>
 
 ### Diagrama de Entidade e Relacionamento
