@@ -75,27 +75,8 @@ describe "Dono visualiza reservas" do
     expect(page).not_to have_content("Código da reserva: #{reserva_outro_dono.code}")
   end
 
-  # it "e vê avaliação de reserva" do
-  #   dono = Owner.create!(email: "a@email.com", password: "senhadonoa")
-  #   Inn.create!(owner: dono, trade_name: "Pousada Enseada", corporate_name: "Pousada Enseada LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pe@email.com", address: "Avenida das Margaridas", address_number: "10", neighborhood:"Enseada", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
-  #   Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 200, has_air_conditioning: true, has_tv: false, inn: Inn.last)
-  #   hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
-  #   reserva = Reservation.create!(room: Room.first, checkin: 1.days.from_now , checkout: 4.days.from_now, number_of_guests: 1, user: hospede, rating: 4, review: "Ótima pousada", status: :finished, checkin_at: 1.days.from_now, checkout_at: 4.days.from_now, amount_paid: 600)
-  #   login_as dono
-
-  #   travel_to 5.days.from_now do
-  #     visit root_path
-  #     click_on "Avaliações"
-
-  #     expect(page).to have_content("Avaliações")
-  #     expect(page).to have_content("Quarto: Quarto Rosa")
-  #     expect(page).to have_content("Reserva: #{reserva.code}")
-  #     expect(page).to have_content("Avaliação: #{reserva.rating}")
-  #     expect(page).to have_content("Comentário: #{reserva.review}")
-  #     expect(page).to have_field("Resposta")
-  #     expect(page).to have_button("Enviar")
-  #   end
-  # end
+  pending "e vê avaliação de hóspede"
+  pending "e responde avaliação de hóspede"
 end
 
     

@@ -7,7 +7,7 @@ describe "Verifica a disponibilidade de um quarto" do
       Inn.create!(owner: dono_a, trade_name: "Pousada Enseada", corporate_name: "Pousada Enseada LTDA", cnpj: "12345678910112", phone: "11999999998", email: "pe@email.com", address: "Avenida das Margaridas", address_number: "10", neighborhood:"Enseada", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
       Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
 
-      get "/api/v1/inns/#{Inn.last.id}/rooms/#{Room.last.id}/check", params: { checkin: 2.days.from_now.strftime("%Y/%m/%d"), checkout: 4.days.from_now.strftime("%Y/%m/%d"), number_of_guests: 2 }
+      get "/api/v1/inns/#{Inn.last.id}/rooms/#{Room.last.id}/check", params: { checkin: 2.days.from_now.strftime("%Y-%m-%d"), checkout: 4.days.from_now.strftime("%Y-%m-%d"), number_of_guests: 2 }
 
       expect(response).to have_http_status(200)
       expect(response.content_type).to include("application/json")
