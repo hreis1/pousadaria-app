@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :authenticate_owner!, only: [:index, :show, :cancel, :active, :checkin, :checkout, :finish]
+  before_action :set_reservation, only: [:show, :cancel, :checkin, :checkout, :finish]
   before_action :authenticate_user!, only: [:create]
   
   def index
@@ -7,7 +8,6 @@ class ReservationsController < ApplicationController
   end
   
   def show
-    @reservation = Reservation.find(params[:id])
     return render :show if @reservation.owner == current_owner
     redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página"
   end
@@ -42,7 +42,6 @@ class ReservationsController < ApplicationController
   end
 
   def cancel
-    @reservation = Reservation.find(params[:id])
     if @reservation.owner == current_owner && @reservation.status == "pending" && @reservation.checkin < 2.days.from_now
       @reservation.canceled!
       return redirect_to reservations_path, notice: "Reserva cancelada com sucesso"
@@ -52,7 +51,6 @@ class ReservationsController < ApplicationController
   end
 
   def checkin
-    @reservation = Reservation.find(params[:id])
     return redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página" if @reservation.owner != current_owner
     if @reservation.pending? && @reservation.checkin.to_date <= Time.zone.today
       @reservation.active!
@@ -65,7 +63,6 @@ class ReservationsController < ApplicationController
   end
 
   def checkout
-    @reservation = Reservation.find(params[:id])
     return redirect_to reservations_path, alert: "Você não tem permissão para acessar essa página" if @reservation.owner != current_owner
     if @reservation.active? && @reservation.finished!
       @reservation.checkout_at = Time.zone.now
@@ -80,7 +77,6 @@ class ReservationsController < ApplicationController
   end
 
   def finish
-    @reservation = Reservation.find(params[:id])
     if @reservation.finished?
       @reservation.payment_method = params[:payment_method]
       if @reservation.save
@@ -93,9 +89,14 @@ class ReservationsController < ApplicationController
     @reservations = current_owner.inn.reservations.active
     render :index
   end
-  
 
+  
+  
   private
+
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
   def reservation_params
     params.require(:reservation).permit(:checkin, :checkout, :number_of_guests, :room_id)

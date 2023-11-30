@@ -1,16 +1,16 @@
 class UserReservationsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :cancel]
+  before_action :set_reservation, only: [:show, :cancel, :rate]
 
   def index
     @reservations = current_user.reservations.order(checkin: :asc)
   end
 
   def show
-    @reservation = Reservation.find(params[:id])
+    @rate = @reservation.rate || Rate.new
   end
 
   def cancel
-    @reservation = Reservation.find(params[:id])
     if current_user == @reservation.user && @reservation.status == "pending" && @reservation.checkin > 7.days.from_now
       @reservation.canceled!
       redirect_to user_reservations_path, notice: "Reserva cancelada com sucesso"
@@ -19,18 +19,12 @@ class UserReservationsController < ApplicationController
     end
   end
 
-  def rate
-    @reservation = Reservation.find(params[:id])
-    if current_user == @reservation.user && @reservation.finished? && @reservation.rating.nil?
-      if @reservation.update(user_rate_params)
-        redirect_to user_reservation_path(@reservation), notice: "Avaliação enviada com sucesso!"
-      end
-    else
-      redirect_to user_reservation_path(@reservation), alert: "Não foi possível realizar a avaliação"
-    end
-  end
 
   private
+
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
+  end
 
   def user_rate_params
     params.require(:reservation).permit(:rating, :review)

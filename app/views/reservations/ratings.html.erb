@@ -1,0 +1,24 @@
+<section class="index-reservation row">
+  <h2>Reservas</h2>
+  <hr>
+
+  <% if @reservations.present? %>
+    <% @reservations.each do |reservation| %>
+      <div class="col-md-6">
+        <h4>Código da reserva: <%= link_to reservation.code, reservation_path(reservation) %></h4>
+        <p><%= Reservation.human_attribute_name(:rating) %>: <%= reservation.rating %></p>
+        <p><%= Reservation.human_attribute_name(:review) %>: <%= reservation.review %></p>
+
+        <%= form_with model: reservation, url: rate_user_reservation_path(reservation), method: :patch do |f| %>
+          <div class="mb-3 col-10">
+            <%= f.label :response, "Resposta" %>
+            <%= f.text_area :response, class: "form-control" %>
+          </div>
+            <%= f.submit "Responder", class: "btn btn-primary" %>
+        <% end %>
+        </div>
+    <% end %>
+  <% else %>
+    <p>Você ainda não possui avaliações</p>
+  <% end %>
+</section>

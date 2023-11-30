@@ -6,13 +6,11 @@
   </div>
   <div class="col-md-6">
     <% if @reservation.finished? %>
-      <% if @reservation.rating.present? %>
-        <h3>Avaliação</h3>
-          <li class="list-group-item"><%= Reservation.human_attribute_name(:rating) %>: <%= @reservation.rating %></li>
-          <li class="list-group-item"><%= Reservation.human_attribute_name(:review) %>: <%= @reservation.review %></li>
-        </ul>
+      <h3>Avaliação</h3>
+      <% if @reservation.rate.present? %>
+        <%= render "/rates/show", rate: @reservation.rate %>
       <% else %>
-        <%= render "rate", reservation: @reservation %>
+        <%= render "/rates/form", rate: @rate %>
       <% end %>
     <% end %>
   </div>

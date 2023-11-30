@@ -1,0 +1,27 @@
+<section class="rate-index row">
+<h2>Avaliações</h2>
+
+<% if @rates.empty? %>
+  <p>Nenhuma avaliação cadastrada.</p>
+<% else %>
+  <% @rates.each do |rate| %>
+    <div class="col-md-6">
+      <p>Reserva: <%= link_to rate.reservation.code, reservation_path(rate.reservation) %></p>
+      <p>Avaliação de <%= rate.reservation.user.name %></p>
+      <p>Nota: <%= rate.rating %></p>
+      <p>Comentário: <%= rate.review %></p>
+      <% if rate.response.present? %>
+        <p>Resposta: <%= rate.response %></p>
+      <% else %>
+        <%= form_with scope: rate, url: reservation_rate_path(rate.reservation, rate), method: :patch do |form| %>
+          <div class="mb-3">
+            <%= form.label :response, "Resposta" %>
+            <%= form.text_area :response, class: "form-control" %>
+          </div>
+          <%= form.submit "Responder", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
+      <hr>
+    </div>
+  <% end %>
+<% end %>

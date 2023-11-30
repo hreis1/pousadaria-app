@@ -16,6 +16,7 @@ Rails.application.routes.draw do
     end
   end
   resources :reservations, only: [:index, :show] do
+    resources :rates, only: [:index, :create, :update]
     get 'active', on: :collection
     post 'cancel', on: :member
     post 'checkin', on: :member
@@ -24,9 +25,7 @@ Rails.application.routes.draw do
   end
   resources :user_reservations, only: [:index, :show] do
     post 'cancel', on: :member
-    patch 'rate', on: :member
   end
-  
   namespace :api do
     namespace :v1 do
       resources :inns, only: [:index, :show] do

@@ -13,5 +13,25 @@
     </div>
   <% end %>
 </section>
+<% if @reviews.any? %>
+<hr>
+  <section id="reviews">
+    <h5>Nota média: <%= @average_rating %></h5>
+    <h2><%= link_to "Avaliações", reservation_rates_path(@inn.reservations), class: "btn btn-primary btn-sm" %></h2>
+    <ul class="container row">
+     <% @reviews.each do |rate| %>
+        <li class="list-group-item col-sm-4">
+          <div>
+          Nota: <%= rate.rating %><br>
+          Comentário: <%= rate.review %><br>
+            <% if rate.response.present? %>
+              Resposta: <%= rate.response %>
+            <% end %>
+          </div>
+        </li>
+      <% end %>
+    </ul>
+  </section>
+<% end %>
 <hr>
 <%= render 'rooms/index', rooms: @rooms %>

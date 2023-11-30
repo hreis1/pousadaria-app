@@ -75,8 +75,39 @@ describe "Dono visualiza reservas" do
     expect(page).not_to have_content("Código da reserva: #{reserva_outro_dono.code}")
   end
 
-  pending "e vê avaliação de hóspede"
-  pending "e responde avaliação de hóspede"
+  it "e vê avaliação de hóspede" do
+    dono = Owner.create!(email: "d@email.com", password: "senhadono")
+    Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+    hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+    reserva = Reservation.create!(room: Room.last, checkin: 0.days.ago , checkout: 5.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: Time.zone.now, checkout_at: 5.days.from_now, amount_paid: 500)
+    avaliacao = Rate.create!(reservation: reserva, rating: 5, review: "Ótima pousada!")
+    login_as dono, scope: :owner
+
+    visit root_path
+    click_on "Avaliações"
+
+    expect(page).to have_content("Avaliação de #{hospede.name}")
+    expect(page).to have_content("Nota: #{reserva.rate.rating}")
+    expect(page).to have_content("Comentário: #{reserva.rate.review}")
+  end
+  
+  it "e resposta de avaliação de hóspede" do
+    dono = Owner.create!(email: "d@email.com", password: "senhadono")
+    Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+    hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+    reserva = Reservation.create!(room: Room.last, checkin: 0.days.ago , checkout: 5.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: Time.zone.now, checkout_at: 5.days.from_now, amount_paid: 500)
+    avaliacao = Rate.create!(reservation: reserva, rating: 5, review: "Ótima pousada!")
+    login_as dono, scope: :owner
+
+    visit root_path
+    click_on "Avaliações"
+    fill_in "Resposta", with: "Obrigado pela avaliação!"
+    click_on "Responder"
+
+    expect(page).to have_content("Resposta: Obrigado pela avaliação!")
+  end
 end
 
     

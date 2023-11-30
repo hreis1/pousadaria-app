@@ -6,17 +6,18 @@ class Reservation < ApplicationRecord
   validates :code, uniqueness: true
   
   validate :checkin_cannot_be_less_than_today, on: :create
-  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy, on: :create
-  validate :checkin_cannot_be_greater_than_checkout, on: :create
+  validate :number_of_guests_cannot_be_greater_than_room_max_occupancy
+  validate :checkin_cannot_be_greater_than_checkout
   validate :range_cannot_be_booked, on: :create
   validate :room_cannot_be_unavailable, on: :create
 
   before_validation :generate_code, on: :create
 
+  
   belongs_to :room
   has_one :owner, through: :room
   belongs_to :user, optional: true
-
+  has_one :rate
 
   def active!
     self.status = :active

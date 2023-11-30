@@ -3,6 +3,7 @@
     <li class="nav-item"><%= link_to "Minha Pousada", inn_path(current_owner.inn), class: "nav-link" %></li>
     <li class="nav-item"><%= link_to "Reservas", reservations_path, class: "nav-link" %></li>
     <li class="nav-item"><%= link_to "Estadias Ativas", active_reservations_path, class: "nav-link" %></li>
+    <li class="nav-item"><%= link_to "Avaliações", reservation_rates_path(current_owner.reservations), class: "nav-link" %></li>
   <% else %>
     <li class="nav-item me-2"><%= link_to "Cadastrar pousada", new_inn_path, class: "btn btn-primary" %></li>
   <% end %>

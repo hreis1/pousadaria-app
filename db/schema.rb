@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.0].define(version: 2023_11_27_230710) do
+ActiveRecord::Schema[7.0].define(version: 2023_11_30_205819) do
   create_table "custom_prices", force: :cascade do |t|
     t.integer "room_id", null: false
     t.date "start_date"
@@ -58,6 +58,16 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_230710) do
     t.index ["reset_password_token"], name: "index_owners_on_reset_password_token", unique: true
   end
 
+  create_table "rates", force: :cascade do |t|
+    t.integer "rating"
+    t.text "review"
+    t.text "response"
+    t.integer "reservation_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["reservation_id"], name: "index_rates_on_reservation_id"
+  end
+
   create_table "reservations", force: :cascade do |t|
     t.date "checkin"
     t.date "checkout"
@@ -73,8 +83,6 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_230710) do
     t.string "payment_method"
     t.string "amount_paid"
     t.string "integer"
-    t.integer "rating"
-    t.text "review"
     t.index ["room_id"], name: "index_reservations_on_room_id"
     t.index ["user_id"], name: "index_reservations_on_user_id"
   end
@@ -115,6 +123,7 @@ ActiveRecord::Schema[7.0].define(version: 2023_11_27_230710) do
 
   add_foreign_key "custom_prices", "rooms"
   add_foreign_key "inns", "owners"
+  add_foreign_key "rates", "reservations"
   add_foreign_key "reservations", "rooms"
   add_foreign_key "reservations", "users"
   add_foreign_key "rooms", "inns"

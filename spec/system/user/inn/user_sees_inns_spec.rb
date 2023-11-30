@@ -45,4 +45,33 @@ describe "Usuário vê pousadas" do
     expect(page).not_to have_content("Pousada Enseada")
     expect(page).not_to have_content("Pousada Itanhaem")
   end
+
+  it "e vê nota média da pousada" do
+    dono = Owner.create!(email: "d@email.com", password: "senhadono")
+    Inn.create!(owner: dono, trade_name: "Pousada Ribeiropolis", corporate_name: "Pousada Ribeiropolis LTDA", cnpj: "12345678910111", phone: "11999999999", email: "pr@email.com", address: "Rua dos Bobos", address_number: "0", neighborhood:"Morumbi", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro, Cartão de crédito ou débito", pets_allowed: true, polices: "Não aceitamos animais de grande porte", checkin_time: "12:00", checkout_time: "12:00")
+    Room.create!(name: "Quarto Rosa", description: "Quarto com cama de casal, TV e ar condicionado", dimension: "20m²", max_occupancy: 2, daily_rate: 100, has_air_conditioning: true, has_tv: false, inn: Inn.last)
+    hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+    reserva1 = Reservation.create!(room: Room.last, checkin: 0.days.ago , checkout: 5.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: Time.zone.now, checkout_at: 5.days.from_now, amount_paid: 500)
+    avaliacao1 = Rate.create!(reservation: reserva1, rating: 5, review: "Ótima pousada!", response: "Obrigado pela avaliação, volte sempre!")
+    reserva2 = Reservation.create!(room: Room.last, checkin: 6.days.from_now, checkout: 7.days.from_now, number_of_guests: 1, user: hospede, status: :finished, checkin_at: 6.days.from_now, checkout_at: 7.days.from_now, amount_paid: 100)
+    avaliacao2 = Rate.create!(reservation: reserva2, rating: 3, review: "Pousada boa, mas o café da manhã poderia ser melhor.", response: "Obrigado pela avaliação, volte sempre!")
+    reserva3 = Reservation.create!(room: Room.last, checkin: 9.days.from_now, checkout: 11.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: 9.days.from_now, checkout_at: 11.days.from_now, amount_paid: 200)
+    avaliacao3 = Rate.create!(reservation: reserva3, rating: 4, review: "Pousada ok, mas a limpeza poderia ser melhor.", response: "Obrigado pela avaliação, volte sempre!")
+
+    visit root_path
+    click_on "Pousada Ribeiropolis"
+
+    expect(page).to have_content("Pousada Ribeiropolis")
+    expect(page).to have_content("Nota média: 4")
+    expect(page).to have_content("Avaliações")
+    expect(page).to have_content("Nota: 5")
+    expect(page).to have_content("Comentário: Ótima pousada!")
+    expect(page).to have_content("Resposta: Obrigado pela avaliação, volte sempre!")
+    expect(page).to have_content("Nota: 3")
+    expect(page).to have_content("Comentário: Pousada boa, mas o café da manhã poderia ser melhor.")
+    expect(page).to have_content("Resposta: Obrigado pela avaliação, volte sempre!")
+    expect(page).to have_content("Nota: 4")
+    expect(page).to have_content("Comentário: Pousada ok, mas a limpeza poderia ser melhor.")
+    expect(page).to have_content("Resposta: Obrigado pela avaliação, volte sempre!")
+  end
 end

@@ -6,4 +6,5 @@ class Owner < ApplicationRecord
 
   has_one :inn
   has_many :rooms, through: :inn
+  has_many :reservations, through: :rooms
 end

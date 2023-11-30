@@ -14,3 +14,12 @@ Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "4
 dono_d = Owner.create!(email: "d@email.com", password: "password")
 Inn.create!(owner: dono_d, trade_name: "Pousada Diamante", corporate_name: "Pousada Diamante LTDA", cnpj: "12345678910115", phone: "11999999995", email: "pd@email.com", address: "Avenida das Araras", address_number: "10", neighborhood:"Araras", state: "São Paulo", city: "São Paulo", cep: "12345678", description: "Pousada para todos os gostos", payment_methods: "Dinheiro", polices: "Não aceitamos som automotivo", checkin_time: "12:00", checkout_time: "12:00")
 Room.create(name: "Suíte Master", description: "Suíte completa", dimension: "40m²", max_occupancy: 2, daily_rate: 200, has_bathroom: true, has_balcony: true, has_air_conditioning: true, has_tv: true, has_closet: true, has_safe: true, is_accessible: true, inn: Inn.last)
+
+
+hospede = User.create!(name: "Fulano de Tal", email: "fdt@email", cpf: "72139331023", password: "password")
+reserva1 = Reservation.create!(room: Room.last, checkin: 0.days.ago , checkout: 5.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: Time.zone.now, checkout_at: 5.days.from_now, amount_paid: 500)
+avaliacao1 = Rate.create!(reservation: reserva1, rating: 5, review: "Ótima pousada!", response: "Obrigado pela avaliação, volte sempre!")
+reserva2 = Reservation.create!(room: Room.last, checkin: 6.days.from_now, checkout: 7.days.from_now, number_of_guests: 1, user: hospede, status: :finished, checkin_at: 6.days.from_now, checkout_at: 7.days.from_now, amount_paid: 100)
+avaliacao2 = Rate.create!(reservation: reserva2, rating: 3, review: "Pousada boa, mas o café da manhã poderia ser melhor.", response: "Obrigado pela avaliação, volte sempre!")
+reserva3 = Reservation.create!(room: Room.last, checkin: 9.days.from_now, checkout: 11.days.from_now, number_of_guests: 2, user: hospede, status: :finished, checkin_at: 9.days.from_now, checkout_at: 11.days.from_now, amount_paid: 200)
+avaliacao3 = Rate.create!(reservation: reserva3, rating: 4, review: "Pousada ok, mas a limpeza poderia ser melhor.", response: "Obrigado pela avaliação, volte sempre!")

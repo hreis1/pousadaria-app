@@ -1,10 +1,11 @@
-<%= form_with scope:@reservation, url: rate_user_reservation_path(@reservation), method: :patch do |form| %> 
+<%= form_with scope: @rate, url: reservation_rates_path(@reservation) do |form| %>  
+  <%= form.hidden_field :reservation_id, value: @reservation.id %>
   <div class="form-group mb-3">
-    <%= form.label :rating %>
+    <%= form.label :rating, "Nota" %>
     <%= form.select :rating, [1, 2, 3, 4, 5], { include_blank: "Selecione uma avaliação" }, class: "form-control", required: true %>
   </div>
   <div class="form-group mb-3">
-    <%= form.label :review %>
+    <%= form.label :review, "Comentário" %>
     <%= form.text_area :review, class: "form-control", required: true %>
   </div>
   <%= form.submit "Avaliar", class: "btn btn-primary" %>

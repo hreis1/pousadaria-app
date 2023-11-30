@@ -15,11 +15,19 @@ class Inn < ApplicationRecord
   belongs_to :owner
   has_many :rooms
   has_many :reservations, through: :rooms
+  has_many :rates, through: :reservations
 
   def full_address
     "#{address}, #{address_number}, #{neighborhood}, #{city} - #{state}"
   end
 
+  def calculate_average_rating
+    if rates.any?
+      rates.average(:rating).to_f.round(1)
+    else
+      0
+    end
+  end
   
   private
 

@@ -115,8 +115,8 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 <summary>Avaliações de estadia</summary>
 
 - [X] Após o checkout, o usuário que se hospedou em um quarto da pousada pode acessar a aplicação e ver suas reservas já finalizadas na aba "Minhas Reservas". Dentro dessa opção, ao acessar uma reserva encerrada, deve existir a opção de fazer uam avaliação. Uma avaliação deve conter uma nota de 0 a 5, onde zero é pessima e cinco é ótima e um campo de texto longo para escrever a avaliação.
-- [ ] Todas avaliações cadastradas podem ser visualizadas pelo usuário dono da pousada, em uma opção "Avaliações" do menu da aplicação. O dono da pousada pode responder uma avaliação e esta resposta pode ser visualizada pelo hóspede em sua conta.
-- [ ] Para os visitantes e para os usuários autenticados deve ser possível ver a nota média de cada pousada e na página de detalhes de uma pousada deve haver um espaço onde são exibidas as últimas 3 avaliações recebidas. Deve existir também uma opção para ver todas as avaliações de uma pousada em uma página separada.
+- [X] Todas avaliações cadastradas podem ser visualizadas pelo usuário dono da pousada, em uma opção "Avaliações" do menu da aplicação. O dono da pousada pode responder uma avaliação e esta resposta pode ser visualizada pelo hóspede em sua conta.
+- [X] Para os visitantes e para os usuários autenticados deve ser possível ver a nota média de cada pousada e na página de detalhes de uma pousada deve haver um espaço onde são exibidas as últimas 3 avaliações recebidas. Deve existir também uma opção para ver todas as avaliações de uma pousada em uma página separada.
 </details>
 
 <details>

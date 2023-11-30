@@ -4,6 +4,8 @@ class InnsController < ApplicationController
   before_action :check_owner, only: [:edit, :update]
 
   def show
+    @reviews = @inn.reservations.limit(3).map(&:rate)
+    @average_rating = @inn.calculate_average_rating
     return @rooms = @inn.rooms if current_owner.present? && current_owner == @inn.owner
     return @rooms = @inn.rooms.where(is_available: true) if @inn.active?
     redirect_to root_path, alert: "Pousada inativa"
