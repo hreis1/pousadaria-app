@@ -17,6 +17,6 @@ class Api::V1::RoomsController < Api::V1::ApiController
       price = reservation.total_value
       return render status: 200, json: { price: price }
     end
-    render status: 204, json: { mensagem: "Quarto indisponível" }
+    return render status: 200, json: { mensagem: "Quarto indisponível" }
   end
 end

@@ -122,12 +122,35 @@ A Pousadaria é uma aplicação web de reserva de quartos em pousadas.
 <details>
 <summary>API</summary>
 
-- [ ] A Pousadaria está avaliando a criação de outras aplicações integradas ao sistema de gestão de pousadas e reservas, para isto, precisamos começar a construir uma API acessível via requisições HTTP e com retornos em formato JSON. Toda API deve ser documentada e, abaixo, segue uma relação dos endpoints esperados neste momento:
-- [ ] Listagem de pousadas: uma listagem completa das pousadas cadastradas e ativas na plataforma. Deve haver uma opção de informar um texto e usar como filtro de busca pelo nome da pousada.
-- [ ] Listagem de quartos de uma pousada: a partir do ID de uma pousada, uma lista com informações sobre os tipos de quartos disponíveis para hospedagem nesta pousada.
-- [ ] Detalhes de uma pousada: a partir do ID de uma pousada, todos os detalhes da pousada exceto CNPJ e razão social. O retorno deve incluir a nota média da pousada a partir de suas avaliações. Caso não existam avaliações o campo deve vir em branco.
-- [ ] Consulta de disponibilidade: informando um ID de um quarto, a data de entrada, data de saída e quantidade de hóspedes, deve ser possível verificar a disponibilidade para reserva. Em caso positivo deve ser retornado o valor da reserva, em caso negativo deve haver uma mensagem de erro no corpo da resposta.
+- [X] Listagem de pousadas: uma listagem completa das pousadas cadastradas e ativas na plataforma. Deve haver uma opção de informar um texto e usar como filtro de busca pelo nome da pousada.
+- [X] Listagem de quartos de uma pousada: a partir do ID de uma pousada, uma lista com informações sobre os tipos de quartos disponíveis para hospedagem nesta pousada.
+- [X] Detalhes de uma pousada: a partir do ID de uma pousada, todos os detalhes da pousada exceto CNPJ e razão social. O retorno deve incluir a nota média da pousada a partir de suas avaliações. Caso não existam avaliações o campo deve vir em branco.
+- [X] Consulta de disponibilidade: informando um ID de um quarto, a data de entrada, data de saída e quantidade de hóspedes, deve ser possível verificar a disponibilidade para reserva. Em caso positivo deve ser retornado o valor da reserva, em caso negativo deve haver uma mensagem de erro no corpo da resposta.
 </details>
+
+### API Endpoints
+
+<details>
+<summary>API Endpoints</summary>
+
+#### Listagem de pousadas
+```
+GET /api/v1/inns
+```
+#### Listagem de quartos de uma pousada
+```
+GET /api/v1/inns/:inn_id/rooms
+```
+#### Detalhes de uma pousada
+```
+GET /api/v1/inns/:id
+```
+#### Consulta de disponibilidade
+```
+GET /api/v1/inns/:inn_id/rooms/:id/check
+```
+</details>
+
 
 ### Diagrama de Entidade e Relacionamento
 <details>
